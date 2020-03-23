@@ -10,7 +10,7 @@ export default function App() {
         dotSize={8}
         outlineSize={8}
         color='220, 90, 90'
-        outlineAlpha = {0.2}
+        outlineAlpha = {0.4}
       />
       <DemoContent />
     </div>
