@@ -6,6 +6,7 @@
   "homepage": "https://github.com/stephenscaff/react-animated-cursor",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
+  "browser": "dist/index.umd.js",
   "files": [
     "/dist",
     "/lib"
