@@ -11,12 +11,13 @@
     "/lib"
   ],
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "clean:demo": "rm -rf ./demo/dist",
+    "clean": "rm -rf dist",
+    "clean:demo": "rm -rf demo/dist",
     "build": "rollup -c ",
-    "demo:start": "parcel demo/index.html --out-dir demo/dist",
+    "demo:start": "parcel --out-dir demo/dist demo/index.html",
     "demo:build": "parcel build --out-dir demo/dist demo/index.html --public-url=/react-animated-cursor",
-    "demo:deploy": "npm run demo:start && gh-pages -d demo/dist"
+    "demo:deploy": "npm run demo:build && gh-pages -d demo/dist",
+    "prepare": "npm run build"
   },
   "keywords": [
     "react",
