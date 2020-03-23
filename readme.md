@@ -1,6 +1,6 @@
 # React Animated Cursor
 
-A React functional component that replaces the native cursor with a custom animated [https://www.urbandictionary.com/define.php?term=Jawn](jawn). As this is a function component, hooks manage events, local state and RAF.
+A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
 
 ### The cursor is comprised of
 - An inner dot,
@@ -25,7 +25,7 @@ Options exist for modifying the color and scaling of the cursor elements (see pr
 
 `npm run demo`
 
-Uses `[Parcel.js](https://parceljs.org/)` bundle the demo and serve it at [http://localhost:1234/](http://localhost:1234/).
+Uses [`Parcel.js`](https://parceljs.org/) bundle the demo and serve it at [http://localhost:1234/](http://localhost:1234/).
 
 
 
@@ -66,7 +66,7 @@ export default function App() {
 
 ### Cursor Styling
 
-Cursor styling is included within the component, using a simple dependency free inline approach. Default properties use *es6 default parameters*, as `defaultProps`, [https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md](is slated for deprecation).
+Cursor styling is included within the component, using a simple dependency free inline approach. Default properties use *es6 default parameters*, as `defaultProps`, [is slated for deprecation](https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md).
 
 ## Options / Props
 
