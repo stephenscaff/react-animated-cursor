@@ -2,31 +2,45 @@
 
 A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
 
-### The cursor is comprised of
-- An inner dot,
-- An outer outline circle (with slight opacity based on the dot/primary color)
-- A slight trailing animation of the outer dot
-- An inversely scaling effect between the inner and outer parts when clicking or hovering over a link
+### The custom cursor is comprised of
+- An inner dot (`cursorDot`)
+- An outer, outlining circle (`cursorOutline`), with slight opacity based on the dot/primary color
+- A slight trailing animation of the outer outline
+- An inversely scaling effect between the inner and outer cursor parts on click or link hover
 
-Options exist for modifying the color and scaling of the cursor elements (see props/options below)
+Options exist for modifying the color and scaling of the cursor elements (see props/options below).
 
-[Live Example](https://0vvpf.csb.app/)
+[Live Demo](https://stephenscaff.github.io/react-animated-cursor/)
 
+### Install package from npm
+`npm i react-animated-cursor`
 
-### Install
+### Instal Project Dependencies
 `npm install`
 
 ### Build
-
 `npm run build`
 
-
 ### Run Demo
+`npm run demo:start`
 
-`npm run demo`
+### Build Demo
+`npm run demo:build`
 
-Uses [`Parcel.js`](https://parceljs.org/) bundle the demo and serve it at [http://localhost:1234/](http://localhost:1234/).
+### Clean Demo
+`npm run clean:demo`
 
+## Demo
+
+The demo is bundled with [`Parcel.js`](https://parceljs.org/) and served up at [http://localhost:1234/](http://localhost:1234/).
+
+## Lib
+
+The core component file is housed in `lib/`
+
+## Dist
+
+On build, `lib` populates `dist` with commonjs, es, umd versions of the component.
 
 
 ### Example Usage

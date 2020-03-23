@@ -18,7 +18,8 @@
     "demo:start": "parcel ./demo/src/index.html --out-dir ./demo/dist",
     "demo:build": "parcel build ./demo/src/index.html --out-dir ./demo/dist --public-url ./",
     "demo:deploy": "gh-pages -d ./demo/dist",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "prepublish": "rm -rf ./dist && npm run build",
   },
   "keywords": [
     "react",
