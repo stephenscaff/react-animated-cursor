@@ -1,0 +1,53 @@
+{
+  "name": "react-animated-cursor",
+  "version": "1.0.0",
+  "description": "An animated custom cursor component in React.",
+  "author": "Stephen Scaff <stephenscaff.com>",
+  "homepage": "https://github.com/stephenscaff/react-animated-cursor",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "/dist",
+    "/lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "clean:demo": "rm -rf ./demo/dist",
+    "build": "rollup -c ",
+    "demo:start": "parcel demo/index.html --out-dir demo/dist",
+    "demo:build": "parcel build --out-dir demo/dist demo/index.html --public-url=/react-animated-cursor",
+    "demo:deploy": "npm run demo:start && gh-pages -d demo/dist"
+  },
+  "keywords": [
+    "react",
+    "custom cursor",
+    "animated cursor"
+  ],
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenscaff/react-animated-cursor"
+  },
+  "peerDependencies": {
+    "parcel-plugin-clean-dist": "0.0.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.1",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@rollup/plugin-replace": "^2.3.1",
+    "gh-pages": "^2.2.0",
+    "parcel-bundler": "^1.12.4",
+    "rollup": "^2.1.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
