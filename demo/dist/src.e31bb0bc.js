@@ -28306,9 +28306,6 @@ var WhoDis = function () {
   var ua = navigator.userAgent;
   return {
     info: ua,
-    UA: function UA() {
-      return ua;
-    },
     Android: function Android() {
       return ua.match(/Android/i);
     },
@@ -28423,8 +28420,8 @@ function AnimatedCursor(_ref) {
       outlineScale = _ref$outlineScale === void 0 ? 5 : _ref$outlineScale,
       _ref$dotScale = _ref.dotScale,
       dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
-  console.log(_WhoDis.default.logger);
-  if (_WhoDis.default.iOS) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
+  // Bail if Mobile
+  if (_WhoDis.default.anyMobile()) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
   var cursorOutline = (0, _react.useRef)();
   var cursorDot = (0, _react.useRef)();
   var requestRef = (0, _react.useRef)();
@@ -28834,7 +28831,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57462" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59042" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
