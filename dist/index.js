@@ -111,8 +111,80 @@ function _nonIterableRest() {
 }
 
 /**
- * Custom Cursor
- * Replaces the native cursor with a custom animated jawn.
+ * WhoDis.js
+ * A simple little sniffer. Mostly Using UA (Yikes! 😜)
+ * for conditional checks.
+ * ES6 version
+ *
+ * @return {boolean}
+ * @author stephen scaff
+ */
+var WhoDis = function () {
+  var ua = navigator.userAgent;
+  return {
+    info: ua,
+    UA: function UA() {
+      return ua;
+    },
+    Android: function Android() {
+      return ua.match(/Android/i);
+    },
+    BlackBerry: function BlackBerry() {
+      return ua.match(/BlackBerry/i);
+    },
+    Chrome: function Chrome() {
+      return ua.match(/Chrome/i);
+    },
+    Edge: function Edge() {
+      return ua.match(/Edge/i);
+    },
+    Firefox: function Firefox() {
+      return ua.match(/Firefox/i);
+    },
+    IE: function IE() {
+      return ua.match(/Trident/i);
+    },
+    IEMobile: function IEMobile() {
+      return ua.match(/IEMobile/i);
+    },
+    IE10: function IE10() {
+      return ua.match(/MSIE/i);
+    },
+    iOS: function iOS() {
+      return ua.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function Opera() {
+      return ua.match(/Opera Mini/i);
+    },
+    OperaMini: function OperaMini() {
+      return ua.match(/Opera Mini/i);
+    },
+    Safari: function Safari() {
+      return !!ua.match(/Version\/[\d\.]+.*Safari/);
+    },
+    Touch: function Touch() {
+      return 'ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch;
+    },
+
+    /**
+     * Any Microsoft
+     */
+    anyMS: function anyMS() {
+      return WhoDis.IE10() || WhoDis.IE() || WhoDis.Edge();
+    },
+
+    /**
+     * Any Mobile
+     */
+    anyMobile: function anyMobile() {
+      return WhoDis.Android() || WhoDis.BlackBerry() || WhoDis.iOS() || WhoDis.OperaMini() || WhoDis.IEMobile();
+    }
+  };
+}(); // Export
+
+/**
+ * Animated Cursor
+ * Replaces the native cursor with a custom animated cursor.
  *
  * @author Stephen Scaff
  */
@@ -130,6 +202,8 @@ function AnimatedCursor(_ref) {
       outlineScale = _ref$outlineScale === void 0 ? 5 : _ref$outlineScale,
       _ref$dotScale = _ref.dotScale,
       dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
+  console.log(WhoDis.logger);
+  if (WhoDis.iOS) return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
   var cursorOutline = React.useRef();
   var cursorDot = React.useRef();
   var requestRef = React.useRef();
@@ -155,10 +229,6 @@ function AnimatedCursor(_ref) {
 
   var cursorVisible = React.useState(false);
   var cursorEnlarged = React.useState(false);
-  /**
-   * Styles & Settings
-   */
-
   var styles = {
     cursors: {
       zIndex: 999,
@@ -213,7 +283,7 @@ function AnimatedCursor(_ref) {
   var onMouseUp = function onMouseUp() {
     cursorEnlarged.current = false;
     toggleCursorSize();
-  }; // Set window hxxsqs
+  }; // Set window hxw
 
 
   var onResize = function onResize(event) {
@@ -226,6 +296,7 @@ function AnimatedCursor(_ref) {
 
 
   React.useEffect(function () {
+    // Bail if mobile
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseenter", onMouseEnter);
     document.addEventListener("mouseleave", onMouseLeave);
@@ -252,6 +323,7 @@ function AnimatedCursor(_ref) {
   };
   var endX = winDimensions.width / 2;
   var endY = winDimensions.height / 2;
+  console.log(mousePosition, winDimensions);
   /**
    * Position Dot (cursor)
    * @param {event}
@@ -281,7 +353,7 @@ function AnimatedCursor(_ref) {
     }
   }
   /**
-   * Toggle Cursor Size
+   * Toggle Cursors Size/Scale
    */
 
 
@@ -295,7 +367,7 @@ function AnimatedCursor(_ref) {
     }
   }
   /**
-   * Handle LInks
+   * Handle Links Events
    * Applies mouseover/out hooks on all links
    * to trigger cursor animation
    */
