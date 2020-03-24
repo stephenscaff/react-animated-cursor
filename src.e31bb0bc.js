@@ -28285,7 +28285,90 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../lib/WhoDis.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+/**
+ * WhoDis.js
+ * A simple little sniffer. Mostly Using UA (Yikes! 😜)
+ * for conditional checks.
+ * ES6 version
+ *
+ * @return {boolean}
+ * @author stephen scaff
+ */
+var WhoDis = function () {
+  var ua = navigator.userAgent;
+  return {
+    info: ua,
+    UA: function UA() {
+      return ua;
+    },
+    Android: function Android() {
+      return ua.match(/Android/i);
+    },
+    BlackBerry: function BlackBerry() {
+      return ua.match(/BlackBerry/i);
+    },
+    Chrome: function Chrome() {
+      return ua.match(/Chrome/i);
+    },
+    Edge: function Edge() {
+      return ua.match(/Edge/i);
+    },
+    Firefox: function Firefox() {
+      return ua.match(/Firefox/i);
+    },
+    IE: function IE() {
+      return ua.match(/Trident/i);
+    },
+    IEMobile: function IEMobile() {
+      return ua.match(/IEMobile/i);
+    },
+    IE10: function IE10() {
+      return ua.match(/MSIE/i);
+    },
+    iOS: function iOS() {
+      return ua.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function Opera() {
+      return ua.match(/Opera Mini/i);
+    },
+    OperaMini: function OperaMini() {
+      return ua.match(/Opera Mini/i);
+    },
+    Safari: function Safari() {
+      return !!ua.match(/Version\/[\d\.]+.*Safari/);
+    },
+    Touch: function Touch() {
+      return 'ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch;
+    },
+
+    /**
+     * Any Microsoft
+     */
+    anyMS: function anyMS() {
+      return WhoDis.IE10() || WhoDis.IE() || WhoDis.Edge();
+    },
+
+    /**
+     * Any Mobile
+     */
+    anyMobile: function anyMobile() {
+      return WhoDis.Android() || WhoDis.BlackBerry() || WhoDis.iOS() || WhoDis.OperaMini() || WhoDis.IEMobile();
+    }
+  };
+}(); // Export
+
+
+var _default = WhoDis;
+exports.default = _default;
+},{}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28294,6 +28377,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _WhoDis = _interopRequireDefault(require("./WhoDis.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -28318,8 +28405,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /**
- * Custom Cursor
- * Replaces the native cursor with a custom animated jawn.
+ * Animated Cursor
+ * Replaces the native cursor with a custom animated cursor.
  *
  * @author Stephen Scaff
  */
@@ -28336,6 +28423,8 @@ function AnimatedCursor(_ref) {
       outlineScale = _ref$outlineScale === void 0 ? 5 : _ref$outlineScale,
       _ref$dotScale = _ref.dotScale,
       dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
+  console.log(_WhoDis.default.logger);
+  if (_WhoDis.default.iOS) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
   var cursorOutline = (0, _react.useRef)();
   var cursorDot = (0, _react.useRef)();
   var requestRef = (0, _react.useRef)();
@@ -28361,10 +28450,6 @@ function AnimatedCursor(_ref) {
 
   var cursorVisible = (0, _react.useState)(false);
   var cursorEnlarged = (0, _react.useState)(false);
-  /**
-   * Styles & Settings
-   */
-
   var styles = {
     cursors: {
       zIndex: 999,
@@ -28419,7 +28504,7 @@ function AnimatedCursor(_ref) {
   var onMouseUp = function onMouseUp() {
     cursorEnlarged.current = false;
     toggleCursorSize();
-  }; // Set window hxxsqs
+  }; // Set window hxw
 
 
   var onResize = function onResize(event) {
@@ -28432,6 +28517,7 @@ function AnimatedCursor(_ref) {
 
 
   (0, _react.useEffect)(function () {
+    // Bail if mobile
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseenter", onMouseEnter);
     document.addEventListener("mouseleave", onMouseLeave);
@@ -28458,6 +28544,7 @@ function AnimatedCursor(_ref) {
   };
   var endX = winDimensions.width / 2;
   var endY = winDimensions.height / 2;
+  console.log(mousePosition, winDimensions);
   /**
    * Position Dot (cursor)
    * @param {event}
@@ -28487,7 +28574,7 @@ function AnimatedCursor(_ref) {
     }
   }
   /**
-   * Toggle Cursor Size
+   * Toggle Cursors Size/Scale
    */
 
 
@@ -28501,7 +28588,7 @@ function AnimatedCursor(_ref) {
     }
   }
   /**
-   * Handle LInks
+   * Handle Links Events
    * Applies mouseover/out hooks on all links
    * to trigger cursor animation
    */
@@ -28551,7 +28638,7 @@ function AnimatedCursor(_ref) {
 
 var _default = AnimatedCursor;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js"}],"../../lib/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./WhoDis.js":"../../lib/WhoDis.js"}],"../../lib/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28747,7 +28834,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49163" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57462" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
