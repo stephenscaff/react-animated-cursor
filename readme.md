@@ -70,7 +70,9 @@ export default function App() {
       dotSize={8}
       outlineSize={8}
       color='193, 11, 111'
-      outlineAlpha = {0.2}
+      outlineAlpha={0.2},
+      dotScale={0.7},
+      outlineScale={5}
     />
     </div>
   );
@@ -80,7 +82,7 @@ export default function App() {
 
 ### Cursor Styling
 
-Cursor styling is included within the component, using a simple dependency free inline approach. Default properties use *es6 default parameters*, as `defaultProps`, [is slated for deprecation](https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md).
+Cursor styling is included within the component, using a simple dependency-free inline approach. Default properties use *es6 default parameters*, as `defaultProps`, [is slated for deprecation](https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md).
 
 ## Options / Props
 
@@ -90,8 +92,8 @@ Cursor styling is included within the component, using a simple dependency free 
 | `outlineAlpha` | number | amount of alpha transparency for cursor outline | `0.4` |
 | `dotSize` | number | Size (px) of inner cursor dot | `8` |
 | `outlineSize` | number | Size (px) of outer cursor outline | `8` |
-| `outlineScale` | number | amount outline scales on click or link hover | `5` |
 | `dotScale` | number | amount dot scales on click or link hover | `0.7` |
+| `outlineScale` | number | amount outline scales on click or link hover | `5` |
 
 ## Todo
 - Either remove on mobile, or provide touch events.
