@@ -95,9 +95,15 @@ Cursor styling is included within the component, using a simple dependency-free 
 | `dotScale` | number | amount dot scales on click or link hover | `0.7` |
 | `outlineScale` | number | amount outline scales on click or link hover | `5` |
 
+
+## Mobile
+`lib/WhoDis.js` is a utility that detects for device based `navigator.userAgent` (:p).
+If any of the common device `userAgent`'s match, we return out and render an empty frag. Is this the best way to do this kinda thing? Probs not. We'll see how it goes.
+
+
 ## Todo
-- Either remove on mobile, or provide touch events.
+- ~~Either remove on mobile, or provide touch events.~~
 - Separate click and hover scalings to provide a different scaling when clicking on links
 
 
-Have fun.
+Have fun ya'll.
