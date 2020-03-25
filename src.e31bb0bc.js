@@ -28303,6 +28303,7 @@ exports.default = void 0;
  * @author stephen scaff
  */
 var WhoDis = function () {
+  if (typeof navigator == 'undefined') return;
   var ua = navigator.userAgent;
   return {
     info: ua,
@@ -28421,7 +28422,7 @@ function AnimatedCursor(_ref) {
       _ref$dotScale = _ref.dotScale,
       dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
   // Bail if Mobile
-  if (_WhoDis.default.anyMobile()) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
+  if (typeof navigator !== 'undefined' && _WhoDis.default.anyMobile()) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
   var cursorOutline = (0, _react.useRef)();
   var cursorDot = (0, _react.useRef)();
   var requestRef = (0, _react.useRef)();
@@ -28831,7 +28832,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59042" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53841" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
