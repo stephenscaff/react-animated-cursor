@@ -322,7 +322,6 @@
     };
     var endX = winDimensions.width / 2;
     var endY = winDimensions.height / 2;
-    console.log(mousePosition, winDimensions);
     /**
      * Position Dot (cursor)
      * @param {event}
