@@ -8,8 +8,9 @@
   "module": "dist/index.es.js",
   "browser": "dist/index.umd.js",
   "files": [
-    "/dist",
-    "/lib"
+    "dist/index.js",
+    "dist/index.es.js",
+    "dist/index.umd.js"
   ],
   "scripts": {
     "clean": "rm -rf ./dist",
@@ -22,7 +23,7 @@
     "prepublish": "rm -rf ./dist && npm run build"
   },
   "keywords": [
-    "react",
+    "react cursor",
     "custom cursor",
     "animated cursor"
   ],
@@ -30,6 +31,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/stephenscaff/react-animated-cursor"
+  },
+  "bugs": {
+    "url": "https://github.com/stephenscaff/react-animated-cursor/issues"
   },
   "peerDependencies": {
     "parcel-plugin-clean-dist": "0.0.6",
@@ -48,9 +52,5 @@
     "rollup": "^2.1.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.2"
-  },
-  "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
   }
 }

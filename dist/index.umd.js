@@ -124,9 +124,6 @@
     var ua = navigator.userAgent;
     return {
       info: ua,
-      UA: function UA() {
-        return ua;
-      },
       Android: function Android() {
         return ua.match(/Android/i);
       },
@@ -203,8 +200,8 @@
         outlineScale = _ref$outlineScale === void 0 ? 5 : _ref$outlineScale,
         _ref$dotScale = _ref.dotScale,
         dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
-    console.log(WhoDis.logger);
-    if (WhoDis.iOS) return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
+    // Bail if Mobile
+    if (WhoDis.anyMobile()) return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
     var cursorOutline = React.useRef();
     var cursorDot = React.useRef();
     var requestRef = React.useRef();
