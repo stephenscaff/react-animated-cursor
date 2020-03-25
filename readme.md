@@ -42,11 +42,11 @@ The core component file is housed in `lib/`
 
 On build, `lib` populates `dist` with commonjs, es, umd versions of the component.
 
-
 ### Example Usage
 ```
 import React from "react";
-import AnimatedCursor from "./AnimatedCursor";
+import AnimatedCursor from "react-animated-cursor"
+
 
 export default function App() {
   return (
@@ -58,10 +58,10 @@ export default function App() {
 ```
 
 
-### Example Usage
+### Example Usage - with options
 ```
 import React from "react";
-import AnimatedCursor from "./AnimatedCursor";
+import AnimatedCursor from "react-animated-cursor"
 
 export default function App() {
   return (
@@ -79,6 +79,17 @@ export default function App() {
 }
 ```
 
+If not using via npm install, then import from directory
+
+### Example Usage - from lib
+```
+import React from "react";
+import AnimatedCursor from "./AnimatedCursor";
+```
+
+
+### Mobile Fail
+`var reactAnimatedCursor = require("react-animated-cursor")` will fail in node with `ReferenceError: navigator is not defined` as `navigator` is used to detect device.
 
 ### Cursor Styling
 
@@ -98,7 +109,8 @@ Cursor styling is included within the component, using a simple dependency-free 
 
 ## Mobile
 `lib/WhoDis.js` is a utility that detects for device based `navigator.userAgent` (:p).
-If any of the common device `userAgent`'s match, we return out and render an empty frag. Is this the best way to do this kinda thing? Probs not. We'll see how it goes.
+If any of the common device `userAgent`'s match, we return out and render an empty frag.
+Not the best solution of course, and had to add a navigator check so we don't fail in node env (as `navigator` is browser api)
 
 
 ## Todo

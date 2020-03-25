@@ -36,7 +36,6 @@
     "url": "https://github.com/stephenscaff/react-animated-cursor/issues"
   },
   "peerDependencies": {
-    "parcel-plugin-clean-dist": "0.0.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },

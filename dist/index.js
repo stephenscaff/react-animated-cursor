@@ -120,6 +120,7 @@ function _nonIterableRest() {
  * @author stephen scaff
  */
 var WhoDis = function () {
+  if (typeof navigator == 'undefined') return;
   var ua = navigator.userAgent;
   return {
     info: ua,
@@ -200,7 +201,7 @@ function AnimatedCursor(_ref) {
       _ref$dotScale = _ref.dotScale,
       dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
   // Bail if Mobile
-  if (WhoDis.anyMobile()) return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
+  if (typeof navigator !== 'undefined' && WhoDis.anyMobile()) return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
   var cursorOutline = React.useRef();
   var cursorDot = React.useRef();
   var requestRef = React.useRef();
