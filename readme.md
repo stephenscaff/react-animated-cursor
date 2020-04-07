@@ -87,9 +87,24 @@ import React from "react";
 import AnimatedCursor from "./AnimatedCursor";
 ```
 
+### With SSR (Server Side Rendering)
 
-### Mobile Fail
-`var reactAnimatedCursor = require("react-animated-cursor")` will fail in node with `ReferenceError: navigator is not defined` as `navigator` is used to detect device.
+The component obtains `window` HxW via `useState(window.innerWidth)` and `useState(window.innerHeight)`.
+Since, `window` is unavailable for components rendering server side, you'll need to render `AnimatedCursor` client side or you'll snag an error.
+
+With `Next.js`, you can leverage a `Dynamic Imports` to set `ssr:false` for `AnimatedCursor`.
+
+**Next.js SSR Example**
+
+```
+import dynamic from 'next/dynamic'
+
+const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+  ssr: false
+});
+
+// <AnimatedCursor/>
+```
 
 ### Cursor Styling
 
