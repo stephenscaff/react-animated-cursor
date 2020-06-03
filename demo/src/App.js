@@ -7,10 +7,10 @@ export default function App() {
   return (
     <div className="App">
       <AnimatedCursor
-        dotSize={8}
-        outlineSize={8}
+        innerSize={8}
+        outerSize={8}
         color='220, 90, 90'
-        outlineAlpha = {0.4}
+        outerAlpha = {0.4}
       />
       <DemoContent />
     </div>

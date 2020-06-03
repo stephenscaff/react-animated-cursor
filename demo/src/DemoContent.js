@@ -52,6 +52,18 @@ export default function Content() {
         Hooks. And if you read the docs, the future ain't class components. So,
         best get on them functions.
       </p>
+      <h3>Clickables</h3>
+      <p>Let's do a text of all clickable elements:</p>
+      <ul>
+      <li><a>Basic Link Tag</a></li>
+      <li><button>Buttons</button></li>
+      <li><input type="submit" value="Submit"/></li>
+      <li><select><option>Select</option></select></li>
+      <li><input type="image" id="image-input" alt="Image Input"
+       src="https://cdn2.iconfinder.com/data/icons/button-v1/30/25-512.png" width="30px"/></li>
+       <li><label htmlFor="label_for">Label For</label><input type="radio" name="gender" id="label_for" value="label_for"/></li>
+       <li><div className="link">class name ="link"</div></li>
+      </ul>
     </section>
   );
 }

@@ -3,8 +3,8 @@
 A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
 
 ### The custom cursor is comprised of
-- An inner dot (`cursorDot`)
-- An outer, outlining circle (`cursorOutline`), with slight opacity based on the dot/primary color
+- An inner dot (`cursorInner`)
+- An outer, outlining circle (`cursorOuter`), with slight opacity based on the dot/primary color
 - A slight trailing animation of the outer outline
 - An inversely scaling effect between the inner and outer cursor parts on click or link hover
 
@@ -67,12 +67,12 @@ export default function App() {
   return (
     <div className="App">
     <AnimatedCursor
-      dotSize={8}
-      outlineSize={8}
+      innerSize={8}
+      outerSize={8}
       color='193, 11, 111'
-      outlineAlpha={0.2},
-      dotScale={0.7},
-      outlineScale={5}
+      outerAlpha={0.2},
+      innerScale={0.7},
+      outerScale={5}
     />
     </div>
   );
@@ -115,22 +115,20 @@ Cursor styling is included within the component, using a simple dependency-free 
 | Option | Type | Description | Default |
 | --- | --- | --- | --- |
 | `color` | string | rgb value |  `220, 90, 90` |
-| `outlineAlpha` | number | amount of alpha transparency for cursor outline | `0.4` |
-| `dotSize` | number | Size (px) of inner cursor dot | `8` |
-| `outlineSize` | number | Size (px) of outer cursor outline | `8` |
-| `dotScale` | number | amount dot scales on click or link hover | `0.7` |
-| `outlineScale` | number | amount outline scales on click or link hover | `5` |
+| `outerAlpha` | number | amount of alpha transparency for cursor outline | `0.4` |
+| `innerSize` | number | Size (px) of inner cursor dot | `8` |
+| `outerSize` | number | Size (px) of outer cursor outline | `8` |
+| `innerScale` | number | amount dot scales on click or link hover | `0.7` |
+| `outerScale` | number | amount outline scales on click or link hover | `5` |
 
 
 ## Mobile
-`lib/WhoDis.js` is a utility that detects for device based `navigator.userAgent` (:p).
-If any of the common device `userAgent`'s match, we return out and render an empty frag.
-Not the best solution of course, and had to add a navigator check so we don't fail in node env (as `navigator` is browser api)
+Added a Media Query hook to conditional show custom cursor above 400px. There are no doubt better solutions...
 
 
 ## Todo
 - ~~Either remove on mobile, or provide touch events.~~
-- Separate click and hover scalings to provide a different scaling when clicking on links
+- ~~Separate click and hover scalings to provide a different scaling when clicking on links~~
 
 
 Have fun ya'll.

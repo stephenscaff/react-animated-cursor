@@ -28285,110 +28285,52 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../lib/WhoDis.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../../node_modules/react-dom/cjs/react-dom.development.js"}],"../../lib/hooks/useEventListener.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.useEventListener = useEventListener;
+
+var _react = require("react");
+
+/* eslint-disable react-hooks/exhaustive-deps */
 
 /**
- * WhoDis.js
- * A simple little sniffer. Mostly Using UA (Yikes! 😜)
- * for conditional checks.
- * ES6 version
- *
- * @return {boolean}
- * @author stephen scaff
+ * UseWindowSize
+ * Custom React Hook that returns window wxh.
+ * @return {object} width, height
  */
-var WhoDis = function () {
-  if (typeof navigator == 'undefined') return;
-  var ua = navigator.userAgent;
-  return {
-    info: ua,
-    Android: function Android() {
-      return ua.match(/Android/i);
-    },
-    BlackBerry: function BlackBerry() {
-      return ua.match(/BlackBerry/i);
-    },
-    Chrome: function Chrome() {
-      return ua.match(/Chrome/i);
-    },
-    Edge: function Edge() {
-      return ua.match(/Edge/i);
-    },
-    Firefox: function Firefox() {
-      return ua.match(/Firefox/i);
-    },
-    IE: function IE() {
-      return ua.match(/Trident/i);
-    },
-    IEMobile: function IEMobile() {
-      return ua.match(/IEMobile/i);
-    },
-    IE10: function IE10() {
-      return ua.match(/MSIE/i);
-    },
-    iOS: function iOS() {
-      return ua.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function Opera() {
-      return ua.match(/Opera Mini/i);
-    },
-    OperaMini: function OperaMini() {
-      return ua.match(/Opera Mini/i);
-    },
-    Safari: function Safari() {
-      return !!ua.match(/Version\/[\d\.]+.*Safari/);
-    },
-    Touch: function Touch() {
-      return 'ontouchstart' in window || window.DocumentTouch && document instanceof DocumentTouch;
-    },
+function useEventListener(eventName, handler) {
+  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document;
+  var savedHandler = (0, _react.useRef)();
+  (0, _react.useEffect)(function () {
+    savedHandler.current = handler;
+  }, [handler]);
+  (0, _react.useEffect)(function () {
+    var isSupported = element && element.addEventListener;
+    if (!isSupported) return;
 
-    /**
-     * Any Microsoft
-     */
-    anyMS: function anyMS() {
-      return WhoDis.IE10() || WhoDis.IE() || WhoDis.Edge();
-    },
+    var eventListener = function eventListener(event) {
+      return savedHandler.current(event);
+    };
 
-    /**
-     * Any Mobile
-     */
-    anyMobile: function anyMobile() {
-      return WhoDis.Android() || WhoDis.BlackBerry() || WhoDis.iOS() || WhoDis.OperaMini() || WhoDis.IEMobile();
-    }
-  };
-}(); // Export
-
-
-var _default = WhoDis;
-exports.default = _default;
-},{}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
+    element.addEventListener(eventName, eventListener);
+    return function () {
+      element.removeEventListener(eventName, eventListener);
+    };
+  }, [eventName, element]);
+}
+},{"react":"../../node_modules/react/index.js"}],"../../lib/hooks/useMQ.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
+exports.useMQ = void 0;
 
-var _react = _interopRequireWildcard(require("react"));
-
-var _WhoDis = _interopRequireDefault(require("./WhoDis.js"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _react = require("react");
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -28402,241 +28344,271 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+/* eslint-disable react-hooks/exhaustive-deps */
+var useMQ = function useMQ(query) {
+  var mediaMatch = window.matchMedia(query);
+
+  var _useState = (0, _react.useState)(mediaMatch.matches),
+      _useState2 = _slicedToArray(_useState, 2),
+      matches = _useState2[0],
+      setMatches = _useState2[1];
+
+  (0, _react.useEffect)(function () {
+    var handler = function handler(e) {
+      return setMatches(e.matches);
+    };
+
+    mediaMatch.addListener(handler);
+    return function () {
+      return mediaMatch.removeListener(handler);
+    };
+  });
+  return matches;
+};
+
+exports.useMQ = useMQ;
+},{"react":"../../node_modules/react/index.js"}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
+var global = arguments[3];
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _useEventListener = require("./hooks/useEventListener");
+
+var _useMQ = require("./hooks/useMQ");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+if (typeof window === 'undefined') {
+  global.window = {};
+}
 /**
  * Animated Cursor
  * Replaces the native cursor with a custom animated cursor.
  *
  * @author Stephen Scaff
  */
+
+
 function AnimatedCursor(_ref) {
   var _ref$color = _ref.color,
       color = _ref$color === void 0 ? '220, 90, 90' : _ref$color,
-      _ref$outlineAlpha = _ref.outlineAlpha,
-      outlineAlpha = _ref$outlineAlpha === void 0 ? 0.3 : _ref$outlineAlpha,
-      _ref$dotSize = _ref.dotSize,
-      dotSize = _ref$dotSize === void 0 ? 8 : _ref$dotSize,
-      _ref$outlineSize = _ref.outlineSize,
-      outlineSize = _ref$outlineSize === void 0 ? 8 : _ref$outlineSize,
-      _ref$outlineScale = _ref.outlineScale,
-      outlineScale = _ref$outlineScale === void 0 ? 5 : _ref$outlineScale,
-      _ref$dotScale = _ref.dotScale,
-      dotScale = _ref$dotScale === void 0 ? 0.7 : _ref$dotScale;
-  // Bail if Mobile
-  if (typeof navigator !== 'undefined' && _WhoDis.default.anyMobile()) return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
-  var cursorOutline = (0, _react.useRef)();
-  var cursorDot = (0, _react.useRef)();
+      _ref$outerAlpha = _ref.outerAlpha,
+      outerAlpha = _ref$outerAlpha === void 0 ? 0.3 : _ref$outerAlpha,
+      _ref$innerSize = _ref.innerSize,
+      innerSize = _ref$innerSize === void 0 ? 8 : _ref$innerSize,
+      _ref$outerSize = _ref.outerSize,
+      outerSize = _ref$outerSize === void 0 ? 8 : _ref$outerSize,
+      _ref$outerScale = _ref.outerScale,
+      outerScale = _ref$outerScale === void 0 ? 5 : _ref$outerScale,
+      _ref$innerScale = _ref.innerScale,
+      innerScale = _ref$innerScale === void 0 ? 0.7 : _ref$innerScale;
+  var cursorOuterRef = (0, _react.useRef)();
+  var cursorInnerRef = (0, _react.useRef)();
   var requestRef = (0, _react.useRef)();
   var previousTimeRef = (0, _react.useRef)();
 
-  var _useState = (0, _react.useState)(window.innerWidth),
-      _useState2 = _slicedToArray(_useState, 2),
-      width = _useState2[0],
-      setWidth = _useState2[1];
-
-  var _useState3 = (0, _react.useState)(window.innerHeight),
-      _useState4 = _slicedToArray(_useState3, 2),
-      height = _useState4[0],
-      setHeight = _useState4[1];
-
-  var _useState5 = (0, _react.useState)({
+  var _useState = (0, _react.useState)({
     x: 0,
     y: 0
   }),
+      _useState2 = _slicedToArray(_useState, 2),
+      coords = _useState2[0],
+      setCoords = _useState2[1];
+
+  var _useState3 = (0, _react.useState)(true),
+      _useState4 = _slicedToArray(_useState3, 2),
+      isVisible = _useState4[0],
+      setIsVisible = _useState4[1];
+
+  var _useState5 = (0, _react.useState)(false),
       _useState6 = _slicedToArray(_useState5, 2),
-      mousePosition = _useState6[0],
-      setMousePosition = _useState6[1];
+      isActive = _useState6[0],
+      setIsActive = _useState6[1];
 
-  var cursorVisible = (0, _react.useState)(false);
-  var cursorEnlarged = (0, _react.useState)(false);
-  var styles = {
-    cursors: {
-      zIndex: 999,
-      pointerEvents: 'none',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      borderRadius: '50%',
-      opacity: 0,
-      transform: 'translate(-50%, -50%)',
-      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
-    },
-    cursorDot: {
-      width: dotSize,
-      height: dotSize,
-      backgroundColor: "rgba(".concat(color, ", 1)")
-    },
-    cursorOutline: {
-      width: outlineSize,
-      height: outlineSize,
-      backgroundColor: "rgba(".concat(color, ", ").concat(outlineAlpha, ")")
-    }
-  }; // Hide default cursor
+  var _useState7 = (0, _react.useState)(false),
+      _useState8 = _slicedToArray(_useState7, 2),
+      isActiveClickable = _useState8[0],
+      setIsActiveClickable = _useState8[1];
 
-  document.body.style.cursor = "none"; // Mouse Events
-
-  var onMouseMove = function onMouseMove(event) {
-    var x = event.pageX,
-        y = event.pageY;
-    setMousePosition({
-      x: x,
-      y: y
+  var endX = (0, _react.useRef)(0);
+  var endY = (0, _react.useRef)(0);
+  var isSmall = (0, _useMQ.useMQ)('(min-width: 400px)');
+  var onMouseMove = (0, _react.useCallback)(function (_ref2) {
+    var clientX = _ref2.clientX,
+        clientY = _ref2.clientY;
+    setCoords({
+      x: clientX,
+      y: clientY
     });
-    positionDot(event);
-  };
-
-  var onMouseEnter = function onMouseEnter() {
-    cursorVisible.current = true;
-    toggleCursorVisibility();
-  };
-
-  var onMouseLeave = function onMouseLeave() {
-    cursorVisible.current = false;
-    toggleCursorVisibility();
-  };
-
-  var onMouseDown = function onMouseDown() {
-    cursorEnlarged.current = true;
-    toggleCursorSize();
-  };
-
-  var onMouseUp = function onMouseUp() {
-    cursorEnlarged.current = false;
-    toggleCursorSize();
-  }; // Set window hxw
-
-
-  var onResize = function onResize(event) {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
-  };
-  /**
-   * Hooks
-   */
-
-
-  (0, _react.useEffect)(function () {
-    // Bail if mobile
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseenter", onMouseEnter);
-    document.addEventListener("mouseleave", onMouseLeave);
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("resize", onResize);
-    requestRef.current = requestAnimationFrame(animateDotOutline);
-    handleLinkEvents();
-    return function () {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseenter", onMouseEnter);
-      document.removeEventListener("mouseleave", onMouseLeave);
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("resize", onResize);
-      cancelAnimationFrame(requestRef.current);
-    };
+    cursorInnerRef.current.style.top = clientY + 'px';
+    cursorInnerRef.current.style.left = clientX + 'px';
+    endX.current = clientX;
+    endY.current = clientY;
   }, []);
-  var x = mousePosition.x,
-      y = mousePosition.y;
-  var winDimensions = {
-    width: width,
-    height: height
-  };
-  var endX = winDimensions.width / 2;
-  var endY = winDimensions.height / 2;
-  console.log(mousePosition, winDimensions);
-  /**
-   * Position Dot (cursor)
-   * @param {event}
-   */
-
-  function positionDot(e) {
-    cursorVisible.current = true;
-    toggleCursorVisibility(); // Position the dot
-
-    endX = e.pageX;
-    endY = e.pageY;
-    cursorDot.current.style.top = endY + "px";
-    cursorDot.current.style.left = endX + "px";
-  }
-  /**
-   * Toggle Cursor Visiblity
-   */
-
-
-  function toggleCursorVisibility() {
-    if (cursorVisible.current) {
-      cursorDot.current.style.opacity = 1;
-      cursorOutline.current.style.opacity = 1;
-    } else {
-      cursorDot.current.style.opacity = 0;
-      cursorOutline.current.style.opacity = 0;
-    }
-  }
-  /**
-   * Toggle Cursors Size/Scale
-   */
-
-
-  function toggleCursorSize() {
-    if (cursorEnlarged.current) {
-      cursorDot.current.style.transform = "translate(-50%, -50%) scale(".concat(dotScale, ")");
-      cursorOutline.current.style.transform = "translate(-50%, -50%) scale(".concat(outlineScale, ")");
-    } else {
-      cursorDot.current.style.transform = "translate(-50%, -50%) scale(1)";
-      cursorOutline.current.style.transform = "translate(-50%, -50%) scale(1)";
-    }
-  }
-  /**
-   * Handle Links Events
-   * Applies mouseover/out hooks on all links
-   * to trigger cursor animation
-   */
-
-
-  function handleLinkEvents() {
-    document.querySelectorAll("a").forEach(function (el) {
-      el.addEventListener("mouseover", function () {
-        cursorEnlarged.current = true;
-        toggleCursorSize();
-      });
-      el.addEventListener("mouseout", function () {
-        cursorEnlarged.current = false;
-        toggleCursorSize();
-      });
-    });
-  }
-  /**
-   * Animate Dot Outline
-   * Aniamtes cursor outline with trailing effect.
-   * @param {number} time
-   */
-
-
-  var animateDotOutline = function animateDotOutline(time) {
+  var animateOuterCursor = (0, _react.useCallback)(function (time) {
     if (previousTimeRef.current !== undefined) {
-      x += (endX - x) / 8;
-      y += (endY - y) / 8;
-      cursorOutline.current.style.top = y + "px";
-      cursorOutline.current.style.left = x + "px";
+      coords.x += (endX.current - coords.x) / 8;
+      coords.y += (endY.current - coords.y) / 8;
+      cursorOuterRef.current.style.top = coords.y + 'px';
+      cursorOuterRef.current.style.left = coords.x + 'px';
     }
 
     previousTimeRef.current = time;
-    requestRef.current = requestAnimationFrame(animateDotOutline);
-  };
+    requestRef.current = requestAnimationFrame(animateOuterCursor);
+  }, [requestRef] // eslint-disable-line
+  );
+  (0, _react.useEffect)(function () {
+    requestRef.current = requestAnimationFrame(animateOuterCursor);
+  }, [animateOuterCursor]);
+  var onMouseDown = (0, _react.useCallback)(function () {
+    setIsActive(true);
+  }, []);
+  var onMouseUp = (0, _react.useCallback)(function () {
+    setIsActive(false);
+  }, []);
+  var onMouseEnter = (0, _react.useCallback)(function () {
+    setIsVisible(true);
+  }, []);
+  var onMouseLeave = (0, _react.useCallback)(function () {
+    setIsVisible(false);
+  }, []);
+  (0, _useEventListener.useEventListener)('mousemove', onMouseMove, document);
+  (0, _useEventListener.useEventListener)('mousedown', onMouseDown, document);
+  (0, _useEventListener.useEventListener)('mouseup', onMouseUp, document);
+  (0, _useEventListener.useEventListener)('mouseenter', onMouseEnter, document);
+  (0, _useEventListener.useEventListener)('mouseleave', onMouseLeave, document);
+  (0, _react.useEffect)(function () {
+    if (isActive) {
+      cursorInnerRef.current.style.transform = "scale(".concat(innerScale, ")");
+      cursorOuterRef.current.style.transform = "scale(".concat(outerScale, ")");
+    } else {
+      cursorInnerRef.current.style.transform = 'scale(1)';
+      cursorOuterRef.current.style.transform = 'scale(1)';
+    }
+  }, [innerScale, outerScale, isActive]);
+  (0, _react.useEffect)(function () {
+    if (isActiveClickable) {
+      cursorInnerRef.current.style.transform = "scale(".concat(innerScale * 1.3, ")");
+      cursorOuterRef.current.style.transform = "scale(".concat(outerScale * 1.4, ")");
+    }
+  }, [innerScale, outerScale, isActiveClickable]);
+  (0, _react.useEffect)(function () {
+    if (isVisible) {
+      cursorInnerRef.current.style.opacity = 1;
+      cursorOuterRef.current.style.opacity = 1;
+    } else {
+      cursorInnerRef.current.style.opacity = 0;
+      cursorOuterRef.current.style.opacity = 0;
+    }
+  }, [isVisible]);
+  (0, _react.useEffect)(function () {
+    var clickables = document.querySelectorAll('a, input[type="submit"], input[type="image"], label[for], select, button, .link');
+    clickables.forEach(function (el) {
+      el.style.cursor = 'none';
+      el.addEventListener('mouseover', function () {
+        setIsActive(true);
+      });
+      el.addEventListener('click', function () {
+        setIsActive(true);
+        setIsActiveClickable(false);
+      });
+      el.addEventListener('mousedown', function () {
+        setIsActiveClickable(true);
+      });
+      el.addEventListener('mouseup', function () {
+        setIsActive(true);
+      });
+      el.addEventListener('mouseout', function () {
+        setIsActive(false);
+        setIsActiveClickable(false);
+      });
+    });
+    return function () {
+      clickables.forEach(function (el) {
+        el.removeEventListener('mouseover', function () {
+          setIsActive(true);
+        });
+        el.removeEventListener('click', function () {
+          setIsActive(true);
+          setIsActiveClickable(false);
+        });
+        el.removeEventListener('mousedown', function () {
+          setIsActiveClickable(true);
+        });
+        el.removeEventListener('mouseup', function () {
+          setIsActive(true);
+        });
+        el.removeEventListener('mouseout', function () {
+          setIsActive(false);
+          setIsActiveClickable(false);
+        });
+      });
+    };
+  }, [isActive]);
+  var styles = {
+    cursor: {
+      zIndex: 999,
+      position: 'fixed',
+      borderRadius: '50%',
+      opacity: 1,
+      pointerEvents: 'none',
+      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+    },
+    cursorInner: {
+      display: isSmall ? 'block' : 'none',
+      position: 'fixed',
+      borderRadius: '50%',
+      width: innerSize,
+      height: innerSize,
+      pointerEvents: 'none',
+      backgroundColor: "rgba(".concat(color, ", 1)"),
+      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
+    },
+    cursorOuter: {
+      display: isSmall ? 'block' : 'none',
+      position: 'fixed',
+      borderRadius: '50%',
+      pointerEvents: 'none',
+      width: outerSize,
+      height: outerSize,
+      backgroundColor: "rgba(".concat(color, ", ").concat(outerAlpha, ")"),
+      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+    }
+  }; // Hide / Show global cursor
 
+  document.body.style.cursor = isSmall ? 'none' : '';
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-    ref: cursorOutline,
-    id: "cursor-outline",
-    style: _objectSpread({}, styles.cursors, {}, styles.cursorOutline)
+    ref: cursorOuterRef,
+    style: styles.cursorOuter
   }), /*#__PURE__*/_react.default.createElement("div", {
-    ref: cursorDot,
-    id: "cursor-inner",
-    style: _objectSpread({}, styles.cursors, {}, styles.cursorDot)
+    ref: cursorInnerRef,
+    style: styles.cursorInner
   }));
 }
 
 var _default = AnimatedCursor;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./WhoDis.js":"../../lib/WhoDis.js"}],"../../lib/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./hooks/useEventListener":"../../lib/hooks/useEventListener.js","./hooks/useMQ":"../../lib/hooks/useMQ.js"}],"../../lib/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28690,7 +28662,25 @@ function Content() {
     style: styles.sep
   }), /*#__PURE__*/_react.default.createElement("p", null, "An animated cursor component made as a ", /*#__PURE__*/_react.default.createElement("a", null, "Functional Component"), ", using ", /*#__PURE__*/_react.default.createElement("a", null, "React hooks"), " like ", /*#__PURE__*/_react.default.createElement("a", null, "useEffect"), " to handle event listeners, local state, an ", /*#__PURE__*/_react.default.createElement("a", null, "RequestAnimationFrame"), " management."), /*#__PURE__*/_react.default.createElement("p", null, "Hover over these ", /*#__PURE__*/_react.default.createElement("a", null, "links"), " and see how that animated cursor does it's thing. Kinda nifty, right? Not right for most things, but a nice move for more interactive-type projects. Here's another", " ", /*#__PURE__*/_react.default.createElement("a", {
     href: ""
-  }, "link to nowhere.")), /*#__PURE__*/_react.default.createElement("p", null, "Play with the ", /*#__PURE__*/_react.default.createElement("a", null, "css variables"), " to influence the cursor, cursor outline size, and amount of scale on target hover. I suppose those could all be ", /*#__PURE__*/_react.default.createElement("a", null, "props"), " with some. Click in the margin to check click animation."), /*#__PURE__*/_react.default.createElement("p", null, "There's probably a better way to manage these kind of events, but this was the best I could come up with. Recently started mucking more with React cause I'm down with the simplicity of Functional Components and Hooks. And if you read the docs, the future ain't class components. So, best get on them functions."));
+  }, "link to nowhere.")), /*#__PURE__*/_react.default.createElement("p", null, "Play with the ", /*#__PURE__*/_react.default.createElement("a", null, "css variables"), " to influence the cursor, cursor outline size, and amount of scale on target hover. I suppose those could all be ", /*#__PURE__*/_react.default.createElement("a", null, "props"), " with some. Click in the margin to check click animation."), /*#__PURE__*/_react.default.createElement("p", null, "There's probably a better way to manage these kind of events, but this was the best I could come up with. Recently started mucking more with React cause I'm down with the simplicity of Functional Components and Hooks. And if you read the docs, the future ain't class components. So, best get on them functions."), /*#__PURE__*/_react.default.createElement("h3", null, "Clickables"), /*#__PURE__*/_react.default.createElement("p", null, "Let's do a text of all clickable elements:"), /*#__PURE__*/_react.default.createElement("ul", null, /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("a", null, "Basic Link Tag")), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("button", null, "Buttons")), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+    type: "submit",
+    value: "Submit"
+  })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("select", null, /*#__PURE__*/_react.default.createElement("option", null, "Select"))), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("input", {
+    type: "image",
+    id: "image-input",
+    alt: "Image Input",
+    src: "https://cdn2.iconfinder.com/data/icons/button-v1/30/25-512.png",
+    width: "30px"
+  })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("label", {
+    htmlFor: "label_for"
+  }, "Label For"), /*#__PURE__*/_react.default.createElement("input", {
+    type: "radio",
+    name: "gender",
+    id: "label_for",
+    value: "label_for"
+  })), /*#__PURE__*/_react.default.createElement("li", null, /*#__PURE__*/_react.default.createElement("div", {
+    className: "link"
+  }, "class name =\"link\""))));
 }
 },{"react":"../../node_modules/react/index.js"}],"../../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
@@ -28786,10 +28776,10 @@ function App() {
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "App"
   }, /*#__PURE__*/_react.default.createElement(_lib.default, {
-    dotSize: 8,
-    outlineSize: 8,
+    innerSize: 8,
+    outerSize: 8,
     color: "220, 90, 90",
-    outlineAlpha: 0.4
+    outerAlpha: 0.4
   }), /*#__PURE__*/_react.default.createElement(_DemoContent.default, null));
 }
 },{"react":"../../node_modules/react/index.js","../../lib":"../../lib/index.js","./DemoContent":"DemoContent.js","./demo-styles.css":"demo-styles.css"}],"index.js":[function(require,module,exports) {
@@ -28832,7 +28822,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53841" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49596" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,13 +2,10 @@
 
 html,
 body {
-
   background-color: #2f2c2c;
   color: #fff;
   font-family: "Inter", sans-serif;
 }
-
-
 
 /* Demo Content */
 a {
@@ -24,12 +21,26 @@ a:hover {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-section p {
+section {
   width: 80%;
   max-width: 32em;
   margin: 0 auto 1em;
   line-height: 1.7;
   font-weight: 300;
+}
+
+h3 {
+  margin: 2em 0 1.5em;
+}
+
+ul {
+  margin: 2em 0;
+  padding-left: 1em;
+}
+
+ul li {
+  padding-bottom: 1.5em;
+  padding-left: 0;
 }
 
 

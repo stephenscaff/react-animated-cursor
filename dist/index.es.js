@@ -246,7 +246,7 @@ function AnimatedCursor(_ref) {
     }
   }; // Hide default cursor
 
-  document.body.style.cursor = "none"; // Mouse Events
+  document.body.style.cursor = 'none'; // Mouse Events
 
   var onMouseMove = function onMouseMove(event) {
     var x = event.pageX,
@@ -290,21 +290,21 @@ function AnimatedCursor(_ref) {
 
   useEffect(function () {
     // Bail if mobile
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseenter", onMouseEnter);
-    document.addEventListener("mouseleave", onMouseLeave);
-    document.addEventListener("mousedown", onMouseDown);
-    document.addEventListener("mouseup", onMouseUp);
-    window.addEventListener("resize", onResize);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseenter', onMouseEnter);
+    document.addEventListener('mouseleave', onMouseLeave);
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('resize', onResize);
     requestRef.current = requestAnimationFrame(animateDotOutline);
     handleLinkEvents();
     return function () {
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseenter", onMouseEnter);
-      document.removeEventListener("mouseleave", onMouseLeave);
-      document.removeEventListener("mousedown", onMouseDown);
-      document.removeEventListener("mouseup", onMouseUp);
-      window.removeEventListener("resize", onResize);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseenter', onMouseEnter);
+      document.removeEventListener('mouseleave', onMouseLeave);
+      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('resize', onResize);
       cancelAnimationFrame(requestRef.current);
     };
   }, []);
@@ -327,8 +327,8 @@ function AnimatedCursor(_ref) {
 
     endX = e.pageX;
     endY = e.pageY;
-    cursorDot.current.style.top = endY + "px";
-    cursorDot.current.style.left = endX + "px";
+    cursorDot.current.style.top = endY + 'px';
+    cursorDot.current.style.left = endX + 'px';
   }
   /**
    * Toggle Cursor Visiblity
@@ -354,8 +354,8 @@ function AnimatedCursor(_ref) {
       cursorDot.current.style.transform = "translate(-50%, -50%) scale(".concat(dotScale, ")");
       cursorOutline.current.style.transform = "translate(-50%, -50%) scale(".concat(outlineScale, ")");
     } else {
-      cursorDot.current.style.transform = "translate(-50%, -50%) scale(1)";
-      cursorOutline.current.style.transform = "translate(-50%, -50%) scale(1)";
+      cursorDot.current.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorOutline.current.style.transform = 'translate(-50%, -50%) scale(1)';
     }
   }
   /**
@@ -366,12 +366,12 @@ function AnimatedCursor(_ref) {
 
 
   function handleLinkEvents() {
-    document.querySelectorAll("a").forEach(function (el) {
-      el.addEventListener("mouseover", function () {
+    document.querySelectorAll('a').forEach(function (el) {
+      el.addEventListener('mouseover', function () {
         cursorEnlarged.current = true;
         toggleCursorSize();
       });
-      el.addEventListener("mouseout", function () {
+      el.addEventListener('mouseout', function () {
         cursorEnlarged.current = false;
         toggleCursorSize();
       });
@@ -388,8 +388,8 @@ function AnimatedCursor(_ref) {
     if (previousTimeRef.current !== undefined) {
       x += (endX - x) / 8;
       y += (endY - y) / 8;
-      cursorOutline.current.style.top = y + "px";
-      cursorOutline.current.style.left = x + "px";
+      cursorOutline.current.style.top = y + 'px';
+      cursorOutline.current.style.left = x + 'px';
     }
 
     previousTimeRef.current = time;
