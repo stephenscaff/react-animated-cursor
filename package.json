@@ -1,6 +1,6 @@
 {
   "name": "react-animated-cursor",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An animated custom cursor component in React.",
   "author": "Stephen Scaff <stephenscaff.com>",
   "homepage": "https://github.com/stephenscaff/react-animated-cursor",
