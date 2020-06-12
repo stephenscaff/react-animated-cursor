@@ -6,6 +6,22 @@
 
   var React__default = 'default' in React ? React['default'] : React;
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
   function _slicedToArray(arr, i) {
     return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
@@ -91,28 +107,37 @@
     }, [eventName, element]);
   }
 
-  /* eslint-disable react-hooks/exhaustive-deps */
+  function useWindowSize() {
+    var isClient = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object';
 
-  var useMQ = function useMQ(query) {
-    var mediaMatch = window.matchMedia(query);
+    function getSize() {
+      return {
+        width: isClient ? window.innerWidth : undefined,
+        height: isClient ? window.innerHeight : undefined
+      };
+    }
 
-    var _useState = React.useState(mediaMatch.matches),
+    var _useState = React.useState(getSize),
         _useState2 = _slicedToArray(_useState, 2),
-        matches = _useState2[0],
-        setMatches = _useState2[1];
+        windowSize = _useState2[0],
+        setWindowSize = _useState2[1];
 
     React.useEffect(function () {
-      var handler = function handler(e) {
-        return setMatches(e.matches);
-      };
+      if (!isClient) {
+        return false;
+      }
 
-      mediaMatch.addListener(handler);
+      function handleResize() {
+        setWindowSize(getSize());
+      }
+
+      window.addEventListener('resize', handleResize);
       return function () {
-        return mediaMatch.removeListener(handler);
+        return window.removeEventListener('resize', handleResize);
       };
-    });
-    return matches;
-  };
+    }, []);
+    return windowSize;
+  }
 
   if (typeof window === 'undefined') {
     global.window = {};
@@ -168,7 +193,8 @@
 
     var endX = React.useRef(0);
     var endY = React.useRef(0);
-    var isSmall = useMQ('(min-width: 400px)');
+    var win = useWindowSize();
+    var isSmall = win.width > 400;
     var onMouseMove = React.useCallback(function (_ref2) {
       var clientX = _ref2.clientX,
           clientY = _ref2.clientY;
@@ -218,17 +244,17 @@
     useEventListener('mouseleave', onMouseLeave, document);
     React.useEffect(function () {
       if (isActive) {
-        cursorInnerRef.current.style.transform = "scale(".concat(innerScale, ")");
-        cursorOuterRef.current.style.transform = "scale(".concat(outerScale, ")");
+        cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale, ")");
+        cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale, ")");
       } else {
-        cursorInnerRef.current.style.transform = 'scale(1)';
-        cursorOuterRef.current.style.transform = 'scale(1)';
+        cursorInnerRef.current.style.transform = 'translateZ(0) scale(1)';
+        cursorOuterRef.current.style.transform = 'translateZ(0) scale(1)';
       }
     }, [innerScale, outerScale, isActive]);
     React.useEffect(function () {
       if (isActiveClickable) {
-        cursorInnerRef.current.style.transform = "scale(".concat(innerScale * 1.3, ")");
-        cursorOuterRef.current.style.transform = "scale(".concat(outerScale * 1.4, ")");
+        cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.3, ")");
+        cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
       }
     }, [innerScale, outerScale, isActiveClickable]);
     React.useEffect(function () {
@@ -294,7 +320,9 @@
         height: innerSize,
         pointerEvents: 'none',
         backgroundColor: "rgba(".concat(color, ", 1)"),
-        transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
+        transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out',
+        backfaceVisibility: 'hidden',
+        willChange: 'transform'
       },
       cursorOuter: {
         zIndex: 999,
@@ -305,7 +333,9 @@
         width: outerSize,
         height: outerSize,
         backgroundColor: "rgba(".concat(color, ", ").concat(outerAlpha, ")"),
-        transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+        transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out',
+        backfaceVisibility: 'hidden',
+        willChange: 'transform'
       }
     }; // Hide / Show global cursor
 
