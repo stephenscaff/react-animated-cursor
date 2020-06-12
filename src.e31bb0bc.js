@@ -28466,7 +28466,7 @@ function AnimatedCursor(_ref) {
     endY.current = clientY;
   }, []);
   var animateOuterCursor = (0, _react.useCallback)(function (time) {
-    if (previousTimeRef.current !== undefined) {
+    if (previousTimeRef.current !== undefined && cursorOuterRef !== null) {
       coords.x += (endX.current - coords.x) / 8;
       coords.y += (endY.current - coords.y) / 8;
       cursorOuterRef.current.style.top = coords.y + 'px';
@@ -28816,7 +28816,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55446" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50736" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
