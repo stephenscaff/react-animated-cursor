@@ -176,7 +176,7 @@ function AnimatedCursor(_ref) {
     endY.current = clientY;
   }, []);
   var animateOuterCursor = useCallback(function (time) {
-    if (previousTimeRef.current !== undefined && cursorOuterRef !== null) {
+    if (previousTimeRef.current !== undefined) {
       coords.x += (endX.current - coords.x) / 8;
       coords.y += (endY.current - coords.y) / 8;
       cursorOuterRef.current.style.top = coords.y + 'px';
@@ -189,6 +189,9 @@ function AnimatedCursor(_ref) {
   );
   useEffect(function () {
     requestRef.current = requestAnimationFrame(animateOuterCursor);
+    return function () {
+      cancelAnimationFrame(requestRef.current);
+    };
   }, [animateOuterCursor]);
   var onMouseDown = useCallback(function () {
     setIsActive(true);
