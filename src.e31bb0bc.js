@@ -28322,13 +28322,13 @@ function useEventListener(eventName, handler) {
     };
   }, [eventName, element]);
 }
-},{"react":"../../node_modules/react/index.js"}],"../../lib/hooks/useMQ.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js"}],"../../lib/hooks/useWindowSize.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.useMQ = void 0;
+exports.useWindowSize = useWindowSize;
 
 var _react = require("react");
 
@@ -28344,29 +28344,39 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-/* eslint-disable react-hooks/exhaustive-deps */
-var useMQ = function useMQ(query) {
-  var mediaMatch = window.matchMedia(query);
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  var _useState = (0, _react.useState)(mediaMatch.matches),
+function useWindowSize() {
+  var isClient = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object';
+
+  function getSize() {
+    return {
+      width: isClient ? window.innerWidth : undefined,
+      height: isClient ? window.innerHeight : undefined
+    };
+  }
+
+  var _useState = (0, _react.useState)(getSize),
       _useState2 = _slicedToArray(_useState, 2),
-      matches = _useState2[0],
-      setMatches = _useState2[1];
+      windowSize = _useState2[0],
+      setWindowSize = _useState2[1];
 
   (0, _react.useEffect)(function () {
-    var handler = function handler(e) {
-      return setMatches(e.matches);
-    };
+    if (!isClient) {
+      return false;
+    }
 
-    mediaMatch.addListener(handler);
+    function handleResize() {
+      setWindowSize(getSize());
+    }
+
+    window.addEventListener('resize', handleResize);
     return function () {
-      return mediaMatch.removeListener(handler);
+      return window.removeEventListener('resize', handleResize);
     };
-  });
-  return matches;
-};
-
-exports.useMQ = useMQ;
+  }, []);
+  return windowSize;
+}
 },{"react":"../../node_modules/react/index.js"}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
@@ -28380,7 +28390,7 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _useEventListener = require("./hooks/useEventListener");
 
-var _useMQ = require("./hooks/useMQ");
+var _useWindowSize = require("./hooks/useWindowSize");
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -28452,7 +28462,9 @@ function AnimatedCursor(_ref) {
 
   var endX = (0, _react.useRef)(0);
   var endY = (0, _react.useRef)(0);
-  var isSmall = (0, _useMQ.useMQ)('(min-width: 400px)');
+  var win = (0, _useWindowSize.useWindowSize)();
+  var isSmall = win.width > 500;
+  console.log(isSmall);
   var onMouseMove = (0, _react.useCallback)(function (_ref2) {
     var clientX = _ref2.clientX,
         clientY = _ref2.clientY;
@@ -28502,17 +28514,17 @@ function AnimatedCursor(_ref) {
   (0, _useEventListener.useEventListener)('mouseleave', onMouseLeave, document);
   (0, _react.useEffect)(function () {
     if (isActive) {
-      cursorInnerRef.current.style.transform = "scale(".concat(innerScale, ")");
-      cursorOuterRef.current.style.transform = "scale(".concat(outerScale, ")");
+      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale, ")");
+      cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale, ")");
     } else {
-      cursorInnerRef.current.style.transform = 'scale(1)';
-      cursorOuterRef.current.style.transform = 'scale(1)';
+      cursorInnerRef.current.style.transform = 'translateZ(0) scale(1)';
+      cursorOuterRef.current.style.transform = 'translateZ(0) scale(1)';
     }
   }, [innerScale, outerScale, isActive]);
   (0, _react.useEffect)(function () {
     if (isActiveClickable) {
-      cursorInnerRef.current.style.transform = "scale(".concat(innerScale * 1.3, ")");
-      cursorOuterRef.current.style.transform = "scale(".concat(outerScale * 1.4, ")");
+      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.3, ")");
+      cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
     }
   }, [innerScale, outerScale, isActiveClickable]);
   (0, _react.useEffect)(function () {
@@ -28578,7 +28590,9 @@ function AnimatedCursor(_ref) {
       height: innerSize,
       pointerEvents: 'none',
       backgroundColor: "rgba(".concat(color, ", 1)"),
-      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
+      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out',
+      backfaceVisibility: 'hidden',
+      willChange: 'transform'
     },
     cursorOuter: {
       zIndex: 999,
@@ -28589,7 +28603,9 @@ function AnimatedCursor(_ref) {
       width: outerSize,
       height: outerSize,
       backgroundColor: "rgba(".concat(color, ", ").concat(outerAlpha, ")"),
-      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out'
+      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out',
+      backfaceVisibility: 'hidden',
+      willChange: 'transform'
     }
   }; // Hide / Show global cursor
 
@@ -28605,7 +28621,7 @@ function AnimatedCursor(_ref) {
 
 var _default = AnimatedCursor;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./hooks/useEventListener":"../../lib/hooks/useEventListener.js","./hooks/useMQ":"../../lib/hooks/useMQ.js"}],"../../lib/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./hooks/useEventListener":"../../lib/hooks/useEventListener.js","./hooks/useWindowSize":"../../lib/hooks/useWindowSize.js"}],"../../lib/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28819,7 +28835,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59015" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51977" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
