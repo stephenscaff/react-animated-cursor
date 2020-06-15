@@ -28463,7 +28463,8 @@ function AnimatedCursor(_ref) {
   var endX = (0, _react.useRef)(0);
   var endY = (0, _react.useRef)(0);
   var win = (0, _useWindowSize.useWindowSize)();
-  var isSmall = win.width > 400;
+  var isSmall = win.width > 500;
+  console.log(isSmall);
   var onMouseMove = (0, _react.useCallback)(function (_ref2) {
     var clientX = _ref2.clientX,
         clientY = _ref2.clientY;
@@ -28834,7 +28835,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58772" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51977" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

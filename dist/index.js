@@ -193,7 +193,8 @@ function AnimatedCursor(_ref) {
   var endX = React.useRef(0);
   var endY = React.useRef(0);
   var win = useWindowSize();
-  var isSmall = win.width > 400;
+  var isSmall = win.width > 500;
+  console.log(isSmall);
   var onMouseMove = React.useCallback(function (_ref2) {
     var clientX = _ref2.clientX,
         clientY = _ref2.clientY;
