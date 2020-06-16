@@ -28322,63 +28322,48 @@ function useEventListener(eventName, handler) {
     };
   }, [eventName, element]);
 }
-},{"react":"../../node_modules/react/index.js"}],"../../lib/hooks/useWindowSize.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js"}],"../../lib/helpers/IsDevice.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.useWindowSize = useWindowSize;
+exports.default = void 0;
 
-var _react = require("react");
+var IsDevice = function () {
+  if (typeof navigator == 'undefined') return;
+  var ua = navigator.userAgent;
+  return {
+    info: ua,
+    Android: function Android() {
+      return ua.match(/Android/i);
+    },
+    BlackBerry: function BlackBerry() {
+      return ua.match(/BlackBerry/i);
+    },
+    IEMobile: function IEMobile() {
+      return ua.match(/IEMobile/i);
+    },
+    iOS: function iOS() {
+      return ua.match(/iPhone|iPad|iPod/i);
+    },
+    OperaMini: function OperaMini() {
+      return ua.match(/Opera Mini/i);
+    },
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function useWindowSize() {
-  var isClient = (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object';
-
-  function getSize() {
-    return {
-      width: isClient ? window.innerWidth : undefined,
-      height: isClient ? window.innerHeight : undefined
-    };
-  }
-
-  var _useState = (0, _react.useState)(getSize),
-      _useState2 = _slicedToArray(_useState, 2),
-      windowSize = _useState2[0],
-      setWindowSize = _useState2[1];
-
-  (0, _react.useEffect)(function () {
-    if (!isClient) {
-      return false;
+    /**
+     * Any Device
+     */
+    any: function any() {
+      return IsDevice.Android() || IsDevice.BlackBerry() || IsDevice.iOS() || IsDevice.OperaMini() || IsDevice.IEMobile();
     }
+  };
+}(); // Export
 
-    function handleResize() {
-      setWindowSize(getSize());
-    }
 
-    window.addEventListener('resize', handleResize);
-    return function () {
-      return window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-  return windowSize;
-}
-},{"react":"../../node_modules/react/index.js"}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
-var global = arguments[3];
+var _default = IsDevice;
+exports.default = _default;
+},{}],"../../lib/AnimatedCursor.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28390,7 +28375,9 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _useEventListener = require("./hooks/useEventListener");
 
-var _useWindowSize = require("./hooks/useWindowSize");
+var _IsDevice = _interopRequireDefault(require("./helpers/IsDevice.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
@@ -28408,30 +28395,34 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-if (typeof window === 'undefined') {
-  global.window = {};
-}
 /**
- * Animated Cursor
- * Replaces the native cursor with a custom animated cursor.
+ * Cursor Core
+ * Replaces the native cursor with a custom animated cursor, consisting
+ * of an inner and outer dot that scale inversely based on hover or click.
  *
- * @author Stephen Scaff
+ * @author Stephen Scaff (github.com/stephenscaff)
+ *
+ * @param {string} color - rgb color value
+ * @param {number} outerAlpha - level of alpha transparency for color
+ * @param {number} innerSize - inner cursor size in px
+ * @param {number} innerScale - inner cursor scale amount
+ * @param {number} outerSize - outer cursor size in px
+ * @param {number} outerScale - outer cursor scale amount
+ *
  */
-
-
-function AnimatedCursor(_ref) {
+function CursorCore(_ref) {
   var _ref$color = _ref.color,
       color = _ref$color === void 0 ? '220, 90, 90' : _ref$color,
       _ref$outerAlpha = _ref.outerAlpha,
       outerAlpha = _ref$outerAlpha === void 0 ? 0.3 : _ref$outerAlpha,
       _ref$innerSize = _ref.innerSize,
       innerSize = _ref$innerSize === void 0 ? 8 : _ref$innerSize,
+      _ref$innerScale = _ref.innerScale,
+      innerScale = _ref$innerScale === void 0 ? 0.7 : _ref$innerScale,
       _ref$outerSize = _ref.outerSize,
       outerSize = _ref$outerSize === void 0 ? 8 : _ref$outerSize,
       _ref$outerScale = _ref.outerScale,
-      outerScale = _ref$outerScale === void 0 ? 5 : _ref$outerScale,
-      _ref$innerScale = _ref.innerScale,
-      innerScale = _ref$innerScale === void 0 ? 0.7 : _ref$innerScale;
+      outerScale = _ref$outerScale === void 0 ? 5 : _ref$outerScale;
   var cursorOuterRef = (0, _react.useRef)();
   var cursorInnerRef = (0, _react.useRef)();
   var requestRef = (0, _react.useRef)();
@@ -28445,7 +28436,7 @@ function AnimatedCursor(_ref) {
       coords = _useState2[0],
       setCoords = _useState2[1];
 
-  var _useState3 = (0, _react.useState)(true),
+  var _useState3 = (0, _react.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
       isVisible = _useState4[0],
       setIsVisible = _useState4[1];
@@ -28461,10 +28452,8 @@ function AnimatedCursor(_ref) {
       setIsActiveClickable = _useState8[1];
 
   var endX = (0, _react.useRef)(0);
-  var endY = (0, _react.useRef)(0);
-  var win = (0, _useWindowSize.useWindowSize)();
-  var isSmall = win.width > 500;
-  console.log(isSmall);
+  var endY = (0, _react.useRef)(0); // Primary Mouse Move event
+
   var onMouseMove = (0, _react.useCallback)(function (_ref2) {
     var clientX = _ref2.clientX,
         clientY = _ref2.clientY;
@@ -28476,7 +28465,8 @@ function AnimatedCursor(_ref) {
     cursorInnerRef.current.style.left = clientX + 'px';
     endX.current = clientX;
     endY.current = clientY;
-  }, []);
+  }, []); // Outer Cursor Animation Delay
+
   var animateOuterCursor = (0, _react.useCallback)(function (time) {
     if (previousTimeRef.current !== undefined) {
       coords.x += (endX.current - coords.x) / 8;
@@ -28488,13 +28478,15 @@ function AnimatedCursor(_ref) {
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame(animateOuterCursor);
   }, [requestRef] // eslint-disable-line
-  );
+  ); // RAF for animateOuterCursor
+
   (0, _react.useEffect)(function () {
     requestRef.current = requestAnimationFrame(animateOuterCursor);
     return function () {
       cancelAnimationFrame(requestRef.current);
     };
-  }, [animateOuterCursor]);
+  }, [animateOuterCursor]); // Mouse Events State updates
+
   var onMouseDown = (0, _react.useCallback)(function () {
     setIsActive(true);
   }, []);
@@ -28511,7 +28503,8 @@ function AnimatedCursor(_ref) {
   (0, _useEventListener.useEventListener)('mousedown', onMouseDown, document);
   (0, _useEventListener.useEventListener)('mouseup', onMouseUp, document);
   (0, _useEventListener.useEventListener)('mouseenter', onMouseEnter, document);
-  (0, _useEventListener.useEventListener)('mouseleave', onMouseLeave, document);
+  (0, _useEventListener.useEventListener)('mouseleave', onMouseLeave, document); // Cursors Hover/Active State
+
   (0, _react.useEffect)(function () {
     if (isActive) {
       cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale, ")");
@@ -28520,13 +28513,15 @@ function AnimatedCursor(_ref) {
       cursorInnerRef.current.style.transform = 'translateZ(0) scale(1)';
       cursorOuterRef.current.style.transform = 'translateZ(0) scale(1)';
     }
-  }, [innerScale, outerScale, isActive]);
+  }, [innerScale, outerScale, isActive]); // Cursors Click States
+
   (0, _react.useEffect)(function () {
     if (isActiveClickable) {
       cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.3, ")");
       cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
     }
-  }, [innerScale, outerScale, isActiveClickable]);
+  }, [innerScale, outerScale, isActiveClickable]); // Cursor Visibility State
+
   (0, _react.useEffect)(function () {
     if (isVisible) {
       cursorInnerRef.current.style.opacity = 1;
@@ -28535,7 +28530,8 @@ function AnimatedCursor(_ref) {
       cursorInnerRef.current.style.opacity = 0;
       cursorOuterRef.current.style.opacity = 0;
     }
-  }, [isVisible]);
+  }, [isVisible]); // Target all possible clickables
+
   (0, _react.useEffect)(function () {
     var clickables = document.querySelectorAll('a, input[type="submit"], input[type="image"], label[for], select, button, .link');
     clickables.forEach(function (el) {
@@ -28579,11 +28575,12 @@ function AnimatedCursor(_ref) {
         });
       });
     };
-  }, [isActive]);
+  }, [isActive]); // Cursor Styles
+
   var styles = {
     cursorInner: {
       zIndex: 999,
-      display: isSmall ? 'block' : 'none',
+      display: 'block',
       position: 'fixed',
       borderRadius: '50%',
       width: innerSize,
@@ -28596,7 +28593,7 @@ function AnimatedCursor(_ref) {
     },
     cursorOuter: {
       zIndex: 999,
-      display: isSmall ? 'block' : 'none',
+      display: 'block',
       position: 'fixed',
       borderRadius: '50%',
       pointerEvents: 'none',
@@ -28609,7 +28606,7 @@ function AnimatedCursor(_ref) {
     }
   }; // Hide / Show global cursor
 
-  document.body.style.cursor = isSmall ? 'none' : '';
+  document.body.style.cursor = 'none';
   return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
     ref: cursorOuterRef,
     style: styles.cursorOuter
@@ -28618,10 +28615,43 @@ function AnimatedCursor(_ref) {
     style: styles.cursorInner
   }));
 }
+/**
+ * AnimatedCursor
+ * Calls and passes props to CursorCore if not a touch/mobile device.
+ */
+
+
+function AnimatedCursor(_ref3) {
+  var _ref3$color = _ref3.color,
+      color = _ref3$color === void 0 ? '220, 90, 90' : _ref3$color,
+      _ref3$outerAlpha = _ref3.outerAlpha,
+      outerAlpha = _ref3$outerAlpha === void 0 ? 0.3 : _ref3$outerAlpha,
+      _ref3$innerSize = _ref3.innerSize,
+      innerSize = _ref3$innerSize === void 0 ? 8 : _ref3$innerSize,
+      _ref3$outerSize = _ref3.outerSize,
+      outerSize = _ref3$outerSize === void 0 ? 8 : _ref3$outerSize,
+      _ref3$outerScale = _ref3.outerScale,
+      outerScale = _ref3$outerScale === void 0 ? 5 : _ref3$outerScale,
+      _ref3$innerScale = _ref3.innerScale,
+      innerScale = _ref3$innerScale === void 0 ? 0.7 : _ref3$innerScale;
+
+  if (typeof navigator !== 'undefined' && _IsDevice.default.any()) {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null);
+  }
+
+  return /*#__PURE__*/_react.default.createElement(CursorCore, {
+    color: color,
+    outerAlpha: outerAlpha,
+    innerSize: innerSize,
+    innerScale: innerScale,
+    outerSize: outerSize,
+    outerScale: outerScale
+  });
+}
 
 var _default = AnimatedCursor;
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","./hooks/useEventListener":"../../lib/hooks/useEventListener.js","./hooks/useWindowSize":"../../lib/hooks/useWindowSize.js"}],"../../lib/index.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","./hooks/useEventListener":"../../lib/hooks/useEventListener.js","./helpers/IsDevice.js":"../../lib/helpers/IsDevice.js"}],"../../lib/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28835,7 +28865,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51977" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53296" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

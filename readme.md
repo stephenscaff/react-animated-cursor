@@ -89,10 +89,8 @@ import AnimatedCursor from "./AnimatedCursor";
 
 ### With SSR (Server Side Rendering)
 
-The component obtains `window` HxW via `useState(window.innerWidth)` and `useState(window.innerHeight)`.
-Since, `window` is unavailable for components rendering server side, you'll need to render `AnimatedCursor` client side or you'll snag an error.
-
 With `Next.js`, you can leverage a `Dynamic Imports` to set `ssr:false` for `AnimatedCursor`.
+Honestly though, you might not have to do that anymore since v2.1.5
 
 **Next.js SSR Example**
 
@@ -122,9 +120,8 @@ Cursor styling is included within the component, using a simple dependency-free 
 | `outerScale` | number | amount outline scales on click or link hover | `5` |
 
 
-## Mobile
-Added a Media Query hook to conditional show custom cursor above 400px. There are no doubt better solutions...
-
+## Mobile / Touch
+`helpers/isDevice.js` uses UA sniffing to determine if on a common device so we can avoid rendering cursors
 
 ## Todo
 - ~~Either remove on mobile, or provide touch events.~~
