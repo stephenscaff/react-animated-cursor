@@ -5,3 +5,4 @@ npm-debug.log
 .cache
 .tmp
 *.log
+.parcel-cache
