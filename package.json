@@ -4,9 +4,10 @@
   "description": "An animated custom cursor component in React.",
   "author": "Stephen Scaff <stephenscaff.com>",
   "homepage": "https://github.com/stephenscaff/react-animated-cursor",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "browser": "dist/index.umd.js",
+  "main": "./demo/dist/index.html",
+  "pkg_cjs": "dist/index.js",
+  "pkg_module": "dist/index.es.js",
+  "pkg_browser": "dist/index.umd.js",
   "files": [
     "dist/index.js",
     "dist/index.es.js",

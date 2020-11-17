@@ -59,30 +59,36 @@ function _nonIterableRest() {
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /**
- * UseWindowSize
- * Custom React Hook that returns window wxh.
+ * useEventListener
+ * Hook for handling EventListeners
  * @return {object} width, height
  */
 
 function useEventListener(eventName, handler) {
-  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document;
-  var savedHandler = useRef();
+  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
+  // Create a ref that stores handler
+  var savedHandler = useRef(); // Update ref.current value if handler changes.
+
   useEffect(function () {
     savedHandler.current = handler;
   }, [handler]);
   useEffect(function () {
+    // Make sure element supports addEventListener
     var isSupported = element && element.addEventListener;
-    if (!isSupported) return;
+    if (!isSupported) return; // Create event listener that calls handler function stored in ref
 
     var eventListener = function eventListener(event) {
       return savedHandler.current(event);
-    };
+    }; // Add event listener
 
-    element.addEventListener(eventName, eventListener);
+
+    element.addEventListener(eventName, eventListener); // Remove event listener on cleanup
+
     return function () {
       element.removeEventListener(eventName, eventListener);
     };
-  }, [eventName, element]);
+  }, [eventName, element] // Re-run if eventName or element changes
+  );
 }
 
 var IsDevice = function () {
@@ -214,17 +220,17 @@ function CursorCore(_ref) {
   var onMouseUp = useCallback(function () {
     setIsActive(false);
   }, []);
-  var onMouseEnter = useCallback(function () {
+  var onMouseEnterViewport = useCallback(function () {
     setIsVisible(true);
   }, []);
-  var onMouseLeave = useCallback(function () {
+  var onMouseLeaveViewport = useCallback(function () {
     setIsVisible(false);
   }, []);
-  useEventListener('mousemove', onMouseMove, document);
-  useEventListener('mousedown', onMouseDown, document);
-  useEventListener('mouseup', onMouseUp, document);
-  useEventListener('mouseenter', onMouseEnter, document);
-  useEventListener('mouseleave', onMouseLeave, document); // Cursors Hover/Active State
+  useEventListener('mousemove', onMouseMove);
+  useEventListener('mousedown', onMouseDown);
+  useEventListener('mouseup', onMouseUp);
+  useEventListener('mouseover', onMouseEnterViewport);
+  useEventListener('mouseout', onMouseLeaveViewport); // Cursors Hover/Active State
 
   useEffect(function () {
     if (isActive) {
@@ -238,7 +244,7 @@ function CursorCore(_ref) {
 
   useEffect(function () {
     if (isActiveClickable) {
-      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.3, ")");
+      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.2, ")");
       cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
     }
   }, [innerScale, outerScale, isActiveClickable]); // Cursor Visibility State
@@ -346,15 +352,15 @@ function AnimatedCursor(_ref3) {
   var _ref3$color = _ref3.color,
       color = _ref3$color === void 0 ? '220, 90, 90' : _ref3$color,
       _ref3$outerAlpha = _ref3.outerAlpha,
-      outerAlpha = _ref3$outerAlpha === void 0 ? 0.3 : _ref3$outerAlpha,
+      outerAlpha = _ref3$outerAlpha === void 0 ? 0.2 : _ref3$outerAlpha,
       _ref3$innerSize = _ref3.innerSize,
       innerSize = _ref3$innerSize === void 0 ? 8 : _ref3$innerSize,
       _ref3$outerSize = _ref3.outerSize,
       outerSize = _ref3$outerSize === void 0 ? 8 : _ref3$outerSize,
       _ref3$outerScale = _ref3.outerScale,
-      outerScale = _ref3$outerScale === void 0 ? 5 : _ref3$outerScale,
+      outerScale = _ref3$outerScale === void 0 ? 4 : _ref3$outerScale,
       _ref3$innerScale = _ref3.innerScale,
-      innerScale = _ref3$innerScale === void 0 ? 0.7 : _ref3$innerScale;
+      innerScale = _ref3$innerScale === void 0 ? 0.6 : _ref3$innerScale;
 
   if (typeof navigator !== 'undefined' && IsDevice.any()) {
     return /*#__PURE__*/React.createElement(React.Fragment, null);

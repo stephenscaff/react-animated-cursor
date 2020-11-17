@@ -7,30 +7,30 @@ import pkg from './package.json'
 
 const umdGlobals = {
   react: 'React',
-  'react-animated-cursor': 'AnimatedCursor',
-};
+  'react-animated-cursor': 'AnimatedCursor'
+}
 
 const getBabelOptions = () => ({
-  exclude: '**/node_modules/**',
-});
+  exclude: '**/node_modules/**'
+})
 
 export default {
   input: 'lib/index.js',
   output: [
     {
-      file: pkg.main,
+      file: pkg.pkg_cjs,
       format: 'cjs'
     },
     {
-      file: pkg.module,
+      file: pkg.pkg_module,
       format: 'es'
     },
     {
-      file: pkg.browser,
+      file: pkg.pkg_browser,
       format: 'umd',
       name: 'AnimatedCursor',
-      globals: umdGlobals,
-    },
+      globals: umdGlobals
+    }
   ],
   plugins: [
     external(),
