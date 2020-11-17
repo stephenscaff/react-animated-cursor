@@ -1,0 +1,54 @@
+"use strict";
+
+var helpers = require("../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.useEventListener = useEventListener;
+
+  var _react = require("react");
+
+  var _s = $RefreshSig$();
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+
+  /**
+   * UseWindowSize
+   * Custom React Hook that returns window wxh.
+   * @return {object} width, height
+   */
+  function useEventListener(eventName, handler) {
+    _s();
+
+    var savedHandler = (0, _react.useRef)();
+    (0, _react.useEffect)(function () {
+      savedHandler.current = handler;
+    }, [handler]);
+    (0, _react.useEffect)(function () {
+      var isSupported = element && element.addEventListener;
+      if (!isSupported) return;
+
+      var eventListener = function eventListener(event) {
+        return savedHandler.current(event);
+      };
+
+      element.addEventListener(eventName, eventListener);
+      return function () {
+        element.removeEventListener(eventName, eventListener);
+      };
+    }, [eventName, element]);
+  }
+
+  _s(useEventListener, "XoZIjRFu3rOkeAcYGIxrbqMN+XY=");
+
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
