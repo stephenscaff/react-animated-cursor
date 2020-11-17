@@ -18,15 +18,15 @@ export default {
   input: 'lib/index.js',
   output: [
     {
-      file: pkg.pkg_cjs,
+      file: pkg.main,
       format: 'cjs'
     },
     {
-      file: pkg.pkg_module,
+      file: pkg.module,
       format: 'es'
     },
     {
-      file: pkg.pkg_browser,
+      file: pkg.browser,
       format: 'umd',
       name: 'AnimatedCursor',
       globals: umdGlobals
