@@ -57,13 +57,13 @@
     "gh-pages": "^2.2.0",
     "parcel": "^2.0.0-nightly.447",
     "prettier": "^2.0.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "rollup": "^2.1.0",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.2"
   },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
     "utils": "^0.3.1"
   }
 }

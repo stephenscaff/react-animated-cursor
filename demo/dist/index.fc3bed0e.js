@@ -29349,11 +29349,6 @@ try {
     }), /*#__PURE__*/_react["default"].createElement(_DemoContent["default"], null));
   }
 
-  _c = App;
-
-  var _c;
-
-  $RefreshReg$(_c, "App");
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
@@ -29396,8 +29391,6 @@ try {
 
   var _IsDevice = _interopRequireDefault(require("./helpers/IsDevice.js"));
 
-  var _s2 = $RefreshSig$();
-
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
   function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -29432,8 +29425,6 @@ try {
    *
    */
   function CursorCore(_ref) {
-    _s2();
-
     var _ref$color = _ref.color,
         color = _ref$color === void 0 ? '220, 90, 90' : _ref$color,
         _ref$outerAlpha = _ref.outerAlpha,
@@ -29644,25 +29635,19 @@ try {
    */
 
 
-  _s2(CursorCore, "muaGRHX1ilRfGd++U0jBzYmQnpM=", false, function () {
-    return [_useEventListener.useEventListener, _useEventListener.useEventListener, _useEventListener.useEventListener, _useEventListener.useEventListener, _useEventListener.useEventListener];
-  });
-
-  _c = CursorCore;
-
   function AnimatedCursor(_ref3) {
     var _ref3$color = _ref3.color,
         color = _ref3$color === void 0 ? '220, 90, 90' : _ref3$color,
         _ref3$outerAlpha = _ref3.outerAlpha,
-        outerAlpha = _ref3$outerAlpha === void 0 ? 0.2 : _ref3$outerAlpha,
+        outerAlpha = _ref3$outerAlpha === void 0 ? 0.3 : _ref3$outerAlpha,
         _ref3$innerSize = _ref3.innerSize,
         innerSize = _ref3$innerSize === void 0 ? 8 : _ref3$innerSize,
         _ref3$outerSize = _ref3.outerSize,
         outerSize = _ref3$outerSize === void 0 ? 8 : _ref3$outerSize,
         _ref3$outerScale = _ref3.outerScale,
-        outerScale = _ref3$outerScale === void 0 ? 4 : _ref3$outerScale,
+        outerScale = _ref3$outerScale === void 0 ? 5 : _ref3$outerScale,
         _ref3$innerScale = _ref3.innerScale,
-        innerScale = _ref3$innerScale === void 0 ? 0.6 : _ref3$innerScale;
+        innerScale = _ref3$innerScale === void 0 ? 0.7 : _ref3$innerScale;
 
     if (typeof navigator !== 'undefined' && _IsDevice["default"].any()) {
       return /*#__PURE__*/_react["default"].createElement(_react["default"].Fragment, null);
@@ -29678,14 +29663,8 @@ try {
     });
   }
 
-  _c2 = AnimatedCursor;
   var _default = AnimatedCursor;
   exports["default"] = _default;
-
-  var _c, _c2;
-
-  $RefreshReg$(_c, "CursorCore");
-  $RefreshReg$(_c2, "AnimatedCursor");
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
@@ -29708,8 +29687,6 @@ try {
 
   var _react = require("react");
 
-  var _s = $RefreshSig$();
-
   /* eslint-disable react-hooks/exhaustive-deps */
 
   /**
@@ -29718,8 +29695,6 @@ try {
    * @return {object} width, height
    */
   function useEventListener(eventName, handler) {
-    _s();
-
     var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
     // Create a ref that stores handler
     var savedHandler = (0, _react.useRef)(); // Update ref.current value if handler changes.
@@ -29745,8 +29720,6 @@ try {
     }, [eventName, element] // Re-run if eventName or element changes
     );
   }
-
-  _s(useEventListener, "XoZIjRFu3rOkeAcYGIxrbqMN+XY=");
 
   helpers.postlude(module);
 } finally {
@@ -30052,11 +30025,6 @@ try {
     }, "class name =\"link\""))));
   }
 
-  _c = Content;
-
-  var _c;
-
-  $RefreshReg$(_c, "Content");
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;

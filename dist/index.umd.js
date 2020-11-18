@@ -358,15 +358,15 @@
     var _ref3$color = _ref3.color,
         color = _ref3$color === void 0 ? '220, 90, 90' : _ref3$color,
         _ref3$outerAlpha = _ref3.outerAlpha,
-        outerAlpha = _ref3$outerAlpha === void 0 ? 0.2 : _ref3$outerAlpha,
+        outerAlpha = _ref3$outerAlpha === void 0 ? 0.3 : _ref3$outerAlpha,
         _ref3$innerSize = _ref3.innerSize,
         innerSize = _ref3$innerSize === void 0 ? 8 : _ref3$innerSize,
         _ref3$outerSize = _ref3.outerSize,
         outerSize = _ref3$outerSize === void 0 ? 8 : _ref3$outerSize,
         _ref3$outerScale = _ref3.outerScale,
-        outerScale = _ref3$outerScale === void 0 ? 4 : _ref3$outerScale,
+        outerScale = _ref3$outerScale === void 0 ? 5 : _ref3$outerScale,
         _ref3$innerScale = _ref3.innerScale,
-        innerScale = _ref3$innerScale === void 0 ? 0.6 : _ref3$innerScale;
+        innerScale = _ref3$innerScale === void 0 ? 0.7 : _ref3$innerScale;
 
     if (typeof navigator !== 'undefined' && IsDevice.any()) {
       return /*#__PURE__*/React__default.createElement(React__default.Fragment, null);
