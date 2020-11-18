@@ -28298,29 +28298,35 @@ var _react = require("react");
 /* eslint-disable react-hooks/exhaustive-deps */
 
 /**
- * UseWindowSize
- * Custom React Hook that returns window wxh.
+ * useEventListener
+ * Hook for handling EventListeners
  * @return {object} width, height
  */
 function useEventListener(eventName, handler) {
-  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document;
-  var savedHandler = (0, _react.useRef)();
+  var element = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window;
+  // Create a ref that stores handler
+  var savedHandler = (0, _react.useRef)(); // Update ref.current value if handler changes.
+
   (0, _react.useEffect)(function () {
     savedHandler.current = handler;
   }, [handler]);
   (0, _react.useEffect)(function () {
+    // Make sure element supports addEventListener
     var isSupported = element && element.addEventListener;
-    if (!isSupported) return;
+    if (!isSupported) return; // Create event listener that calls handler function stored in ref
 
     var eventListener = function eventListener(event) {
       return savedHandler.current(event);
-    };
+    }; // Add event listener
 
-    element.addEventListener(eventName, eventListener);
+
+    element.addEventListener(eventName, eventListener); // Remove event listener on cleanup
+
     return function () {
       element.removeEventListener(eventName, eventListener);
     };
-  }, [eventName, element]);
+  }, [eventName, element] // Re-run if eventName or element changes
+  );
 }
 },{"react":"../../node_modules/react/index.js"}],"../../lib/helpers/IsDevice.js":[function(require,module,exports) {
 "use strict";
@@ -28493,17 +28499,17 @@ function CursorCore(_ref) {
   var onMouseUp = (0, _react.useCallback)(function () {
     setIsActive(false);
   }, []);
-  var onMouseEnter = (0, _react.useCallback)(function () {
+  var onMouseEnterViewport = (0, _react.useCallback)(function () {
     setIsVisible(true);
   }, []);
-  var onMouseLeave = (0, _react.useCallback)(function () {
+  var onMouseLeaveViewport = (0, _react.useCallback)(function () {
     setIsVisible(false);
   }, []);
-  (0, _useEventListener.useEventListener)('mousemove', onMouseMove, document);
-  (0, _useEventListener.useEventListener)('mousedown', onMouseDown, document);
-  (0, _useEventListener.useEventListener)('mouseup', onMouseUp, document);
-  (0, _useEventListener.useEventListener)('mouseenter', onMouseEnter, document);
-  (0, _useEventListener.useEventListener)('mouseleave', onMouseLeave, document); // Cursors Hover/Active State
+  (0, _useEventListener.useEventListener)('mousemove', onMouseMove);
+  (0, _useEventListener.useEventListener)('mousedown', onMouseDown);
+  (0, _useEventListener.useEventListener)('mouseup', onMouseUp);
+  (0, _useEventListener.useEventListener)('mouseover', onMouseEnterViewport);
+  (0, _useEventListener.useEventListener)('mouseout', onMouseLeaveViewport); // Cursors Hover/Active State
 
   (0, _react.useEffect)(function () {
     if (isActive) {
@@ -28517,7 +28523,7 @@ function CursorCore(_ref) {
 
   (0, _react.useEffect)(function () {
     if (isActiveClickable) {
-      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.3, ")");
+      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.2, ")");
       cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
     }
   }, [innerScale, outerScale, isActiveClickable]); // Cursor Visibility State
@@ -28725,7 +28731,7 @@ function Content() {
     className: "link"
   }, "class name =\"link\""))));
 }
-},{"react":"../../node_modules/react/index.js"}],"../../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js"}],"../../node_modules/parcel/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -28757,7 +28763,7 @@ function getBaseURL(url) {
 
 exports.getBundleURL = getBundleURLCached;
 exports.getBaseURL = getBaseURL;
-},{}],"../../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+},{}],"../../node_modules/parcel/src/builtins/css-loader.js":[function(require,module,exports) {
 var bundle = require('./bundle-url');
 
 function updateLink(link) {
@@ -28792,12 +28798,12 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"demo-styles.css":[function(require,module,exports) {
+},{"./bundle-url":"../../node_modules/parcel/src/builtins/bundle-url.js"}],"demo-styles.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"App.js":[function(require,module,exports) {
+},{"_css_loader":"../../node_modules/parcel/src/builtins/css-loader.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -28837,7 +28843,7 @@ var _App = _interopRequireDefault(require("./App"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_App.default, null), document.getElementById('root'));
-},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./App":"App.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-dom":"../../node_modules/react-dom/index.js","./App":"App.js"}],"../../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -28865,7 +28871,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53296" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50811" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -29041,5 +29047,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
+},{}]},{},["../../node_modules/parcel/src/builtins/hmr-runtime.js","index.js"], null)
 //# sourceMappingURL=/src.e31bb0bc.js.map
