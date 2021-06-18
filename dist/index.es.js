@@ -147,9 +147,11 @@ function CursorCore(_ref) {
       _ref$innerScale = _ref.innerScale,
       innerScale = _ref$innerScale === void 0 ? 0.7 : _ref$innerScale,
       _ref$outerSize = _ref.outerSize,
-      outerSize = _ref$outerSize === void 0 ? 8 : _ref$outerSize,
+      outerSize = _ref$outerSize === void 0 ? 18 : _ref$outerSize,
       _ref$outerScale = _ref.outerScale,
-      outerScale = _ref$outerScale === void 0 ? 5 : _ref$outerScale;
+      outerScale = _ref$outerScale === void 0 ? 5 : _ref$outerScale,
+      _ref$trailingSpeed = _ref.trailingSpeed,
+      trailingSpeed = _ref$trailingSpeed === void 0 ? 8 : _ref$trailingSpeed;
   var cursorOuterRef = useRef();
   var cursorInnerRef = useRef();
   var requestRef = useRef();
@@ -188,18 +190,18 @@ function CursorCore(_ref) {
       x: clientX,
       y: clientY
     });
-    cursorInnerRef.current.style.top = clientY + 'px';
-    cursorInnerRef.current.style.left = clientX + 'px';
+    cursorInnerRef.current.style.top = "".concat(clientY, "px");
+    cursorInnerRef.current.style.left = "".concat(clientX, "px");
     endX.current = clientX;
     endY.current = clientY;
   }, []); // Outer Cursor Animation Delay
 
   var animateOuterCursor = useCallback(function (time) {
     if (previousTimeRef.current !== undefined) {
-      coords.x += (endX.current - coords.x) / 8;
-      coords.y += (endY.current - coords.y) / 8;
-      cursorOuterRef.current.style.top = coords.y + 'px';
-      cursorOuterRef.current.style.left = coords.x + 'px';
+      coords.x += (endX.current - coords.x) / trailingSpeed;
+      coords.y += (endY.current - coords.y) / trailingSpeed;
+      cursorOuterRef.current.style.top = "".concat(coords.y, "px");
+      cursorOuterRef.current.style.left = "".concat(coords.x, "px");
     }
 
     previousTimeRef.current = time;
@@ -234,18 +236,18 @@ function CursorCore(_ref) {
 
   useEffect(function () {
     if (isActive) {
-      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale, ")");
-      cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale, ")");
+      cursorInnerRef.current.style.transform = "translate(-50%, -50%) scale(".concat(innerScale, ")");
+      cursorOuterRef.current.style.transform = "translate(-50%, -50%) scale(".concat(outerScale, ")");
     } else {
-      cursorInnerRef.current.style.transform = 'translateZ(0) scale(1)';
-      cursorOuterRef.current.style.transform = 'translateZ(0) scale(1)';
+      cursorInnerRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
+      cursorOuterRef.current.style.transform = 'translate(-50%, -50%) scale(1)';
     }
   }, [innerScale, outerScale, isActive]); // Cursors Click States
 
   useEffect(function () {
     if (isActiveClickable) {
-      cursorInnerRef.current.style.transform = "translateZ(0) scale(".concat(innerScale * 1.2, ")");
-      cursorOuterRef.current.style.transform = "translateZ(0) scale(".concat(outerScale * 1.4, ")");
+      cursorInnerRef.current.style.transform = "translate(-50%, -50%) scale(".concat(innerScale * 1.2, ")");
+      cursorOuterRef.current.style.transform = "translate(-50%, -50%) scale(".concat(outerScale * 1.4, ")");
     }
   }, [innerScale, outerScale, isActiveClickable]); // Cursor Visibility State
 
@@ -314,9 +316,7 @@ function CursorCore(_ref) {
       height: innerSize,
       pointerEvents: 'none',
       backgroundColor: "rgba(".concat(color, ", 1)"),
-      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out',
-      backfaceVisibility: 'hidden',
-      willChange: 'transform'
+      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
     },
     cursorOuter: {
       zIndex: 999,
@@ -328,7 +328,6 @@ function CursorCore(_ref) {
       height: outerSize,
       backgroundColor: "rgba(".concat(color, ", ").concat(outerAlpha, ")"),
       transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out',
-      backfaceVisibility: 'hidden',
       willChange: 'transform'
     }
   }; // Hide / Show global cursor
@@ -358,9 +357,11 @@ function AnimatedCursor(_ref3) {
       _ref3$outerSize = _ref3.outerSize,
       outerSize = _ref3$outerSize === void 0 ? 8 : _ref3$outerSize,
       _ref3$outerScale = _ref3.outerScale,
-      outerScale = _ref3$outerScale === void 0 ? 5 : _ref3$outerScale,
+      outerScale = _ref3$outerScale === void 0 ? 6 : _ref3$outerScale,
       _ref3$innerScale = _ref3.innerScale,
-      innerScale = _ref3$innerScale === void 0 ? 0.7 : _ref3$innerScale;
+      innerScale = _ref3$innerScale === void 0 ? 0.6 : _ref3$innerScale,
+      _ref3$trailingSpeed = _ref3.trailingSpeed,
+      trailingSpeed = _ref3$trailingSpeed === void 0 ? 8 : _ref3$trailingSpeed;
 
   if (typeof navigator !== 'undefined' && IsDevice.any()) {
     return /*#__PURE__*/React.createElement(React.Fragment, null);
@@ -372,7 +373,8 @@ function AnimatedCursor(_ref3) {
     innerSize: innerSize,
     innerScale: innerScale,
     outerSize: outerSize,
-    outerScale: outerScale
+    outerScale: outerScale,
+    trailingSpeed: trailingSpeed
   });
 }
 
