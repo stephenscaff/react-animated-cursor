@@ -81,6 +81,19 @@ export default function App() {
       outerAlpha={0.2}
       innerScale={0.7}
       outerScale={5}
+      clickables={[
+        'a',
+        'input[type="text"]',
+        'input[type="email"]',
+        'input[type="number"]',
+        'input[type="submit"]',
+        'input[type="image"]',
+        'label[for]',
+        'select',
+        'textarea',
+        'button',
+        '.link'
+      ]}
     />
     </div>
   );
@@ -99,9 +112,9 @@ import AnimatedCursor from "./AnimatedCursor";
 ### With SSR (Server Side Rendering)
 
 With `Next.js`, you can leverage a `Dynamic Imports` to set `ssr:false` for `AnimatedCursor`.
-Honestly though, you might not have to do that anymore since v2.1.5
+HOWEVER since v2.1.5, a normal import should do the trick.
 
-**Next.js SSR Example**
+**Next.js SSR Example, pre v2.1.5f**
 
 ```
 import dynamic from 'next/dynamic'
@@ -128,6 +141,7 @@ Cursor styling is included within the component, using a simple dependency-free 
 | `innerScale`    | number | amount dot scales on click or link hover          | `0.7`         |
 | `outerScale`    | number | amount outer dot scales on click or link hover    | `5`           |
 | `trailingSpeed` | number | Outer dot's trailing speed                        | `8`           |
+| `clickables`    | array  | Collection of selectors cursor that trigger cursor interaction | `['a', 'input[type="text"]', 'input[type="email"]', 'input[type="number"]', 'input[type="submit"]', 'input[type="image"]', 'label[for]', 'select', 'textarea', 'button', '.link']` |
 
 ## Mobile / Touch
 
@@ -138,6 +152,10 @@ Cursor styling is included within the component, using a simple dependency-free 
 - ~~Either remove on mobile, or provide touch events.~~
 - ~~Separate click and hover scalings to provide a different scaling when clicking on links~~
 - ~~Fix transform blur in Safari~~
+- ~~Make clickables (cursor targets / selectors) a prop~~
+- ~~Add PropType checks~~
+- Open cursor styles as props
 - Solution for impacting state during route changes
+- Convert to TS
 
 Have fun ya'll.

@@ -7,7 +7,11 @@ export default function App() {
   return (
     <div className="App">
       <AnimatedCursor />
-      <DemoContent />
+      <DemoContent 
+      cursorStyles={{
+          border: "9px solid pink"
+      }}
+    />
     </div>
   )
 }
