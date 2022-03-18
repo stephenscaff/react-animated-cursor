@@ -1,6 +1,6 @@
 {
   "name": "react-animated-cursor",
-  "version": "2.1.8",
+  "version": "2.2.0",
   "description": "An animated custom cursor component in React.",
   "author": "Stephen Scaff <stephenscaff.com>",
   "homepage": "https://github.com/stephenscaff/react-animated-cursor",
@@ -64,6 +64,7 @@
     "rollup-plugin-peer-deps-external": "^2.2.2"
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "utils": "^0.3.1"
   }
 }

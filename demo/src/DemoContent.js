@@ -62,7 +62,7 @@ export default function Content() {
       <li><input type="image" id="image-input" alt="Image Input"
        src="https://cdn2.iconfinder.com/data/icons/button-v1/30/25-512.png" width="30px"/></li>
        <li><label htmlFor="label_for">Label For</label><input type="radio" name="gender" id="label_for" value="label_for"/></li>
-       <li><div className="link">class name ="link"</div></li>
+       <li><div className="link">Class name ="link"</div></li>
       </ul>
     </section>
   );
