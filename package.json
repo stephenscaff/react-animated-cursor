@@ -1,6 +1,6 @@
 {
   "name": "react-animated-cursor",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "An animated custom cursor component in React.",
   "author": "Stephen Scaff <stephenscaff.com>",
   "homepage": "https://github.com/stephenscaff/react-animated-cursor",
@@ -12,11 +12,11 @@
     "dist/index.es.js",
     "dist/index.umd.js"
   ],
-  "targets": { 
-    "main": false, 
-    "module": false, 
+  "targets": {
+    "main": false,
+    "module": false,
     "browser": false
-   },
+  },
   "scripts": {
     "clean": "rm -rf ./dist",
     "clean:demo": "rm -rf ./demo/dist",
