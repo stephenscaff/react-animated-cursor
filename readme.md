@@ -25,6 +25,10 @@ Options exist for modifying the color and scaling of the cursor elements (see pr
 
 `npm run build`
 
+### Dev
+
+`npm run dev`
+
 ### Run Demo
 
 `npm run demo:start`
