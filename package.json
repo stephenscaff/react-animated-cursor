@@ -12,6 +12,11 @@
     "dist/index.es.js",
     "dist/index.umd.js"
   ],
+  "targets": { 
+    "main": false, 
+    "module": false, 
+    "browser": false
+   },
   "scripts": {
     "clean": "rm -rf ./dist",
     "clean:demo": "rm -rf ./demo/dist",
