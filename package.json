@@ -44,8 +44,8 @@
     "url": "https://github.com/stephenscaff/react-animated-cursor/issues"
   },
   "peerDependencies": {
-    "react": "^16.13.1 || ^17",
-    "react-dom": "^16.13.1 || ^17"
+    "react": "^16 || ^17 || ^18",
+    "react-dom": "^16 || ^17 || ^18"
   },
   "devDependencies": {
     "@babel/core": "^7.12.0",
