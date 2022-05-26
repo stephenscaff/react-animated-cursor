@@ -1,5 +1,8 @@
 /* Cursor vars if you wanna use css over css in js */
 
+:root {
+  --cursor-color: #fff
+}
 html,
 body {
   background-color: #2f2c2c;

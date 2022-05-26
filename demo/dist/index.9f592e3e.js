@@ -22184,7 +22184,7 @@ var _s = $RefreshSig$();
  * @param {number} outerScale - outer cursor scale amount
  * @param {array}  clickables - array of clickable selectors
  *
- */ function CursorCore({ color ='220, 90, 90' , outerAlpha =0.3 , innerSize =8 , outerSize =8 , outerScale =6 , innerScale =0.6 , trailingSpeed =8 , clickables =[
+ */ function CursorCore({ outerStyle , innerStyle , color ='220, 90, 90' , outerAlpha =0.3 , innerSize =8 , outerSize =8 , outerScale =6 , innerScale =0.6 , trailingSpeed =8 , clickables =[
     'a',
     'input[type="text"]',
     'input[type="email"]',
@@ -22356,6 +22356,7 @@ var _s = $RefreshSig$();
             height: innerSize,
             pointerEvents: 'none',
             backgroundColor: `rgba(${color}, 1)`,
+            ...innerStyle && innerStyle,
             transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
         },
         cursorOuter: {
@@ -22368,7 +22369,8 @@ var _s = $RefreshSig$();
             height: outerSize,
             backgroundColor: `rgba(${color}, ${outerAlpha})`,
             transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out',
-            willChange: 'transform'
+            willChange: 'transform',
+            ...outerStyle && outerStyle
         }
     };
     // Hide / Show global cursor
@@ -22380,7 +22382,7 @@ var _s = $RefreshSig$();
                 style: styles.cursorOuter
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.js",
-                lineNumber: 215,
+                lineNumber: 219,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -22388,13 +22390,13 @@ var _s = $RefreshSig$();
                 style: styles.cursorInner
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.js",
-                lineNumber: 216,
+                lineNumber: 220,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 214,
+        lineNumber: 218,
         columnNumber: 5
     }, this));
 }
@@ -22411,14 +22413,16 @@ _c = CursorCore;
 /**
  * AnimatedCursor
  * Calls and passes props to CursorCore if not a touch/mobile device.
- */ function AnimatedCursor({ color , outerAlpha , innerSize , innerScale , outerSize , outerScale , trailingSpeed , clickables  }) {
+ */ function AnimatedCursor({ outerStyle , innerStyle , color , outerAlpha , innerSize , innerScale , outerSize , outerScale , trailingSpeed , clickables  }) {
     if (typeof navigator !== 'undefined' && _isDeviceJsDefault.default.any()) return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactDefault.default.Fragment, {
     }, void 0, false, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 236,
+        lineNumber: 242,
         columnNumber: 12
     }, this));
     return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(CursorCore, {
+        outerStyle: outerStyle,
+        innerStyle: innerStyle,
         color: color,
         outerAlpha: outerAlpha,
         innerSize: innerSize,
@@ -22429,7 +22433,7 @@ _c = CursorCore;
         clickables: clickables
     }, void 0, false, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 239,
+        lineNumber: 245,
         columnNumber: 5
     }, this));
 }
@@ -22441,6 +22445,8 @@ AnimatedCursor.propTypes = {
     outerSize: _propTypesDefault.default.number,
     outerScale: _propTypesDefault.default.number,
     innerScale: _propTypesDefault.default.number,
+    outerStyle: _propTypesDefault.default.object,
+    innerStyle: _propTypesDefault.default.object,
     trailingSpeed: _propTypesDefault.default.number,
     clickables: _propTypesDefault.default.array
 };
@@ -24075,7 +24081,7 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 const styles = {
     section: {
-        padding: "4em 0"
+        padding: '4em 0'
     },
     title: {
         marginBottom: '0.7em',
@@ -24102,21 +24108,21 @@ function Content() {
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("br", {
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 27,
+                        lineNumber: 26,
                         columnNumber: 25
                     }, this),
                     "React Component"
                 ]
             }, void 0, true, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 26,
+                lineNumber: 25,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("hr", {
                 style: styles.sep
             }, void 0, false, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 30,
+                lineNumber: 29,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -24126,7 +24132,7 @@ function Content() {
                         children: "Functional Component"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 32,
+                        lineNumber: 31,
                         columnNumber: 48
                     }, this),
                     ", using ",
@@ -24134,7 +24140,7 @@ function Content() {
                         children: "React hooks"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 33,
+                        lineNumber: 32,
                         columnNumber: 15
                     }, this),
                     " like ",
@@ -24142,7 +24148,7 @@ function Content() {
                         children: "useEffect"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 33,
+                        lineNumber: 32,
                         columnNumber: 39
                     }, this),
                     " to handle event listeners, local state, an ",
@@ -24150,14 +24156,14 @@ function Content() {
                         children: "RequestAnimationFrame"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 34,
+                        lineNumber: 33,
                         columnNumber: 36
                     }, this),
                     " management."
                 ]
             }, void 0, true, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 31,
+                lineNumber: 30,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -24167,23 +24173,23 @@ function Content() {
                         children: "links"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 37,
+                        lineNumber: 36,
                         columnNumber: 26
                     }, this),
                     " and see how that animated cursor does it's thing. Kinda nifty, right? Not right for most things, but a nice move for more interactive-type projects. Here's another",
-                    " ",
+                    ' ',
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("a", {
                         href: "",
                         children: "link to nowhere."
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 40,
+                        lineNumber: 39,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 36,
+                lineNumber: 35,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
@@ -24193,7 +24199,7 @@ function Content() {
                         children: "css variables"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 43,
+                        lineNumber: 42,
                         columnNumber: 23
                     }, this),
                     " to influence the cursor, cursor outline size, and amount of scale on target hover. I suppose those could all be ",
@@ -24201,35 +24207,35 @@ function Content() {
                         children: "props"
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 45,
+                        lineNumber: 44,
                         columnNumber: 16
                     }, this),
                     " with some. Click in the margin to check click animation."
                 ]
             }, void 0, true, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 42,
+                lineNumber: 41,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                 children: "There's probably a better way to manage these kind of events, but this was the best I could come up with. Recently started mucking more with React cause I'm down with the simplicity of Functional Components and Hooks. And if you read the docs, the future ain't class components. So, best get on them functions."
             }, void 0, false, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 48,
+                lineNumber: 47,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("h3", {
                 children: "Clickables"
             }, void 0, false, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 55,
+                lineNumber: 54,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("p", {
                 children: "Let's do a text of all clickable elements:"
             }, void 0, false, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 56,
+                lineNumber: 55,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("ul", {
@@ -24244,45 +24250,12 @@ function Content() {
                         }, this)
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 58,
-                        columnNumber: 7
+                        lineNumber: 57,
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
                         children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("button", {
                             children: "Buttons"
-                        }, void 0, false, {
-                            fileName: "demo/src/DemoContent.js",
-                            lineNumber: 59,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "demo/src/DemoContent.js",
-                        lineNumber: 59,
-                        columnNumber: 7
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
-                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
-                            type: "submit",
-                            value: "Submit"
-                        }, void 0, false, {
-                            fileName: "demo/src/DemoContent.js",
-                            lineNumber: 60,
-                            columnNumber: 11
-                        }, this)
-                    }, void 0, false, {
-                        fileName: "demo/src/DemoContent.js",
-                        lineNumber: 60,
-                        columnNumber: 7
-                    }, this),
-                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
-                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
-                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
-                                children: "Select"
-                            }, void 0, false, {
-                                fileName: "demo/src/DemoContent.js",
-                                lineNumber: 61,
-                                columnNumber: 19
-                            }, this)
                         }, void 0, false, {
                             fileName: "demo/src/DemoContent.js",
                             lineNumber: 61,
@@ -24290,8 +24263,41 @@ function Content() {
                         }, this)
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 61,
-                        columnNumber: 7
+                        lineNumber: 60,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
+                            type: "submit",
+                            value: "Submit"
+                        }, void 0, false, {
+                            fileName: "demo/src/DemoContent.js",
+                            lineNumber: 64,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "demo/src/DemoContent.js",
+                        lineNumber: 63,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
+                        children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("select", {
+                            children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("option", {
+                                children: "Select"
+                            }, void 0, false, {
+                                fileName: "demo/src/DemoContent.js",
+                                lineNumber: 68,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "demo/src/DemoContent.js",
+                            lineNumber: 67,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "demo/src/DemoContent.js",
+                        lineNumber: 66,
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
                         children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
@@ -24302,13 +24308,13 @@ function Content() {
                             width: "30px"
                         }, void 0, false, {
                             fileName: "demo/src/DemoContent.js",
-                            lineNumber: 62,
+                            lineNumber: 72,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 62,
-                        columnNumber: 7
+                        lineNumber: 71,
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
                         children: [
@@ -24317,8 +24323,8 @@ function Content() {
                                 children: "Label For"
                             }, void 0, false, {
                                 fileName: "demo/src/DemoContent.js",
-                                lineNumber: 64,
-                                columnNumber: 12
+                                lineNumber: 81,
+                                columnNumber: 11
                             }, this),
                             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("input", {
                                 type: "radio",
@@ -24327,14 +24333,14 @@ function Content() {
                                 value: "label_for"
                             }, void 0, false, {
                                 fileName: "demo/src/DemoContent.js",
-                                lineNumber: 64,
-                                columnNumber: 56
+                                lineNumber: 82,
+                                columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 64,
-                        columnNumber: 8
+                        lineNumber: 80,
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ _jsxDevRuntime.jsxDEV("li", {
                         children: /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -24342,24 +24348,24 @@ function Content() {
                             children: "Class name =\"link\""
                         }, void 0, false, {
                             fileName: "demo/src/DemoContent.js",
-                            lineNumber: 65,
-                            columnNumber: 12
+                            lineNumber: 85,
+                            columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "demo/src/DemoContent.js",
-                        lineNumber: 65,
-                        columnNumber: 8
+                        lineNumber: 84,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "demo/src/DemoContent.js",
-                lineNumber: 57,
+                lineNumber: 56,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "demo/src/DemoContent.js",
-        lineNumber: 25,
+        lineNumber: 24,
         columnNumber: 5
     }, this));
 }
