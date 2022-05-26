@@ -53,6 +53,20 @@ export default function App() {
 }
 ```
 
+### Add to Next.js
+
+If using in Next, you may have to leverage dynamic imports.
+
+```
+import dynamic from 'next/dynamic'
+
+const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+  ssr: false
+});
+
+<AnimatedCursor/>
+```
+
 <br>
 
 ## 🤖 Commands
@@ -125,12 +139,9 @@ export default function App() {
 }
 ```
 
-### With SSR (Server Side Rendering)
+### With Next / SSR (Server Side Rendering)
 
-With `Next.js`, you can leverage a `Dynamic Imports` to set `ssr:false` for `AnimatedCursor`.
-HOWEVER since v2.1.5, a normal import should do the trick.
-
-**Next.js SSR Example, pre v2.1.5f**
+In Next's SSR environment, you may have to leverage a `Dynamic Import`.
 
 ```
 import dynamic from 'next/dynamic'
@@ -139,7 +150,7 @@ const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
   ssr: false
 });
 
-// <AnimatedCursor/>
+<AnimatedCursor/>
 ```
 
 <br/>
