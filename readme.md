@@ -57,12 +57,12 @@ export default function App() {
 
 ## 🤖 Commands
 
-**Install** `npm i react-animated-cursor`
-**Build**: `npm run build`
-**Dev**: `npm run dev`
-**Demo Run**: `npm run demo:start`
-**Demo Build**: `npm run demo:build`
-**Demo Clean**: `npm run demo:clean`
+**Install** `npm i react-animated-cursor` <br/>
+**Build**: `npm run build` <br/>
+**Dev**: `npm run dev` <br/>
+**Demo Run**: `npm run demo:start` <br/>
+**Demo Build**: `npm run demo:build` <br/>
+**Demo Clean**: `npm run demo:clean` <br/>
 
 ### Demo
 

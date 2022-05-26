@@ -22182,6 +22182,8 @@ var _s = $RefreshSig$();
  * @param {number} innerScale - inner cursor scale amount
  * @param {number} outerSize - outer cursor size in px
  * @param {number} outerScale - outer cursor scale amount
+ * @param {object} outerStyle - style object for outer cursor
+ * @param {object} innerStyle - style object for inner cursor
  * @param {array}  clickables - array of clickable selectors
  *
  */ function CursorCore({ outerStyle , innerStyle , color ='220, 90, 90' , outerAlpha =0.3 , innerSize =8 , outerSize =8 , outerScale =6 , innerScale =0.6 , trailingSpeed =8 , clickables =[
@@ -22382,7 +22384,7 @@ var _s = $RefreshSig$();
                 style: styles.cursorOuter
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.js",
-                lineNumber: 219,
+                lineNumber: 221,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV("div", {
@@ -22390,13 +22392,13 @@ var _s = $RefreshSig$();
                 style: styles.cursorInner
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.js",
-                lineNumber: 220,
+                lineNumber: 222,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 218,
+        lineNumber: 220,
         columnNumber: 5
     }, this));
 }
@@ -22417,7 +22419,7 @@ _c = CursorCore;
     if (typeof navigator !== 'undefined' && _isDeviceJsDefault.default.any()) return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(_reactDefault.default.Fragment, {
     }, void 0, false, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 242,
+        lineNumber: 244,
         columnNumber: 12
     }, this));
     return(/*#__PURE__*/ _jsxDevRuntime.jsxDEV(CursorCore, {
@@ -22433,7 +22435,7 @@ _c = CursorCore;
         clickables: clickables
     }, void 0, false, {
         fileName: "lib/AnimatedCursor.js",
-        lineNumber: 245,
+        lineNumber: 247,
         columnNumber: 5
     }, this));
 }
