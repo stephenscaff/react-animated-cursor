@@ -28,9 +28,9 @@ Options exist for modifying the color and scaling of the cursor elements (see pr
 
 [Live Demo](https://stephenscaff.github.io/react-animated-cursor/)
 
-## 🎯 Quickstart
-
 <br/>
+
+## 🎯 Quickstart
 
 ### Install package from npm
 
