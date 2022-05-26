@@ -22116,6 +22116,19 @@ function App() {
         className: "App",
         children: [
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_libDefault.default, {
+                //color="255,255,255"
+                innerSize: 8,
+                outerSize: 35,
+                innerScale: 1,
+                outerScale: 1.7,
+                outerAlpha: 0,
+                hasBlendMode: true,
+                outerStyle: {
+                    border: '3px solid var(--cursor-color)'
+                },
+                innerStyle: {
+                    backgroundColor: 'var(--cursor-color)'
+                }
             }, void 0, false, {
                 fileName: "demo/src/App.js",
                 lineNumber: 9,
@@ -22124,7 +22137,7 @@ function App() {
             /*#__PURE__*/ _jsxDevRuntime.jsxDEV(_demoContentDefault.default, {
             }, void 0, false, {
                 fileName: "demo/src/App.js",
-                lineNumber: 10,
+                lineNumber: 24,
                 columnNumber: 7
             }, this)
         ]
@@ -23209,7 +23222,7 @@ _s(useEventListener, "XoZIjRFu3rOkeAcYGIxrbqMN+XY=");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a

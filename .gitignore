@@ -6,3 +6,4 @@ npm-debug.log
 .tmp
 *.log
 .parcel-cache
+dist
