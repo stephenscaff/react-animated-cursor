@@ -1,9 +1,8 @@
-import React from "react";
-
+import React from 'react'
 
 const styles = {
   section: {
-    padding: "4em 0",
+    padding: '4em 0'
   },
   title: {
     marginBottom: '0.7em',
@@ -16,7 +15,7 @@ const styles = {
     margin: '0 auto 2em',
     height: 2,
     width: '3em',
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    backgroundColor: 'rgba(255, 255, 255, 0.5)'
   }
 }
 
@@ -36,7 +35,7 @@ export default function Content() {
       <p>
         Hover over these <a>links</a> and see how that animated cursor does it's
         thing. Kinda nifty, right? Not right for most things, but a nice move
-        for more interactive-type projects. Here's another{" "}
+        for more interactive-type projects. Here's another{' '}
         <a href="">link to nowhere.</a>
       </p>
       <p>
@@ -55,15 +54,37 @@ export default function Content() {
       <h3>Clickables</h3>
       <p>Let's do a text of all clickable elements:</p>
       <ul>
-      <li><a>Basic Link Tag</a></li>
-      <li><button>Buttons</button></li>
-      <li><input type="submit" value="Submit"/></li>
-      <li><select><option>Select</option></select></li>
-      <li><input type="image" id="image-input" alt="Image Input"
-       src="https://cdn2.iconfinder.com/data/icons/button-v1/30/25-512.png" width="30px"/></li>
-       <li><label htmlFor="label_for">Label For</label><input type="radio" name="gender" id="label_for" value="label_for"/></li>
-       <li><div className="link">Class name ="link"</div></li>
+        <li>
+          <a>Basic Link Tag</a>
+        </li>
+        <li>
+          <button>Buttons</button>
+        </li>
+        <li>
+          <input type="submit" value="Submit" />
+        </li>
+        <li>
+          <select>
+            <option>Select</option>
+          </select>
+        </li>
+        <li>
+          <input
+            type="image"
+            id="image-input"
+            alt="Image Input"
+            src="https://cdn2.iconfinder.com/data/icons/button-v1/30/25-512.png"
+            width="30px"
+          />
+        </li>
+        <li>
+          <label htmlFor="label_for">Label For</label>
+          <input type="radio" name="gender" id="label_for" value="label_for" />
+        </li>
+        <li>
+          <div className="link">Class name ="link"</div>
+        </li>
       </ul>
     </section>
-  );
+  )
 }
