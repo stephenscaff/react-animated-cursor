@@ -1,7 +1,32 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import PropTypes from 'prop-types'
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  ReactElement,
+  CSSProperties
+} from 'react'
+import { hexToRGB } from './helpers/hexToRGB'
+import { IsDevice } from './helpers/IsDevice'
 import { useEventListener } from './hooks/useEventListener'
-import IsDevice from './helpers/IsDevice.js'
+
+export interface IAnimatedCursor {
+  color?: string
+  outerAlpha?: number
+  innerSize?: number
+  outerSize?: number
+  outerScale?: number
+  innerScale?: number
+  outerStyle?: object
+  innerStyle?: object
+  trailingSpeed?: number
+  clickables?: string[]
+}
+
+export interface ICoordinates {
+  x: number
+  y: number
+}
 
 /**
  * Cursor Core
@@ -10,7 +35,7 @@ import IsDevice from './helpers/IsDevice.js'
  *
  * @author Stephen Scaff (github.com/stephenscaff)
  *
- * @param {string} color - rgb color value
+ * @param {string} color - rgb color value (RGB or HEX)
  * @param {number} outerAlpha - level of alpha transparency for color
  * @param {number} innerSize - inner cursor size in px
  * @param {number} innerScale - inner cursor scale amount
@@ -21,35 +46,23 @@ import IsDevice from './helpers/IsDevice.js'
  * @param {array}  clickables - array of clickable selectors
  *
  */
-function CursorCore({
+const CursorCore = ({
   outerStyle,
   innerStyle,
-  color = '220, 90, 90',
-  outerAlpha = 0.3,
-  innerSize = 8,
-  outerSize = 8,
-  outerScale = 6,
-  innerScale = 0.6,
-  trailingSpeed = 8,
-  clickables = [
-    'a',
-    'input[type="text"]',
-    'input[type="email"]',
-    'input[type="number"]',
-    'input[type="submit"]',
-    'input[type="image"]',
-    'label[for]',
-    'select',
-    'textarea',
-    'button',
-    '.link'
-  ]
-}) {
-  const cursorOuterRef = useRef()
-  const cursorInnerRef = useRef()
-  const requestRef = useRef()
-  const previousTimeRef = useRef()
-  const [coords, setCoords] = useState({ x: 0, y: 0 })
+  color,
+  outerAlpha,
+  innerSize,
+  innerScale,
+  outerSize,
+  outerScale,
+  trailingSpeed,
+  clickables
+}: IAnimatedCursor): ReactElement => {
+  const cursorOuterRef = useRef<HTMLDivElement>(null)
+  const cursorInnerRef = useRef<HTMLDivElement>(null)
+  const requestRef = useRef(null)
+  const previousTimeRef = useRef(null)
+  const [coords, setCoords] = useState<ICoordinates>({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const [isActiveClickable, setIsActiveClickable] = useState(false)
@@ -71,7 +84,7 @@ function CursorCore({
 
   // Outer Cursor Animation Delay
   const animateOuterCursor = useCallback(
-    (time) => {
+    (time: number) => {
       if (previousTimeRef.current !== undefined) {
         coords.x += (endX.current - coords.x) / trailingSpeed
         coords.y += (endY.current - coords.y) / trailingSpeed
@@ -128,16 +141,18 @@ function CursorCore({
   // Cursor Visibility State
   useEffect(() => {
     if (isVisible) {
-      cursorInnerRef.current.style.opacity = 1
-      cursorOuterRef.current.style.opacity = 1
+      cursorInnerRef.current.style.opacity = '1'
+      cursorOuterRef.current.style.opacity = '1'
     } else {
-      cursorInnerRef.current.style.opacity = 0
-      cursorOuterRef.current.style.opacity = 0
+      cursorInnerRef.current.style.opacity = '0'
+      cursorOuterRef.current.style.opacity = '0'
     }
   }, [isVisible])
 
   useEffect(() => {
-    const clickableEls = document.querySelectorAll(clickables.join(','))
+    const clickableEls = document.querySelectorAll<HTMLElement>(
+      clickables.join(',')
+    )
 
     clickableEls.forEach((el) => {
       el.style.cursor = 'none'
@@ -184,30 +199,33 @@ function CursorCore({
     }
   }, [isActive, clickables])
 
+  const mainStyles: CSSProperties = {
+    zIndex: 999,
+    display: 'block',
+    position: 'fixed',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+    transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
+  }
+
   // Cursor Styles
   const styles = {
     cursorInner: {
-      zIndex: 999,
-      display: 'block',
-      position: 'fixed',
-      borderRadius: '50%',
+      ...mainStyles,
       width: innerSize,
       height: innerSize,
-      pointerEvents: 'none',
-      backgroundColor: `rgba(${color}, 1)`,
-      ...(innerStyle && innerStyle),
-      transition: 'opacity 0.15s ease-in-out, transform 0.25s ease-in-out'
+      backgroundColor: color.includes('#')
+        ? hexToRGB(color)
+        : `rgba(${color}, 1)`,
+      ...(innerStyle && innerStyle)
     },
     cursorOuter: {
-      zIndex: 999,
-      display: 'block',
-      position: 'fixed',
-      borderRadius: '50%',
-      pointerEvents: 'none',
+      ...mainStyles,
       width: outerSize,
       height: outerSize,
-      backgroundColor: `rgba(${color}, ${outerAlpha})`,
-      transition: 'opacity 0.15s ease-in-out, transform 0.15s ease-in-out',
+      backgroundColor: color.includes('#')
+        ? hexToRGB(color, outerAlpha)
+        : `rgba(${color}, ${outerAlpha} )`,
       willChange: 'transform',
       ...(outerStyle && outerStyle)
     }
@@ -217,10 +235,10 @@ function CursorCore({
   document.body.style.cursor = 'none'
 
   return (
-    <React.Fragment>
+    <>
       <div ref={cursorOuterRef} style={styles.cursorOuter} />
       <div ref={cursorInnerRef} style={styles.cursorInner} />
-    </React.Fragment>
+    </>
   )
 }
 
@@ -228,20 +246,32 @@ function CursorCore({
  * AnimatedCursor
  * Calls and passes props to CursorCore if not a touch/mobile device.
  */
-function AnimatedCursor({
+export const AnimatedCursor = ({
   outerStyle,
   innerStyle,
-  color,
-  outerAlpha,
-  innerSize,
-  innerScale,
-  outerSize,
-  outerScale,
-  trailingSpeed,
-  clickables
-}) {
+  color = '220, 90, 90',
+  outerAlpha = 0.3,
+  innerSize = 8,
+  outerSize = 8,
+  outerScale = 6,
+  innerScale = 0.6,
+  trailingSpeed = 8,
+  clickables = [
+    'a',
+    'input[type="text"]',
+    'input[type="email"]',
+    'input[type="number"]',
+    'input[type="submit"]',
+    'input[type="image"]',
+    'label[for]',
+    'select',
+    'textarea',
+    'button',
+    '.link'
+  ]
+}: IAnimatedCursor): ReactElement => {
   if (typeof navigator !== 'undefined' && IsDevice.any()) {
-    return <React.Fragment></React.Fragment>
+    return <></>
   }
   return (
     <CursorCore
@@ -258,18 +288,3 @@ function AnimatedCursor({
     />
   )
 }
-
-AnimatedCursor.propTypes = {
-  color: PropTypes.string,
-  outerAlpha: PropTypes.number,
-  innerSize: PropTypes.number,
-  outerSize: PropTypes.number,
-  outerScale: PropTypes.number,
-  innerScale: PropTypes.number,
-  outerStyle: PropTypes.object,
-  innerStyle: PropTypes.object,
-  trailingSpeed: PropTypes.number,
-  clickables: PropTypes.array
-}
-
-export default AnimatedCursor
