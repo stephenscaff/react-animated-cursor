@@ -5,9 +5,14 @@ import { useRef, useEffect } from 'react'
  * Hook for handling EventListeners
  * @return {object} width, height
  */
-export function useEventListener(eventName, handler, element = window) {
+export const useEventListener = (
+  eventName: string,
+  // eslint-disable-next-line no-unused-vars
+  handler: (event?: MouseEvent) => void,
+  element: Window = window
+) => {
   // Create a ref that stores handler
-  const savedHandler = useRef()
+  const savedHandler = useRef(null)
 
   // Update ref.current value if handler changes.
   useEffect(() => {
@@ -21,7 +26,7 @@ export function useEventListener(eventName, handler, element = window) {
       if (!isSupported) return
 
       // Create event listener that calls handler function stored in ref
-      const eventListener = (event) => savedHandler.current(event)
+      const eventListener = (event: MouseEvent) => savedHandler.current(event)
 
       // Add event listener
       element.addEventListener(eventName, eventListener)
