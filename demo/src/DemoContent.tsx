@@ -1,6 +1,9 @@
-import React from 'react'
-
-const styles = {
+import { CSSProperties, ReactElement } from 'react'
+const styles: {
+  section: CSSProperties
+  title: CSSProperties
+  sep: CSSProperties
+} = {
   section: {
     padding: '4em 0'
   },
@@ -19,7 +22,7 @@ const styles = {
   }
 }
 
-export default function Content() {
+export const DemoContent = (): ReactElement => {
   return (
     <section style={styles.section}>
       <h1 style={styles.title}>
