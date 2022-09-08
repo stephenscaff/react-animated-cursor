@@ -18,7 +18,7 @@ A React functional component that replaces the native cursor with a custom anima
 
 <br/>
 
-## 📌 Features
+## 📌 Featuraaes
 
 ### The custom cursor is comprised of
 
