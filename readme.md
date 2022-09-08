@@ -267,7 +267,7 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 - ~~Add PropType checks~~
 - ~~Add PropType checks~~
 - ~~Open cursor styles as props~~
+- ~~Convert to TS~~
 - Solution for impacting state during route changes
-- Convert to TS
 
 Have fun ya'll.
