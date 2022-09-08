@@ -1,4 +1,7 @@
-# React Animated Cursor
+# React Animated Cursor TS
+
+#### ⚠️⚠️⚠️⚠️
+This is a **TEMPORAL** proposal, to test the Typescript of the library. Additionally, all the credit for the library should got to [@stephenscaff](https://github.com/stephenscaff)
 
 A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
 
