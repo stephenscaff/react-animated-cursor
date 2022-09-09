@@ -63,7 +63,8 @@ If using in Next, you may have to leverage dynamic imports.
 ```
 import dynamic from 'next/dynamic'
 
-const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+const AnimatedCursor = dynamic(() => import('react-animated-cursor')
+  .then((mod) => mod.AnimatedCursor), {
   ssr: false
 });
 
