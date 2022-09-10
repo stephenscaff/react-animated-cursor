@@ -1,4 +1,4 @@
-const IsDevice = (() => {
+export const IsDevice = (() => {
   if (typeof navigator == 'undefined') return
 
   let ua = navigator.userAgent
@@ -44,6 +44,3 @@ const IsDevice = (() => {
     }
   }
 })()
-
-// Export
-export default IsDevice

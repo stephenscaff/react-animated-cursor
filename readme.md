@@ -1,4 +1,7 @@
-# React Animated Cursor
+# ⚠️⚠️⚠️⚠️
+This is a **TEMPORAL** proposal, to test the Typescript of the library. Additionally, all the credit for the library should got to [@stephenscaff](https://github.com/stephenscaff)
+
+# React Animated Cursor TS
 
 A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
 
@@ -60,7 +63,8 @@ If using in Next, you may have to leverage dynamic imports.
 ```
 import dynamic from 'next/dynamic'
 
-const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
+const AnimatedCursor = dynamic(() => import('react-animated-cursor')
+  .then((mod) => mod.AnimatedCursor), {
   ssr: false
 });
 
@@ -267,7 +271,7 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 - ~~Add PropType checks~~
 - ~~Add PropType checks~~
 - ~~Open cursor styles as props~~
+- ~~Convert to TS~~
 - Solution for impacting state during route changes
-- Convert to TS
 
 Have fun ya'll.
