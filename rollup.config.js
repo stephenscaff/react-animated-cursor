@@ -9,16 +9,13 @@ const umdGlobals = {
   'react-animated-cursor': 'AnimatedCursor'
 }
 
-const getBabelOptions = () => ({
-  exclude: '**/node_modules/**'
-})
-
 export default {
   input: 'lib/index.js',
   output: [
     {
       file: pkg.main,
-      format: 'cjs'
+      format: 'cjs',
+      exports: 'default'
     },
     {
       file: pkg.module,
