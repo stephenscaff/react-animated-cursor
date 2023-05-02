@@ -232,7 +232,7 @@ html.dark-mode {
 
 ### BlendMode Cursor
 
-You can use CSS mix-blend-mode with the style props to create an intersting cursor effect on hover tha inverts the content's color. Works best with white / black cursors.
+You can use CSS mix-blend-mode with the style props to create an intersting cursor effect on hover that inverts the content's color. Works best with white / black cursors.
 
 ```
 <AnimatedCursor
