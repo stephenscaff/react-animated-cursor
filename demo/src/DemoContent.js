@@ -107,13 +107,13 @@ export default function Content() {
       <p>A few options to checkout</p>
       <ul>
         <li>
-          <a href="/">Default</a>
+          <a href="/?cursor=default">Default</a>
         </li>
         <li>
-          <a href="/donut">Donut</a>
+          <a href="/?cursor=donut">Donut</a>
         </li>
         <li>
-          <a href="/blendmode">Blendmode</a>
+          <a href="/?cursor=blendmode">Blendmode</a>
         </li>
       </ul>
     </section>

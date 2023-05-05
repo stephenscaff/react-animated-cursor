@@ -248,7 +248,7 @@ A donut style cursor basically resembles a donut. You can easily create on by ap
 />
 ```
 
-[Donut Demo→](https://stephenscaff.github.io/react-animated-cursor/donut)
+[Donut Demo→](https://stephenscaff.github.io/react-animated-cursor?cursor=donut)
 
 <br/>
 
@@ -270,7 +270,7 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 />
 ```
 
-[Blend Mode Demo→](https://stephenscaff.github.io/react-animated-cursor/blendmode)
+[Blend Mode Demo→](https://stephenscaff.github.io/react-animated-cursor?cursor=donut)
 
 <br/>
 
