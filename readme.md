@@ -26,7 +26,7 @@ A React functional component that replaces the native cursor with a custom anima
 
 Options exist for modifying the color and scaling of the cursor elements (see props/options below). Style props for in the inner and outer cursor allow you to easily create unique cursor types.
 
-[Live Demo→](https://stephenscaff.github.io/react-animated-cursor/donut)
+[Live Demo→](https://stephenscaff.github.io/react-animated-cursor/)
 
 <br/>
 
@@ -270,7 +270,7 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 />
 ```
 
-[Blend Mode Demo→](https://stephenscaff.github.io/react-animated-cursor?cursor=donut)
+[Blend Mode Demo→](https://stephenscaff.github.io/react-animated-cursor?cursor=blendmode)
 
 <br/>
 
