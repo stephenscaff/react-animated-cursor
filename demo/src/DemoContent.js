@@ -10,9 +10,12 @@ const styles = {
     fontWeight: 800,
     textAlign: 'center'
   },
+  subtitle: {
+    textAlign: 'center'
+  },
   sep: {
     border: 0,
-    margin: '0 auto 2em',
+    margin: '2em auto',
     height: 2,
     width: '3em',
     backgroundColor: 'rgba(255, 255, 255, 0.5)'
@@ -22,37 +25,51 @@ const styles = {
 export default function Content() {
   return (
     <section style={styles.section}>
-      <h1 style={styles.title}>
-        Animated Cursor <br />
-        React Component
-      </h1>
+      <p style={styles.subtitle}>
+        <a href="https://github.com/stephenscaff/react-animated-cursor">Repo</a>{' '}
+        |{' '}
+        <a href="https://github.com/stephenscaff/react-animated-cursor/blob/master/readme.md">
+          Docs
+        </a>
+      </p>
+      <h1 style={styles.title}>React Animated Cursor</h1>
+      <p style={styles.subtitle}>
+        A component by <a href="http://stephenscaff.com/">Stephen Scaff</a>
+      </p>
       <hr style={styles.sep} />
       <p>
-        An animated cursor component made as a <a>Functional Component</a>,
-        using <a>React hooks</a> like <a>useEffect</a> to handle event
-        listeners, local state, an <a>RequestAnimationFrame</a> management.
+        React animated cursor is a React component that creates a custom cursor
+        experience. You can craft a variety of cursor types, and animate
+        movement, hover and clicking properties.
       </p>
       <p>
         Hover over these <a>links</a> and see how that animated cursor does it's
-        thing. Kinda nifty, right? Not right for most things, but a nice move
-        for more interactive-type projects. Here's another{' '}
-        <a href="">link to nowhere.</a>
+        thing. Kinda nifty, right? Not applicable to most projects, but a nice
+        move for more interactive/immersive stuff... if you're into that kinda
+        thing? Here's another <a href="">link to nowhere.</a>
       </p>
+      <p>Essentially, the cursor consists:</p>
+      <ul>
+        <li>
+          An inner dot (<code>cursorInner</code>)
+        </li>
+        <li>
+          An outer, outlining circle (<code>cursorOuter</code>), with slight
+          opacity based on the dot/primary color
+        </li>
+        <li>
+          An inversely scaling effect between the inner and outer cursor parts
+          on click or link hover
+        </li>
+      </ul>
       <p>
-        Play with the <a>css variables</a> to influence the cursor, cursor
-        outline size, and amount of scale on target hover. I suppose those could
-        all be <a>props</a> with some. Click in the margin to check click
-        animation.
+        Style props exist for in the inner and outer cursor allow you to easily
+        create unique cursor types. Play with <a>css variables</a> to influence
+        the cursor, cursor outline size, and amount of scale on target hover.
       </p>
-      <p>
-        There's probably a better way to manage these kind of events, but this
-        was the best I could come up with. Recently started mucking more with
-        React cause I'm down with the simplicity of Functional Components and
-        Hooks. And if you read the docs, the future ain't class components. So,
-        best get on them functions.
-      </p>
+
       <h3>Clickables</h3>
-      <p>Let's do a text of all clickable elements:</p>
+      <p>Test of clickable elements:</p>
       <ul>
         <li>
           <a>Basic Link Tag</a>
@@ -83,6 +100,20 @@ export default function Content() {
         </li>
         <li>
           <div className="link">Class name ="link"</div>
+        </li>
+      </ul>
+
+      <h3>Demo Cursors</h3>
+      <p>A few options to checkout</p>
+      <ul>
+        <li>
+          <a href="/">Default</a>
+        </li>
+        <li>
+          <a href="/donut">Donut</a>
+        </li>
+        <li>
+          <a href="/blendmode">Blendmode</a>
         </li>
       </ul>
     </section>

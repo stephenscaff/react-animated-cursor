@@ -26,7 +26,7 @@ A React functional component that replaces the native cursor with a custom anima
 
 Options exist for modifying the color and scaling of the cursor elements (see props/options below). Style props for in the inner and outer cursor allow you to easily create unique cursor types.
 
-[Live Demo](https://stephenscaff.github.io/react-animated-cursor/)
+[Live Demo→](https://stephenscaff.github.io/react-animated-cursor/donut)
 
 <br/>
 
@@ -157,46 +157,44 @@ const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
 
 ## 🧬 Options
 
-| Option          | Type   | Description                                                    | Default                                                                                                                                                                            |
-| --------------- | ------ | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `color`         | string | rgb value                                                      | `220, 90, 90`                                                                                                                                                                      |
-| `outerAlpha`    | number | amount of alpha transparency for outer cursor dot              | `0.4`                                                                                                                                                                              |
-| `innerSize`     | number | Size (px) of inner cursor dot                                  | `8`                                                                                                                                                                                |
-| `outerSize`     | number | Size (px) of outer cursor outline                              | `8`                                                                                                                                                                                |
-| `innerScale`    | number | amount dot scales on click or link hover                       | `0.7`                                                                                                                                                                              |
-| `outerScale`    | number | amount outer dot scales on click or link hover                 | `5`                                                                                                                                                                                |
-| `innerStyle`    | object | provides custom styles / css to inner cursor                   | `null`                                                                                                                                                                             |
-| `outerStyle`    | object | provides custom styles / css to outer cursor                   | `null`                                                                                                                                                                             |
-| `trailingSpeed` | number | Outer dot's trailing speed                                     | `8`                                                                                                                                                                                |
+<style>
+table th:first-of-type {
+    width: 10%;
+}
+table th:nth-of-type(2) {
+    width: 10%;
+}
+table th:nth-of-type(3) {
+    width: 50%;
+}
+table th:nth-of-type(4) {
+    width: 30%;
+}
+</style>
+<!-- prettier-ignore -->
+| Option | Type | Description      | Default |
+| ----   | ---- | -------- | -------|
 | `clickables`    | array  | Collection of selectors cursor that trigger cursor interaction | `['a', 'input[type="text"]', 'input[type="email"]', 'input[type="number"]', 'input[type="submit"]', 'input[type="image"]', 'label[for]', 'select', 'textarea', 'button', '.link']` |
+| `color`      | string | rgb value  | `220, 90, 90` |
+| `innerScale` | number | amount dot scales on click or link hover | `0.7` |
+| `innerSize`  | number | Size (px) of inner cursor dot | `8` |
+| `innerStyle` | object | provides custom styles / css to inner cursor  | `null` |
+| `outerAlpha` | number | amount of alpha transparency for outer cursor dot    | `0.4`  |
+| `outerScale` | number | amount outer dot scales on click or link hover  | `5`  |
+| `outerSize`  | number | Size (px) of outer cursor outline  | `8` |
+| `outerStyle` | object | provides custom styles / css to outer cursor  | `null` |
+| `showSystemCursir` | boolean | Show system/brower cursor | `false` |
+| `trailingSpeed` | number | Outer dot's trailing speed | `8` |
 
 <br/>
 
 ## 🎨 Cursor Types
 
-You can use the `innerStyle` and `outerStyle` props to provide custom styles and create a variery of custom cursor types. For example:
-
-### Donut Cursor
-
-A donut style cursor basically resembles a donut. You can easily create on by applying using the `outerStyle` props to apply an outer border
-
-```
-<AnimatedCursor
-  color="255,255,255"
-  innerSize={8}
-  outerSize={35}
-  innerScale={1}
-  outerScale={1.7}
-  outerAlpha={0}
-  outerStyle={{
-    border: '3px solid #fff'
-  }}
-/>
-```
+You can use the `innerStyle` and `outerStyle` props to provide custom styles and create a variery of custom cursor types. Additionally, you can pass custom styles and css vars to create unique cursors or update style based on events.
 
 ### Dynamic Styles
 
-Use CSS Vars with `innerStyle` and `outerStyle` props to create dynamic styles values that you can easily update.
+Use CSS variables with `innerStyle` and `outerStyle` props to create dynamic styles that you can easily update.
 For example, perhaps you have a light and dark mode experience and what your cursor to also adapt it's colors.
 
 **CSS Vars**
@@ -220,7 +218,6 @@ html.dark-mode {
   innerScale={1}
   outerScale={1.7}
   outerAlpha={0}
-  hasBlendMode={true}
   outerStyle={{
     border: '3px solid var(--cursor-color)'
   }}
@@ -230,7 +227,32 @@ html.dark-mode {
 />
 ```
 
-### BlendMode Cursor
+### Donut Cursor
+
+A donut style cursor basically resembles a donut. You can easily create on by applying using the `outerStyle` props to apply an outer border
+
+```
+<AnimatedCursor
+  innerSize={8}
+  outerSize={35}
+  innerScale={1}
+  outerScale={2}
+  outerAlpha={0}
+  hasBlendMode={true}
+  innerStyle={{
+    backgroundColor: 'var(--cursor-color)'
+  }}
+  outerStyle={{
+    border: '3px solid var(--cursor-color)'
+  }}
+/>
+```
+
+[Donut Demo→](https://stephenscaff.github.io/react-animated-cursor/donut)
+
+<br/>
+
+### Blend Mode Cursor
 
 You can use CSS mix-blend-mode with the style props to create an intersting cursor effect on hover that inverts the content's color. Works best with white / black cursors.
 
@@ -242,12 +264,13 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
   innerScale={1}
   outerScale={1.7}
   outerAlpha={0}
-  hasBlendMode={true}
   outerStyle={{
     mixBlendMode: 'exclusion'
   }}
 />
 ```
+
+[Blend Mode Demo→](https://stephenscaff.github.io/react-animated-cursor/blendmode)
 
 <br/>
 
@@ -255,19 +278,24 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 
 ### Mobile / Touch
 
-`helpers/isDevice.js` uses UA sniffing to determine if on a common device so we can avoid rendering cursors
+`helpers/isDevice.js` uses UA sniffing to determine if on a common device so we can avoid rendering cursors. Yes... I know, there are other and probably better ways to handle this. Whatevers.
+
 <br/>
 
 ## 📅 To Dos
 
 - ~~Either remove on mobile, or provide touch events.~~
-- ~~Separate click and hover scalings to provide a different scaling when clicking on links~~
-- ~~Fix transform blur in Safari~~
+- ~~Separate click and hover scalings to provide a different scaling when clicking on links/clickables~~
+- ~~Fix transform blur in Safari, which may mean migrating from `scale` to a `width` &`height` update~~ 4/4/23
 - ~~Make clickables (cursor targets / selectors) a prop~~
 - ~~Add PropType checks~~
-- ~~Add PropType checks~~
 - ~~Open cursor styles as props~~
+- ~~Add ability to maintain system cursor for the squeamish~~ 4/4/23
+- Options to control cusror transition speed and bezier
 - Solution for impacting state during route changes
 - Convert to TS
+- Add some proper tests
+
+<br/>
 
 Have fun ya'll.
