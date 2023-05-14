@@ -183,7 +183,7 @@ table th:nth-of-type(4) {
 | `outerScale` | number | amount outer dot scales on click or link hover  | `5`  |
 | `outerSize`  | number | Size (px) of outer cursor outline  | `8` |
 | `outerStyle` | object | provides custom styles / css to outer cursor  | `null` |
-| `showSystemCursir` | boolean | Show system/brower cursor | `false` |
+| `showSystemCursor` | boolean | Show system/brower cursor | `false` |
 | `trailingSpeed` | number | Outer dot's trailing speed | `8` |
 
 <br/>
