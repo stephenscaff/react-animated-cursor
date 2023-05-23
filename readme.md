@@ -157,7 +157,7 @@ const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
 
 ## 🧬 Options
 
-<style>
+<style >
 table th:first-of-type {
     width: 10%;
 }
@@ -291,9 +291,10 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 - ~~Add PropType checks~~
 - ~~Open cursor styles as props~~
 - ~~Add ability to maintain system cursor for the squeamish~~ 4/4/23
+- ~~Migrate to TS~~
 - Options to control cusror transition speed and bezier
 - Solution for impacting state during route changes
-- Convert to TS
+
 - Add some proper tests
 
 <br/>
