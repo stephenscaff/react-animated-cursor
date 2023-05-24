@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from 'react'
 import AnimatedCursor from '../../lib'
 import DemoContent from './DemoContent'
+import DemoHeader from './DemoHeader'
+import DemoFooter from './DemoFooter'
 import './demo-styles.css'
 
 export default function App() {
@@ -22,6 +24,7 @@ export default function App() {
           innerScale={1}
           outerScale={2}
           outerAlpha={0}
+          showSystemCursor={true}
           hasBlendMode={true}
           outerStyle={{
             border: '3px solid var(--cursor-color)'
@@ -49,7 +52,9 @@ export default function App() {
           }}
         />
       )}
+      <DemoHeader />
       <DemoContent />
+      <DemoFooter />
     </div>
   )
 }

@@ -1,58 +1,55 @@
 {
-	"env": {
-		"node": 1,
-		"browser": 1,
-		"es6": true,
-		"commonjs": true
-	},
-	"plugins": [
-		"react",
-		"react-hooks",
-		"prettier"
-	],
-	"extends": [
-		"eslint:recommended",
-		"plugin:react/recommended",
-		"plugin:react-hooks/recommended",
-		"plugin:prettier/recommended"
-	],
-	"settings": {
-		"react": {
-			"version": "16.13.1"
-		},
-		"import/resolver": {
-			"node": {
-				"paths": [
-					"./"
-				]
-			}
-		}
-	},
-	"ignorePatterns": ["temp.js", "node_modules"],
-	"parserOptions": {
-		"ecmaVersion": 9,
-		"sourceType": "module",
-		"ecmaFeatures": {
-			"jsx": true,
-			"experimentalObjectRestSpread": true,
-			"modules": true
-		}
-	},
-	"rules": {
-		"prettier/prettier": "error",
-		"react/prefer-stateless-function": 1,
-		"linebreak-style": 0,
-		"no-underscore-dangle": 0,
-		"react/no-find-dom-node": 0,
-		"react/prop-types": 0,
-		"no-nested-ternary": 0,
-		"react/no-unescaped-entities": 0,
-		"react-hooks/rules-of-hooks": "error",
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true,
+    "commonjs": true
+  },
+  "plugins": ["react", "react-hooks", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "settings": {
+    "react": {
+      "version": "18.2.0"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["./"]
+      }
+    }
+  },
+  "ignorePatterns": ["temp.js", "node_modules"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "plugins": ["@typescript-eslint"],
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true,
+      "modules": true
+    }
+  },
+  "rules": {
+    "linebreak-style": 0,
+    "no-underscore-dangle": 0,
+    "no-nested-ternary": 0,
+    "prettier/prettier": "error",
     "react-hooks/exhaustive-deps": "warn",
-		"react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error"
-	},
-	"globals": {
-		"grecaptcha": "readonly"
-	}
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-uses-react": "off",
+    "react/jsx-uses-vars": "error",
+    "react/no-unescaped-entities": 0,
+    "react/prefer-stateless-function": 1
+  },
+  "globals": {
+    "grecaptcha": "readonly"
+  }
 }

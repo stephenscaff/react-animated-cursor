@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react'
-import PropTypes from 'prop-types'
+import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
 import { useEventListener } from './hooks/useEventListener'
-import IsDevice from './helpers/IsDevice.js'
+import IsDevice from './helpers/isDevice'
+import {
+  AnimatedCursorProps,
+  AnimatedCursorCoordinates
+} from './AnimatedCursor.types'
 
 /**
  * Cursor Core
@@ -10,17 +13,18 @@ import IsDevice from './helpers/IsDevice.js'
  *
  * @author Stephen Scaff (github.com/stephenscaff)
  *
- * @param {array}  clickables - array of clickable selectors
- * @param {string} color - rgb color value
- * @param {number} innerScale - inner cursor scale amount
- * @param {number} innerSize - inner cursor size in px
- * @param {object} innerStyle - style object for inner cursor
- * @param {number} outerAlpha - level of alpha transparency for color
- * @param {number} outerScale - outer cursor scale amount
- * @param {number} outerSize - outer cursor size in px
- * @param {object} outerStyle - style object for outer cursor
- * @param {bool}   showSystemCursor - show/hide system cursor
- * @param {number} trailingSpeed - speed the outer cursor trails at
+ * @param {object} obj
+ * @param {array}  obj.clickables - array of clickable selectors
+ * @param {string} obj.color - rgb color value
+ * @param {number} obj.innerScale - inner cursor scale amount
+ * @param {number} obj.innerSize - inner cursor size in px
+ * @param {object} obj.innerStyle - style object for inner cursor
+ * @param {number} obj.outerAlpha - level of alpha transparency for color
+ * @param {number} obj.outerScale - outer cursor scale amount
+ * @param {number} obj.outerSize - outer cursor size in px
+ * @param {object} obj.outerStyle - style object for outer cursor
+ * @param {bool}   obj.showSystemCursor - show/hide system cursor1
+ * @param {number} obj.trailingSpeed - speed the outer cursor trails at
  */
 function CursorCore({
   clickables = [
@@ -46,24 +50,28 @@ function CursorCore({
   outerStyle,
   showSystemCursor = false,
   trailingSpeed = 8
-}) {
-  const cursorOuterRef = useRef()
-  const cursorInnerRef = useRef()
-  const requestRef = useRef()
-  const previousTimeRef = useRef()
-  const [coords, setCoords] = useState({ x: 0, y: 0 })
+}: AnimatedCursorProps) {
+  const cursorOuterRef = useRef<HTMLDivElement>(null)
+  const cursorInnerRef = useRef<HTMLDivElement>(null)
+  const requestRef = useRef(null)
+  const previousTimeRef = useRef(null)
+  const [coords, setCoords] = useState<AnimatedCursorCoordinates>({
+    x: 0,
+    y: 0
+  })
   const [isVisible, setIsVisible] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const [isActiveClickable, setIsActiveClickable] = useState(false)
-  let endX = useRef(0)
-  let endY = useRef(0)
+  const endX = useRef(0)
+  const endY = useRef(0)
 
   /**
    * Primary Mouse move event
-   * @param {number} clientX - MouseEvent.clientx
-   * @param {number} clientY - MouseEvent.clienty
+   * @param {number} clientX - MouseEvent.clientX
+   * @param {number} clientY - MouseEvent.clientY
    */
-  const onMouseMove = useCallback(({ clientX, clientY }) => {
+  const onMouseMove = useCallback((event: MouseEvent) => {
+    const { clientX, clientY } = event
     setCoords({ x: clientX, y: clientY })
     cursorInnerRef.current.style.top = `${clientY}px`
     cursorInnerRef.current.style.left = `${clientX}px`
@@ -73,7 +81,7 @@ function CursorCore({
 
   // Outer Cursor Animation Delay
   const animateOuterCursor = useCallback(
-    (time) => {
+    (time: number) => {
       if (previousTimeRef.current !== undefined) {
         coords.x += (endX.current - coords.x) / trailingSpeed
         coords.y += (endY.current - coords.y) / trailingSpeed
@@ -86,21 +94,36 @@ function CursorCore({
     [requestRef] // eslint-disable-line
   )
 
-  const getScaleAmount = (orignalSize, scaleAmount) => {
-    return parseInt(orignalSize * scaleAmount) + 'px'
-  }
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const scaleBySize = useCallback((cursorRef, orignalSize, scaleAmount) => {
-    cursorRef.style.height = getScaleAmount(orignalSize, scaleAmount)
-    cursorRef.style.width = getScaleAmount(orignalSize, scaleAmount)
-  })
-
-  // RAF for animateOuterCursor
+  // Outer cursor RAF setup / cleanup
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animateOuterCursor)
     return () => cancelAnimationFrame(requestRef.current)
   }, [animateOuterCursor])
+
+  /**
+   * Calculates amount to scale cursor in px3
+   * @param {number} orignalSize - starting size
+   * @param {number} scaleAmount - Amount to scale
+   * @returns {String} Scale amount in px
+   */
+  const getScaleAmount = (orignalSize: number, scaleAmount: number) => {
+    return `${parseInt(String(orignalSize * scaleAmount))}px`
+  }
+
+  // Scales cursor by HxW
+  const scaleBySize = useCallback(
+    (
+      cursorRef: HTMLDivElement | null,
+      orignalSize: number,
+      scaleAmount: number
+    ) => {
+      if (cursorRef) {
+        cursorRef.style.height = getScaleAmount(orignalSize, scaleAmount)
+        cursorRef.style.width = getScaleAmount(orignalSize, scaleAmount)
+      }
+    },
+    []
+  )
 
   // Mouse Events State updates
   const onMouseDown = useCallback(() => setIsActive(true), [])
@@ -143,20 +166,22 @@ function CursorCore({
   // Cursor Visibility Statea
   useEffect(() => {
     if (isVisible) {
-      cursorInnerRef.current.style.opacity = 1
-      cursorOuterRef.current.style.opacity = 1
+      cursorInnerRef.current.style.opacity = '1'
+      cursorOuterRef.current.style.opacity = '1'
     } else {
-      cursorInnerRef.current.style.opacity = 0
-      cursorOuterRef.current.style.opacity = 0
+      cursorInnerRef.current.style.opacity = '0'
+      cursorOuterRef.current.style.opacity = '0'
     }
   }, [isVisible])
 
   // Click event state updates
   useEffect(() => {
-    const clickableEls = document.querySelectorAll(clickables.join(','))
+    const clickableEls = document.querySelectorAll<HTMLElement>(
+      clickables.join(',')
+    )
 
     clickableEls.forEach((el) => {
-      el.style.cursor = 'none'
+      if (!showSystemCursor) el.style.cursor = 'none'
 
       el.addEventListener('mouseover', () => {
         setIsActive(true)
@@ -198,36 +223,33 @@ function CursorCore({
         })
       })
     }
-  }, [isActive, clickables])
+  }, [isActive, clickables, showSystemCursor])
+
+  const coreStyles: CSSProperties = {
+    zIndex: 999,
+    display: 'block',
+    position: 'fixed',
+    borderRadius: '50%',
+    pointerEvents: 'none',
+    transform: 'translate(-50%, -50%)',
+    transition:
+      'opacity 0.15s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out'
+  }
 
   // Cursor Styles
   const styles = {
     cursorInner: {
-      zIndex: 999,
-      position: 'fixed',
-      display: 'block',
       width: innerSize,
       height: innerSize,
       backgroundColor: `rgba(${color}, 1)`,
-      borderRadius: '50%',
-      pointerEvents: 'none',
-      transform: 'translate(-50%, -50%)',
-      transition:
-        'opacity 0.15s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out',
+      ...coreStyles,
       ...(innerStyle && innerStyle)
     },
     cursorOuter: {
-      zIndex: 999,
-      position: 'fixed',
-      display: 'block',
       width: outerSize,
       height: outerSize,
       backgroundColor: `rgba(${color}, ${outerAlpha})`,
-      borderRadius: '50%',
-      pointerEvents: 'none',
-      transform: 'translate(-50%, -50%)',
-      transition:
-        'opacity 0.15s ease-in-out, height 0.2s ease-in-out, width 0.2s ease-in-out',
+      ...coreStyles,
       ...(outerStyle && outerStyle)
     }
   }
@@ -236,10 +258,10 @@ function CursorCore({
   if (!showSystemCursor) document.body.style.cursor = 'none'
 
   return (
-    <React.Fragment>
+    <>
       <div ref={cursorOuterRef} style={styles.cursorOuter} />
       <div ref={cursorInnerRef} style={styles.cursorInner} />
-    </React.Fragment>
+    </>
   )
 }
 
@@ -259,9 +281,9 @@ function AnimatedCursor({
   outerStyle,
   showSystemCursor,
   trailingSpeed
-}) {
+}: AnimatedCursorProps) {
   if (typeof navigator !== 'undefined' && IsDevice.any()) {
-    return <React.Fragment></React.Fragment>
+    return <></>
   }
   return (
     <CursorCore
@@ -278,20 +300,6 @@ function AnimatedCursor({
       trailingSpeed={trailingSpeed}
     />
   )
-}
-
-AnimatedCursor.propTypes = {
-  clickables: PropTypes.array,
-  color: PropTypes.string,
-  innerScale: PropTypes.number,
-  innerSize: PropTypes.number,
-  innerStyle: PropTypes.object,
-  outerAlpha: PropTypes.number,
-  outerScale: PropTypes.number,
-  outerSize: PropTypes.number,
-  outerStyle: PropTypes.object,
-  showSystemCursor: PropTypes.bool,
-  trailingSpeed: PropTypes.number
 }
 
 export default AnimatedCursor
