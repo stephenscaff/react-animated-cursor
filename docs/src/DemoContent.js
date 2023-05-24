@@ -8,10 +8,11 @@ const s = {
     margin: '0 auto 1em'
   },
   title: {
-    marginBottom: '0.7em',
+    marginBottom: '1em',
     fontSize: '3em',
     fontWeight: 800,
-    textAlign: 'center'
+    textAlign: 'center',
+    lineHeight: 1
   },
   pretitle: {
     textAlign: 'center'

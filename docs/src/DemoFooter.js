@@ -4,7 +4,7 @@ const s = {
   footer: {
     position: 'relative',
     width: '100%',
-    padding: '6em  0',
+    padding: '6em 0 3em',
     backgroundColor: '#2f2c2c',
     textAlign: 'center'
   },
@@ -20,8 +20,11 @@ const s = {
     border: '0',
     backgroundColor: 'rgba(255,255,255,0.4)'
   },
+  footer__copy: {
+    fontSize: '0.8em'
+  },
   footer__icon: {
-    width: '3em',
+    width: '2em',
     margin: '0 auto',
     textAlign: 'center'
   },

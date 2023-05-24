@@ -23,31 +23,29 @@ const s = {
   },
   nav__link: {
     marginLeft: '1em',
+    fontSize: '0.8em',
     fontWeight: '400'
   },
   brand: {
     display: 'flex',
     alignItems: 'center'
   },
-  brand__type: {
-    fontWeight: '700'
-  },
-  brand__icon: {
+  brand__icon_inner: {
+    position: 'relative',
+    right: '-5px',
     display: 'block',
-    height: '8px',
-    width: '8px',
-    marginRight: '10px',
+    height: '10px',
+    width: '10px',
     borderRadius: '100%',
     backgroundColor: '#fff'
   },
   brand__icon_outer: {
     position: 'relative',
-    left: '-7px',
-    top: '-6px',
+    left: '-10px',
+    top: '-8px',
     display: 'block',
     height: '6px',
     width: '6px',
-    marginRight: '10px',
     borderRadius: '100%',
     backgroundColor: 'rgba(255,255,255,0.4)'
   }
@@ -58,10 +56,8 @@ export default function DemoHeader() {
     <section style={s.header}>
       <div style={s.header__grid}>
         <div style={s.brand}>
-          <span style={s.brand__icon}>
-            <span style={s.brand__icon_outer}></span>
-          </span>
-          <span style={s.brand__type}>React Animated Cursor</span>
+          <span style={s.brand__icon_inner}></span>
+          <span style={s.brand__icon_outer}></span>
         </div>
         <nav style={s.nav}>
           <a
