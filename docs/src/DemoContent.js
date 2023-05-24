@@ -1,13 +1,19 @@
 import React from 'react'
 
-const styles = {
+const s = {
   section: {
-    padding: '4em 0'
+    padding: '6em 0',
+    width: '80%',
+    maxWidth: '36em',
+    margin: '0 auto 1em'
   },
   title: {
     marginBottom: '0.7em',
     fontSize: '3em',
     fontWeight: 800,
+    textAlign: 'center'
+  },
+  pretitle: {
     textAlign: 'center'
   },
   subtitle: {
@@ -24,19 +30,13 @@ const styles = {
 
 export default function Content() {
   return (
-    <section style={styles.section}>
-      <p style={styles.subtitle}>
-        <a href="https://github.com/stephenscaff/react-animated-cursor">Repo</a>{' '}
-        |{' '}
-        <a href="https://github.com/stephenscaff/react-animated-cursor/blob/master/readme.md">
-          Docs
-        </a>
-      </p>
-      <h1 style={styles.title}>React Animated Cursor</h1>
-      <p style={styles.subtitle}>
+    <section style={s.section}>
+      <p style={s.pretitle}>Demos</p>
+      <h1 style={s.title}>React Animated Cursor</h1>
+      <p style={s.subtitle}>
         A component by <a href="http://stephenscaff.com/">Stephen Scaff</a>
       </p>
-      <hr style={styles.sep} />
+      <hr style={s.sep} />
       <p>
         React animated cursor is a React component that creates a custom cursor
         experience. You can craft a variety of cursor types, and animate
@@ -68,8 +68,22 @@ export default function Content() {
         the cursor, cursor outline size, and amount of scale on target hover.
       </p>
 
-      <h3>Clickables</h3>
-      <p>Test of clickable elements:</p>
+      <h3>Demo Cursors</h3>
+      <p>Here's a few cursor types you can create to test</p>
+      <ul>
+        <li>
+          <a href="?cursor=default">Default</a>
+        </li>
+        <li>
+          <a href="?cursor=donut">Donut</a>
+        </li>
+        <li>
+          <a href="?cursor=blendmode">Blendmode</a>
+        </li>
+      </ul>
+
+      <h3>Test Clickables</h3>
+      <p>Here's a collection of test clickable elements to hover over:</p>
       <ul>
         <li>
           <a>Basic Link Tag</a>
@@ -100,20 +114,6 @@ export default function Content() {
         </li>
         <li>
           <div className="link">Class name ="link"</div>
-        </li>
-      </ul>
-
-      <h3>Demo Cursors</h3>
-      <p>A few options to checkout</p>
-      <ul>
-        <li>
-          <a href="?cursor=default">Default</a>
-        </li>
-        <li>
-          <a href="?cursor=donut">Donut</a>
-        </li>
-        <li>
-          <a href="?cursor=blendmode">Blendmode</a>
         </li>
       </ul>
     </section>

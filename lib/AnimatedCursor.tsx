@@ -12,6 +12,7 @@ import {
  * of an inner and outer dot that scale inversely based on hover or click.
  *
  * @author Stephen Scaff (github.com/stephenscaff)
+ *
  * @param {object} obj
  * @param {array}  obj.clickables - array of clickable selectors
  * @param {string} obj.color - rgb color value
@@ -66,8 +67,8 @@ function CursorCore({
 
   /**
    * Primary Mouse move event
-   * @param {number} clientX - MouseEvent.clientx
-   * @param {number} clientY - MouseEvent.clienty
+   * @param {number} clientX - MouseEvent.clientX
+   * @param {number} clientY - MouseEvent.clientY
    */
   const onMouseMove = useCallback((event: MouseEvent) => {
     const { clientX, clientY } = event
@@ -93,15 +94,23 @@ function CursorCore({
     [requestRef] // eslint-disable-line
   )
 
+  // Outer cursor RAF setup / cleanup
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animateOuterCursor)
     return () => cancelAnimationFrame(requestRef.current)
   }, [animateOuterCursor])
 
+  /**
+   * Calculates amount to scale cursor in px3
+   * @param {number} orignalSize - starting size
+   * @param {number} scaleAmount - Amount to scale
+   * @returns {String} Scale amount in px
+   */
   const getScaleAmount = (orignalSize: number, scaleAmount: number) => {
     return `${parseInt(String(orignalSize * scaleAmount))}px`
   }
 
+  // Scales cursor by HxW
   const scaleBySize = useCallback(
     (
       cursorRef: HTMLDivElement | null,
@@ -172,7 +181,7 @@ function CursorCore({
     )
 
     clickableEls.forEach((el) => {
-      el.style.cursor = 'none'
+      if (!showSystemCursor) el.style.cursor = 'none'
 
       el.addEventListener('mouseover', () => {
         setIsActive(true)
@@ -216,7 +225,7 @@ function CursorCore({
     }
   }, [isActive, clickables])
 
-  const mainStyles: CSSProperties = {
+  const coreStyles: CSSProperties = {
     zIndex: 999,
     display: 'block',
     position: 'fixed',
@@ -233,14 +242,14 @@ function CursorCore({
       width: innerSize,
       height: innerSize,
       backgroundColor: `rgba(${color}, 1)`,
-      ...mainStyles,
+      ...coreStyles,
       ...(innerStyle && innerStyle)
     },
     cursorOuter: {
       width: outerSize,
       height: outerSize,
       backgroundColor: `rgba(${color}, ${outerAlpha})`,
-      ...mainStyles,
+      ...coreStyles,
       ...(outerStyle && outerStyle)
     }
   }
