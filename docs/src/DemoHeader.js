@@ -22,7 +22,8 @@ const s = {
     marginLeft: 'auto'
   },
   nav__link: {
-    marginLeft: '1em'
+    marginLeft: '1em',
+    fontWeight: '400'
   },
   brand: {
     display: 'flex',

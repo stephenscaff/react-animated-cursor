@@ -62,8 +62,8 @@ function CursorCore({
   const [isVisible, setIsVisible] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const [isActiveClickable, setIsActiveClickable] = useState(false)
-  let endX = useRef(0)
-  let endY = useRef(0)
+  const endX = useRef(0)
+  const endY = useRef(0)
 
   /**
    * Primary Mouse move event
@@ -223,7 +223,7 @@ function CursorCore({
         })
       })
     }
-  }, [isActive, clickables])
+  }, [isActive, clickables, showSystemCursor])
 
   const coreStyles: CSSProperties = {
     zIndex: 999,

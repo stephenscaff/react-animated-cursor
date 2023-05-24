@@ -1,32 +1,32 @@
 const IsDevice = (() => {
-  if (typeof navigator === 'undefined') return;
+  if (typeof navigator === 'undefined') return
 
-  let ua = navigator.userAgent;
+  const ua = navigator.userAgent
 
   return {
     info: ua,
 
     Android() {
-      return ua.match(/Android/i);
+      return ua.match(/Android/i)
     },
     BlackBerry() {
-      return ua.match(/BlackBerry/i);
+      return ua.match(/BlackBerry/i)
     },
     IEMobile() {
-      return ua.match(/IEMobile/i);
+      return ua.match(/IEMobile/i)
     },
     iOS() {
-      return ua.match(/iPhone|iPad|iPod/i);
+      return ua.match(/iPhone|iPad|iPod/i)
     },
     iPad() {
       return (
         ua.match(/Mac/) &&
         navigator.maxTouchPoints &&
         navigator.maxTouchPoints > 2
-      );
+      )
     },
     OperaMini() {
-      return ua.match(/Opera Mini/i);
+      return ua.match(/Opera Mini/i)
     },
 
     /**
@@ -40,10 +40,10 @@ const IsDevice = (() => {
         IsDevice.iPad() ||
         IsDevice.OperaMini() ||
         IsDevice.IEMobile()
-      );
+      )
     }
-  };
-})();
+  }
+})()
 
 // Export
-export default IsDevice;
+export default IsDevice
