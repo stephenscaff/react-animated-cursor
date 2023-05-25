@@ -144,10 +144,21 @@ export default function App() {
 In Next's SSR environment, you may have to leverage a `Dynamic Import`.
 
 ```
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
+
+const AnimatedCursor = dynamic(() =>
+  import('react-animated-cursor').then((mod) => mod.AnimatedCursor),
+);
+<AnimatedCursor/>
+```
+
+#### With no SSR
+
+```
+import dynamic from 'next/dynamic';
 
 const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
-  ssr: false
+    ssr: false,
 });
 
 <AnimatedCursor/>
