@@ -1,6 +1,6 @@
 # React Animated Cursor
 
-A React functional component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). As this is a function component, hooks manage events, local state and RAF.
+A React component that replaces the native cursor with a custom animated [jawn](https://www.urbandictionary.com/define.php?term=Jawn). Available options and props allow you to easily craft a unique cursor experience.
 
 ## Contents
 
