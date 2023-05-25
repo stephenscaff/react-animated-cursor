@@ -28496,6 +28496,6 @@ $RefreshReg$(_c, "DemoHeader");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","kQxkE","8P9Ai"], "8P9Ai", "parcelRequireabf7")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}]},["1xC6H","kQxkE","8P9Ai"], "8P9Ai", "parcelRequire77fe")
 
 //# sourceMappingURL=index.f154b909.js.map
