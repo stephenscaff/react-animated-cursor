@@ -53,20 +53,6 @@ export default function App() {
 }
 ```
 
-### Add to Next.js
-
-If using in Next, you may have to leverage dynamic imports.
-
-```
-import dynamic from 'next/dynamic'
-
-const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
-  ssr: false
-});
-
-<AnimatedCursor/>
-```
-
 <br>
 
 ## 🤖 Commands
