@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react'
 
 export interface AnimatedCursorOptions {
+  text?: string
   color?: string
   innerScale?: number
   innerSize?: number

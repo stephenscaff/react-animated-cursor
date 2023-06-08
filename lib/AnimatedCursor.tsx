@@ -49,6 +49,7 @@ function CursorCore({
     'button',
     '.link'
   ],
+  text,
   color = '220, 90, 90',
   innerScale = 0.6,
   innerSize = 8,
@@ -62,6 +63,7 @@ function CursorCore({
 }: AnimatedCursorProps) {
   const defaultOptions = useMemo(
     () => ({
+      text,
       color,
       innerScale,
       innerSize,
@@ -72,6 +74,7 @@ function CursorCore({
       outerStyle
     }),
     [
+      text,
       color,
       innerScale,
       innerSize,
@@ -317,9 +320,9 @@ function CursorCore({
   // Cursor Styles
   const styles = {
     cursorInner: {
-      width: options.innerSize,
-      height: options.innerSize,
-      backgroundColor: `rgba(${options.color}, 1)`,
+      width: !text ? options.innerSize : 'auto',
+      height: !text ? options.innerSize : 'auto',
+      backgroundColor: !text ? `rgba(${options.color}, 1)` : 'transparent',
       ...coreStyles,
       ...(options.innerStyle && options.innerStyle)
     },
@@ -338,7 +341,16 @@ function CursorCore({
   return (
     <>
       <div ref={cursorOuterRef} style={styles.cursorOuter} />
-      <div ref={cursorInnerRef} style={styles.cursorInner} />
+      <div ref={cursorInnerRef} style={styles.cursorInner}>
+        <div
+          style={{
+            opacity: !options.text ? 0 : 1,
+            transition: 'opacity 0.3s ease-in-out'
+          }}
+        >
+          {options.text}
+        </div>
+      </div>
     </>
   )
 }
@@ -348,6 +360,7 @@ function CursorCore({
  * Calls and passes props to CursorCore if not a touch/mobile device.
  */
 function AnimatedCursor({
+  text,
   clickables,
   color,
   innerScale,
@@ -376,6 +389,7 @@ function AnimatedCursor({
       outerStyle={outerStyle}
       showSystemCursor={showSystemCursor}
       trailingSpeed={trailingSpeed}
+      text={text}
     />
   )
 }
