@@ -1,7 +1,7 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 export interface AnimatedCursorOptions {
-  text?: string
+  children?: string | ReactNode
   color?: string
   innerScale?: number
   innerSize?: number
@@ -10,6 +10,7 @@ export interface AnimatedCursorOptions {
   outerScale?: number
   outerSize?: number
   outerStyle?: CSSProperties
+  hug?: boolean
 }
 
 export interface AnimatedCursorProps extends AnimatedCursorOptions {

@@ -23,7 +23,7 @@ import {
  *
  * @param {object} obj
  * @param {array}  obj.clickables - array of clickable selectors
- * @param {string} obj.text - text that is shown instead of the inner dot
+ * @param {string} obj.children - element that is shown instead of the inner dot
  * @param {string} obj.color - rgb color value
  * @param {number} obj.innerScale - inner cursor scale amount
  * @param {number} obj.innerSize - inner cursor size in px
@@ -49,7 +49,7 @@ function CursorCore({
     'button',
     '.link'
   ],
-  text,
+  children,
   color = '220, 90, 90',
   innerScale = 0.6,
   innerSize = 8,
@@ -63,7 +63,7 @@ function CursorCore({
 }: AnimatedCursorProps) {
   const defaultOptions = useMemo(
     () => ({
-      text,
+      children,
       color,
       innerScale,
       innerSize,
@@ -74,7 +74,7 @@ function CursorCore({
       outerStyle
     }),
     [
-      text,
+      children,
       color,
       innerScale,
       innerSize,
@@ -242,12 +242,14 @@ function CursorCore({
     clickableEls.forEach((el) => {
       if (!showSystemCursor) el.style.cursor = 'none'
 
+      const clickableOptions = clickables.find(
+        (clickable) =>
+          typeof clickable === 'object' && el.matches(clickable.target)
+      )
+
       const options = {
         ...defaultOptions,
-        ...clickables.find(
-          (clickable) =>
-            typeof clickable === 'object' && el.matches(clickable?.target)
-        )
+        ...clickableOptions
       }
 
       el.addEventListener('mouseover', () => {
@@ -273,13 +275,10 @@ function CursorCore({
 
     return () => {
       clickableEls.forEach((el) => {
-        const options = {
-          ...defaultOptions,
-          ...clickables.find(
-            (clickable) =>
-              typeof clickable === 'object' && el.matches(clickable?.target)
-          )
-        }
+        const options = clickables.find(
+          (clickable) =>
+            typeof clickable === 'object' && el.matches(clickable.target)
+        )
 
         el.removeEventListener('mouseover', () => {
           setIsActive(true)
@@ -320,9 +319,11 @@ function CursorCore({
   // Cursor Styles
   const styles = {
     cursorInner: {
-      width: !text ? options.innerSize : 'auto',
-      height: !text ? options.innerSize : 'auto',
-      backgroundColor: !text ? `rgba(${options.color}, 1)` : 'transparent',
+      width: !options.children ? options.innerSize : 'auto',
+      height: !options.children ? options.innerSize : 'auto',
+      backgroundColor: !options.children
+        ? `rgba(${options.color}, 1)`
+        : 'transparent',
       ...coreStyles,
       ...(options.innerStyle && options.innerStyle)
     },
@@ -344,11 +345,11 @@ function CursorCore({
       <div ref={cursorInnerRef} style={styles.cursorInner}>
         <div
           style={{
-            opacity: !options.text ? 0 : 1,
+            opacity: !options.children ? 0 : 1,
             transition: 'opacity 0.3s ease-in-out'
           }}
         >
-          {options.text}
+          {options.children}
         </div>
       </div>
     </>
@@ -360,7 +361,7 @@ function CursorCore({
  * Calls and passes props to CursorCore if not a touch/mobile device.
  */
 function AnimatedCursor({
-  text,
+  children,
   clickables,
   color,
   innerScale,
@@ -389,7 +390,7 @@ function AnimatedCursor({
       outerStyle={outerStyle}
       showSystemCursor={showSystemCursor}
       trailingSpeed={trailingSpeed}
-      text={text}
+      children={children}
     />
   )
 }
