@@ -8,11 +8,13 @@ import {
 } from 'react'
 import { useEventListener } from './hooks/useEventListener'
 import IsDevice from './helpers/isDevice'
-import {
+import type {
   AnimatedCursorProps,
   AnimatedCursorCoordinates,
-  AnimatedCursorOptions
+  AnimatedCursorOptions,
+  Clickable
 } from './AnimatedCursor.types'
+import find from './helpers/find'
 
 /**
  * Cursor Core
@@ -242,10 +244,14 @@ function CursorCore({
     clickableEls.forEach((el) => {
       if (!showSystemCursor) el.style.cursor = 'none'
 
-      const clickableOptions = clickables.find(
-        (clickable) =>
-          typeof clickable === 'object' && el.matches(clickable.target)
-      )
+      const clickableOptions =
+        typeof clickables === 'object'
+          ? find(
+              clickables,
+              (clickable: Clickable) =>
+                typeof clickable === 'object' && el.matches(clickable.target)
+            )
+          : {}
 
       const options = {
         ...defaultOptions,
@@ -275,8 +281,9 @@ function CursorCore({
 
     return () => {
       clickableEls.forEach((el) => {
-        const options = clickables.find(
-          (clickable) =>
+        const options = find(
+          clickables,
+          (clickable: Clickable) =>
             typeof clickable === 'object' && el.matches(clickable.target)
         )
 
@@ -390,8 +397,9 @@ function AnimatedCursor({
       outerStyle={outerStyle}
       showSystemCursor={showSystemCursor}
       trailingSpeed={trailingSpeed}
-      children={children}
-    />
+    >
+      {children}
+    </CursorCore>
   )
 }
 
