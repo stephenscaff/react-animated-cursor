@@ -1,20 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  CSSProperties,
-  useMemo
-} from 'react'
+import { useState, useEffect, useCallback, useRef, CSSProperties } from 'react'
 import { useEventListener } from './hooks/useEventListener'
 import IsDevice from './helpers/isDevice'
-import type {
+import {
   AnimatedCursorProps,
-  AnimatedCursorCoordinates,
-  AnimatedCursorOptions,
-  Clickable
+  AnimatedCursorCoordinates
 } from './AnimatedCursor.types'
-import find from './helpers/find'
 
 /**
  * Cursor Core
@@ -25,7 +15,6 @@ import find from './helpers/find'
  *
  * @param {object} obj
  * @param {array}  obj.clickables - array of clickable selectors
- * @param {string} obj.children - element that is shown instead of the inner dot
  * @param {string} obj.color - rgb color value
  * @param {number} obj.innerScale - inner cursor scale amount
  * @param {number} obj.innerSize - inner cursor size in px
@@ -51,7 +40,6 @@ function CursorCore({
     'button',
     '.link'
   ],
-  children,
   color = '220, 90, 90',
   innerScale = 0.6,
   innerSize = 8,
@@ -63,31 +51,6 @@ function CursorCore({
   showSystemCursor = false,
   trailingSpeed = 8
 }: AnimatedCursorProps) {
-  const defaultOptions = useMemo(
-    () => ({
-      children,
-      color,
-      innerScale,
-      innerSize,
-      innerStyle,
-      outerAlpha,
-      outerScale,
-      outerSize,
-      outerStyle
-    }),
-    [
-      children,
-      color,
-      innerScale,
-      innerSize,
-      innerStyle,
-      outerAlpha,
-      outerScale,
-      outerSize,
-      outerStyle
-    ]
-  )
-
   const cursorOuterRef = useRef<HTMLDivElement>(null)
   const cursorInnerRef = useRef<HTMLDivElement>(null)
   const requestRef = useRef(null)
@@ -97,10 +60,7 @@ function CursorCore({
     y: 0
   })
   const [isVisible, setIsVisible] = useState(false)
-  const [options, setOptions] = useState(defaultOptions)
-  const [isActive, setIsActive] = useState<boolean | AnimatedCursorOptions>(
-    false
-  )
+  const [isActive, setIsActive] = useState(false)
   const [isActiveClickable, setIsActiveClickable] = useState(false)
   const endX = useRef(0)
   const endY = useRef(0)
@@ -180,40 +140,25 @@ function CursorCore({
   // Cursors Hover/Active State
   useEffect(() => {
     if (isActive) {
-      scaleBySize(cursorInnerRef.current, options.innerSize, options.innerScale)
-      scaleBySize(cursorOuterRef.current, options.outerSize, options.outerScale)
+      scaleBySize(cursorInnerRef.current, innerSize, innerScale)
+      scaleBySize(cursorOuterRef.current, outerSize, outerScale)
     } else {
-      scaleBySize(cursorInnerRef.current, options.innerSize, 1)
-      scaleBySize(cursorOuterRef.current, options.outerSize, 1)
+      scaleBySize(cursorInnerRef.current, innerSize, 1)
+      scaleBySize(cursorOuterRef.current, outerSize, 1)
     }
-  }, [
-    options.innerSize,
-    options.innerScale,
-    options.outerSize,
-    options.outerScale,
-    scaleBySize,
-    isActive
-  ])
+  }, [innerSize, innerScale, outerSize, outerScale, scaleBySize, isActive])
 
   // Cursors Click States
   useEffect(() => {
     if (isActiveClickable) {
-      scaleBySize(
-        cursorInnerRef.current,
-        options.innerSize,
-        options.innerScale * 1.2
-      )
-      scaleBySize(
-        cursorOuterRef.current,
-        options.outerSize,
-        options.outerScale * 1.4
-      )
+      scaleBySize(cursorInnerRef.current, innerSize, innerScale * 1.2)
+      scaleBySize(cursorOuterRef.current, outerSize, outerScale * 1.4)
     }
   }, [
-    options.innerSize,
-    options.innerScale,
-    options.outerSize,
-    options.outerScale,
+    innerSize,
+    innerScale,
+    outerSize,
+    outerScale,
     scaleBySize,
     isActiveClickable
   ])
@@ -232,35 +177,14 @@ function CursorCore({
   // Click event state updates
   useEffect(() => {
     const clickableEls = document.querySelectorAll<HTMLElement>(
-      clickables
-        .map((clickable) =>
-          typeof clickable === 'object' && clickable?.target
-            ? clickable.target
-            : clickable ?? ''
-        )
-        .join(',')
+      clickables.join(',')
     )
 
     clickableEls.forEach((el) => {
       if (!showSystemCursor) el.style.cursor = 'none'
 
-      const clickableOptions =
-        typeof clickables === 'object'
-          ? find(
-              clickables,
-              (clickable: Clickable) =>
-                typeof clickable === 'object' && el.matches(clickable.target)
-            )
-          : {}
-
-      const options = {
-        ...defaultOptions,
-        ...clickableOptions
-      }
-
       el.addEventListener('mouseover', () => {
         setIsActive(true)
-        setOptions(options)
       })
       el.addEventListener('click', () => {
         setIsActive(true)
@@ -275,21 +199,13 @@ function CursorCore({
       el.addEventListener('mouseout', () => {
         setIsActive(false)
         setIsActiveClickable(false)
-        setOptions(defaultOptions)
       })
     })
 
     return () => {
       clickableEls.forEach((el) => {
-        const options = find(
-          clickables,
-          (clickable: Clickable) =>
-            typeof clickable === 'object' && el.matches(clickable.target)
-        )
-
         el.removeEventListener('mouseover', () => {
           setIsActive(true)
-          setOptions(options)
         })
         el.removeEventListener('click', () => {
           setIsActive(true)
@@ -304,17 +220,14 @@ function CursorCore({
         el.removeEventListener('mouseout', () => {
           setIsActive(false)
           setIsActiveClickable(false)
-          setOptions(defaultOptions)
         })
       })
     }
-  }, [isActive, clickables, showSystemCursor, defaultOptions])
+  }, [isActive, clickables, showSystemCursor])
 
   const coreStyles: CSSProperties = {
     zIndex: 999,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: 'block',
     position: 'fixed',
     borderRadius: '50%',
     pointerEvents: 'none',
@@ -326,20 +239,18 @@ function CursorCore({
   // Cursor Styles
   const styles = {
     cursorInner: {
-      width: !options.children ? options.innerSize : 'auto',
-      height: !options.children ? options.innerSize : 'auto',
-      backgroundColor: !options.children
-        ? `rgba(${options.color}, 1)`
-        : 'transparent',
+      width: innerSize,
+      height: innerSize,
+      backgroundColor: `rgba(${color}, 1)`,
       ...coreStyles,
-      ...(options.innerStyle && options.innerStyle)
+      ...(innerStyle && innerStyle)
     },
     cursorOuter: {
-      width: options.outerSize,
-      height: options.outerSize,
-      backgroundColor: `rgba(${options.color}, ${options.outerAlpha})`,
+      width: outerSize,
+      height: outerSize,
+      backgroundColor: `rgba(${color}, ${outerAlpha})`,
       ...coreStyles,
-      ...(options.outerStyle && options.outerStyle)
+      ...(outerStyle && outerStyle)
     }
   }
 
@@ -349,16 +260,7 @@ function CursorCore({
   return (
     <>
       <div ref={cursorOuterRef} style={styles.cursorOuter} />
-      <div ref={cursorInnerRef} style={styles.cursorInner}>
-        <div
-          style={{
-            opacity: !options.children ? 0 : 1,
-            transition: 'opacity 0.3s ease-in-out'
-          }}
-        >
-          {options.children}
-        </div>
-      </div>
+      <div ref={cursorInnerRef} style={styles.cursorInner} />
     </>
   )
 }
@@ -368,7 +270,6 @@ function CursorCore({
  * Calls and passes props to CursorCore if not a touch/mobile device.
  */
 function AnimatedCursor({
-  children,
   clickables,
   color,
   innerScale,
@@ -397,9 +298,7 @@ function AnimatedCursor({
       outerStyle={outerStyle}
       showSystemCursor={showSystemCursor}
       trailingSpeed={trailingSpeed}
-    >
-      {children}
-    </CursorCore>
+    />
   )
 }
 

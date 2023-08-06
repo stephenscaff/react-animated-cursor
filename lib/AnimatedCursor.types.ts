@@ -1,7 +1,7 @@
-import { CSSProperties, ReactNode } from 'react'
+import { CSSProperties } from 'react'
 
-export interface AnimatedCursorOptions {
-  children?: ReactNode
+export interface AnimatedCursorProps {
+  clickables?: string[]
   color?: string
   innerScale?: number
   innerSize?: number
@@ -10,12 +10,6 @@ export interface AnimatedCursorOptions {
   outerScale?: number
   outerSize?: number
   outerStyle?: CSSProperties
-}
-
-export type Clickable = string | ({ target: string } & AnimatedCursorOptions)
-
-export interface AnimatedCursorProps extends AnimatedCursorOptions {
-  clickables?: Clickable[]
   showSystemCursor?: boolean
   trailingSpeed?: number
 }
