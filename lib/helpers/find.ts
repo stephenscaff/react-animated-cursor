@@ -1,6 +1,7 @@
 export default function findInArray<T>(
   arr: T[],
-  callback: (element: T, index: number, array: T[]) => boolean
+  callback: (element: T, index: number, array: T[]) => boolean,
+  ...args
 ): T | undefined {
   if (typeof callback !== 'function') {
     throw new TypeError('callback must be a function')
@@ -9,7 +10,7 @@ export default function findInArray<T>(
   const list = Object(arr)
   // Makes sure it always has a positive integer as length.
   const length = list.length >>> 0
-  const thisArg = arguments[2]
+  const thisArg = args[2]
 
   for (let i = 0; i < length; i++) {
     const element = list[i]

@@ -281,11 +281,19 @@ function CursorCore({
 
     return () => {
       clickableEls.forEach((el) => {
-        const options = find(
-          clickables,
-          (clickable: Clickable) =>
-            typeof clickable === 'object' && el.matches(clickable.target)
-        )
+        const clickableOptions =
+          typeof clickables === 'object'
+            ? find(
+                clickables,
+                (clickable: Clickable) =>
+                  typeof clickable === 'object' && el.matches(clickable.target)
+              )
+            : {}
+
+        const options = {
+          ...defaultOptions,
+          ...clickableOptions
+        }
 
         el.removeEventListener('mouseover', () => {
           setIsActive(true)
