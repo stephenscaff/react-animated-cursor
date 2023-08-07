@@ -2,7 +2,7 @@ import React from 'react'
 
 const s = {
   section: {
-    padding: '6em 0',
+    paddingTop: '6em',
     width: '80%',
     maxWidth: '36em',
     margin: '0 auto 1em'
@@ -80,6 +80,9 @@ export default function Content() {
         </li>
         <li>
           <a href="?cursor=blendmode">Blendmode</a>
+        </li>
+        <li>
+          <a href="?cursor=custom">Custom</a>
         </li>
       </ul>
 

@@ -125,6 +125,52 @@ export default function App() {
 }
 ```
 
+### Example Usage - with simple options and custom config for one class
+
+```
+import React from "react";
+import AnimatedCursor from "react-animated-cursor"
+
+export default function App() {
+  return (
+    <div className="App">
+    <AnimatedCursor
+      innerSize={8}
+      outerSize={8}
+      color='193, 11, 111'
+      outerAlpha={0.2}
+      innerScale={0.7}
+      outerScale={5}
+      clickables={[
+        'a',
+        'input[type="text"]',
+        'input[type="email"]',
+        'input[type="number"]',
+        'input[type="submit"]',
+        'input[type="image"]',
+        'label[for]',
+        'select',
+        'textarea',
+        'button',
+        '.link',
+        {
+          target: '.custom',
+          options: {
+            innerSize: 12,
+            outerSize: 12,
+            color: '255, 255, 255',
+            outerAlpha: 0.3,
+            innerScale: 0.7,
+            outerScale: 5
+          }
+        }
+      ]}
+    />
+    </div>
+  );
+}
+```
+
 ### With Next / SSR (Server Side Rendering)
 
 In Next's SSR environment, you may have to leverage a `Dynamic Import`.
@@ -157,7 +203,7 @@ const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
 <!-- prettier-ignore -->
 | Option | Type | Description      | Default |
 | ----   | ---- | -------- | -------|
-| `clickables`    | array  | Collection of selectors cursor that trigger cursor interaction | `['a', 'input[type="text"]', 'input[type="email"]', 'input[type="number"]', 'input[type="submit"]', 'input[type="image"]', 'label[for]', 'select', 'textarea', 'button', '.link']` |
+| `clickables`    | array  | Collection of selectors cursor that trigger cursor interaction or object with single target and possibly the rest of the options listed below | `['a', 'input[type="text"]', 'input[type="email"]', 'input[type="number"]', 'input[type="submit"]', 'input[type="image"]', 'label[for]', 'select', 'textarea', 'button', '.link']` |
 | `color`      | string | rgb value  | `220, 90, 90` |
 | `innerScale` | number | amount dot scales on click or link hover | `0.7` |
 | `innerSize`  | number | Size (px) of inner cursor dot | `8` |
@@ -275,7 +321,8 @@ You can use CSS mix-blend-mode with the style props to create an intersting curs
 - ~~Open cursor styles as props~~
 - ~~Add ability to maintain system cursor for the squeamish~~ 4/4/23
 - ~~Migrate to TS~~
-- Options to control cusror transition speed and bezier
+- ~~Allow for different behavior based on the element hovered~~
+- Options to control cursor transition speed and bezier
 - Solution for impacting state during route changes
 
 - Add some proper tests
