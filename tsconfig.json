@@ -5,7 +5,7 @@
     "target": "es5",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "module": "esnext",
+    "module": "nodenext",
     "allowJs": true
   },
   "include": ["lib"],

@@ -18,17 +18,20 @@ const config = [
     output: [
       {
         file: pkg.main,
-        format: 'cjs'
+        format: 'cjs',
+        banner: "'use client';"
       },
       {
         file: pkg.module,
-        format: 'es'
+        format: 'esm',
+        banner: "'use client';"
       },
       {
         file: pkg.browser,
         format: 'umd',
         name: 'AnimatedCursor',
-        globals: umdGlobals
+        globals: umdGlobals,
+        banner: "'use client';"
       }
     ],
     plugins: [
