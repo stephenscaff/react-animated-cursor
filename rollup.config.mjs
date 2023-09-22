@@ -30,8 +30,7 @@ const config = [
         file: pkg.browser,
         format: 'umd',
         name: 'AnimatedCursor',
-        globals: umdGlobals,
-        banner: "'use client';"
+        globals: umdGlobals
       }
     ],
     plugins: [
