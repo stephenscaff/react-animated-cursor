@@ -362,7 +362,9 @@ function CursorCore({
   }
 
   // Hide / Show global cursor
-  if (!showSystemCursor) document.body.style.cursor = 'none'
+  if (typeof window === 'object') {
+    if (!showSystemCursor) document.body.style.cursor = 'none'
+  }
 
   return (
     <>
