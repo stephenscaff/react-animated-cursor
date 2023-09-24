@@ -171,22 +171,25 @@ export default function App() {
 }
 ```
 
-### With Next / SSR (Server Side Rendering)
+### Client Components, Next.js, SSR
 
-In Next's SSR environment, you may have to leverage a `Dynamic Import`.
+In previous versions of the component, integration with Next's SSR environment required using a `Dynamic Import`.
+However, as of version `2.10.1`, **you _should_ be good to go with a simple `import`.**
+
+Relevant updates:
+
+- Included module directive `'use client'` to indicate a client side component.
+- Updated `useEventListener` hook with `window` checks.
+- Wrapped the `document` use in a check.
+
+However, if you do run into any issues, you could try including with Dynamic Import.
+
+**Next's Dynamic Import**
 
 ```
-import dynamic from 'next/dynamic';
+'use client'; // indicates Client Component
 
-const AnimatedCursor = dynamic(() =>
-  import('react-animated-cursor').then((mod) => mod.AnimatedCursor),
-);
-<AnimatedCursor/>
-```
-
-#### With no SSR
-
-```
+// Import with next's dynamic import
 import dynamic from 'next/dynamic';
 
 const AnimatedCursor = dynamic(() => import('react-animated-cursor'), {
