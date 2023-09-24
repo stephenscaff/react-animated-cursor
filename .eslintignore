@@ -1,5 +1,6 @@
 *.json
 build
 config
+dist
 **node_modules**
 ./node_modules/**

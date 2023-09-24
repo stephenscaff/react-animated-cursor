@@ -1,49 +1,54 @@
-const IsDevice = (() => {
-  if (typeof navigator === 'undefined') return
+type DeviceInfo = {
+  info: string
+  Android: () => RegExpMatchArray | null
+  BlackBerry: () => RegExpMatchArray | null
+  IEMobile: () => RegExpMatchArray | null
+  iOS: () => RegExpMatchArray | null
+  iPad: () => boolean | null
+  OperaMini: () => RegExpMatchArray | null
+  any: () => boolean | null
+}
+
+const IsDevice: DeviceInfo = (() => {
+  if (typeof navigator === 'undefined') {
+    // Provide default implementations that return null or false
+    return {
+      info: '',
+      Android: () => null,
+      BlackBerry: () => null,
+      IEMobile: () => null,
+      iOS: () => null,
+      iPad: () => null,
+      OperaMini: () => null,
+      any: () => false
+    }
+  }
 
   const ua = navigator.userAgent
 
   return {
     info: ua,
-
-    Android() {
-      return ua.match(/Android/i)
-    },
-    BlackBerry() {
-      return ua.match(/BlackBerry/i)
-    },
-    IEMobile() {
-      return ua.match(/IEMobile/i)
-    },
-    iOS() {
-      return ua.match(/iPhone|iPad|iPod/i)
-    },
-    iPad() {
-      return (
+    Android: () => ua.match(/Android/i),
+    BlackBerry: () => ua.match(/BlackBerry/i),
+    IEMobile: () => ua.match(/IEMobile/i),
+    iOS: () => ua.match(/iPhone|iPad|iPod/i),
+    iPad: () =>
+      !!(
         ua.match(/Mac/) &&
         navigator.maxTouchPoints &&
         navigator.maxTouchPoints > 2
-      )
-    },
-    OperaMini() {
-      return ua.match(/Opera Mini/i)
-    },
-
-    /**
-     * Any Device
-     */
-    any() {
-      return (
-        IsDevice.Android() ||
-        IsDevice.BlackBerry() ||
-        IsDevice.iOS() ||
+      ), // Return boolean
+    OperaMini: () => ua.match(/Opera Mini/i),
+    any: () =>
+      !!(
+        IsDevice.Android()?.length ||
+        IsDevice.BlackBerry()?.length ||
+        IsDevice.iOS()?.length ||
         IsDevice.iPad() ||
-        IsDevice.OperaMini() ||
-        IsDevice.IEMobile()
-      )
-    }
+        IsDevice.OperaMini()?.length ||
+        IsDevice.IEMobile()?.length
+      ) // Return boolean
   }
 })()
 
-// Export
 export default IsDevice
