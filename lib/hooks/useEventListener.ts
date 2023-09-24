@@ -1,46 +1,53 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
-type EventListener = (event: Event) => void
+type AllEventMaps = HTMLElementEventMap & DocumentEventMap & WindowEventMap
 
-/**
- * useEventListener
- * Hook for handling EventListeners
- * @param {string} eventName - The name of the event to listen for
- * @param {EventListener} handler - The event handler function
- * @param {HTMLElement|Window} element - The element to attach the event listener to
- * @returns {void}
- */
-export function useEventListener(
-  eventName: string,
-  handler: EventListener,
-  element: HTMLElement | Window = window
-): void {
-  // Create a ref that stores handler
-  const savedHandler = useRef<EventListener | null>(null)
+export function useEventListener<K extends keyof HTMLElementEventMap>(
+  type: K,
+  listener: (event: HTMLElementEventMap[K]) => void,
+  element: HTMLElement
+): void
 
-  // Update ref.current value if handler changes.
+export function useEventListener<K extends keyof DocumentEventMap>(
+  type: K,
+  listener: (event: DocumentEventMap[K]) => void,
+  element: Document
+): void
+
+export function useEventListener<K extends keyof WindowEventMap>(
+  type: K,
+  listener: (event: WindowEventMap[K]) => void,
+  element?: Window
+): void
+
+export function useEventListener<K extends keyof AllEventMaps>(
+  type: K,
+  listener: (event: AllEventMaps[K]) => void,
+  element?: HTMLElement | Document | Window | null
+) {
+  const listenerRef = useRef(listener)
+
   useEffect(() => {
-    savedHandler.current = handler
-  }, [handler])
+    listenerRef.current = listener
+  })
 
   useEffect(() => {
-    // Make sure element supports addEventListener
-    const isSupported = element && element.addEventListener
-    if (!isSupported) return
+    const el = element === undefined ? window : element
 
-    // Create event listener that calls handler function stored in ref
-    const eventListener: EventListener = (event) => {
-      if (savedHandler.current) {
-        savedHandler.current(event)
-      }
+    const internalListener = (ev: AllEventMaps[K]) => {
+      return listenerRef.current(ev)
     }
 
-    // Add event listener
-    element.addEventListener(eventName, eventListener)
+    el?.addEventListener(
+      type,
+      internalListener as EventListenerOrEventListenerObject
+    )
 
-    // Remove event listener on cleanup
     return () => {
-      element.removeEventListener(eventName, eventListener)
+      el?.removeEventListener(
+        type,
+        internalListener as EventListenerOrEventListenerObject
+      )
     }
-  }, [eventName, element]) // Re-run if eventName or element changes
+  }, [type, element])
 }

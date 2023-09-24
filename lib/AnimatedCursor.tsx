@@ -90,8 +90,8 @@ function CursorCore({
 
   const cursorOuterRef = useRef<HTMLDivElement>(null)
   const cursorInnerRef = useRef<HTMLDivElement>(null)
-  const requestRef = useRef(null)
-  const previousTimeRef = useRef(null)
+  const requestRef = useRef<number | null>(null)
+  const previousTimeRef = useRef<number | null>(null)
   const [coords, setCoords] = useState<AnimatedCursorCoordinates>({
     x: 0,
     y: 0
@@ -113,8 +113,10 @@ function CursorCore({
   const onMouseMove = useCallback((event: MouseEvent) => {
     const { clientX, clientY } = event
     setCoords({ x: clientX, y: clientY })
-    cursorInnerRef.current.style.top = `${clientY}px`
-    cursorInnerRef.current.style.left = `${clientX}px`
+    if (cursorInnerRef.current !== null) {
+      cursorInnerRef.current.style.top = `${clientY}px`
+      cursorInnerRef.current.style.left = `${clientX}px`
+    }
     endX.current = clientX
     endY.current = clientY
   }, [])
@@ -125,8 +127,10 @@ function CursorCore({
       if (previousTimeRef.current !== undefined) {
         coords.x += (endX.current - coords.x) / trailingSpeed
         coords.y += (endY.current - coords.y) / trailingSpeed
-        cursorOuterRef.current.style.top = `${coords.y}px`
-        cursorOuterRef.current.style.left = `${coords.x}px`
+        if (cursorOuterRef.current !== null) {
+          cursorOuterRef.current.style.top = `${coords.y}px`
+          cursorOuterRef.current.style.left = `${coords.x}px`
+        }
       }
       previousTimeRef.current = time
       requestRef.current = requestAnimationFrame(animateOuterCursor)
@@ -137,7 +141,11 @@ function CursorCore({
   // Outer cursor RAF setup / cleanup
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animateOuterCursor)
-    return () => cancelAnimationFrame(requestRef.current)
+    return () => {
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current)
+      }
+    }
   }, [animateOuterCursor])
 
   /**
@@ -220,6 +228,8 @@ function CursorCore({
 
   // Cursor Visibility Statea
   useEffect(() => {
+    if (cursorInnerRef.current == null || cursorOuterRef.current == null) return
+
     if (isVisible) {
       cursorInnerRef.current.style.opacity = '1'
       cursorOuterRef.current.style.opacity = '1'
