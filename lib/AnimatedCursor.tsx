@@ -149,7 +149,7 @@ function CursorCore({
   }, [animateOuterCursor])
 
   /**
-   * Calculates amount to scale cursor in px3
+   * Calculates amount to scale cursor in px
    * @param {number} orignalSize - starting size
    * @param {number} scaleAmount - Amount to scale
    * @returns {String} Scale amount in px
@@ -252,8 +252,6 @@ function CursorCore({
     )
 
     clickableEls.forEach((el) => {
-      if (!showSystemCursor) el.style.cursor = 'none'
-
       const clickableOptions =
         typeof clickables === 'object'
           ? find(
@@ -328,6 +326,12 @@ function CursorCore({
     }
   }, [isActive, clickables, showSystemCursor, defaultOptions])
 
+  useEffect(() => {
+    if (typeof window === 'object' && !showSystemCursor) {
+      document.body.style.cursor = 'none'
+    }
+  }, [showSystemCursor])
+
   const coreStyles: CSSProperties = {
     zIndex: 999,
     display: 'flex',
@@ -359,11 +363,6 @@ function CursorCore({
       ...coreStyles,
       ...(options.outerStyle && options.outerStyle)
     }
-  }
-
-  // Hide / Show global cursor
-  if (typeof window === 'object') {
-    if (!showSystemCursor) document.body.style.cursor = 'none'
   }
 
   return (

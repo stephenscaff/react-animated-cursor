@@ -25,7 +25,7 @@ export default function App() {
           innerScale={1}
           outerScale={2}
           outerAlpha={0}
-          showSystemCursor={true}
+          showSystemCursor={false}
           hasBlendMode={true}
           outerStyle={{
             border: '3px solid var(--cursor-color)'
