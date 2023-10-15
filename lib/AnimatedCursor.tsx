@@ -7,7 +7,7 @@ import {
   useMemo
 } from 'react'
 import { useEventListener } from './hooks/useEventListener'
-import IsDevice from './helpers/isDevice'
+import useDeviceInfo from './hooks/useDeviceInfo'
 import type {
   AnimatedCursorProps,
   AnimatedCursorCoordinates,
@@ -400,7 +400,8 @@ function AnimatedCursor({
   showSystemCursor,
   trailingSpeed
 }: AnimatedCursorProps) {
-  if (typeof navigator !== 'undefined' && IsDevice.any()) {
+  const deviceInfo = useDeviceInfo()
+  if (typeof navigator !== 'undefined' && deviceInfo.any) {
     return <></>
   }
   return (
