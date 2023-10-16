@@ -7,6 +7,7 @@ import {
   useMemo
 } from 'react'
 import { useEventListener } from './hooks/useEventListener'
+//import IsDevice from './helpers/isDevice'
 import useDeviceInfo from './hooks/useDeviceInfo'
 import type {
   AnimatedCursorProps,
@@ -149,7 +150,7 @@ function CursorCore({
   }, [animateOuterCursor])
 
   /**
-   * Calculates amount to scale cursor in px
+   * Calculates amount to scale cursor in px3
    * @param {number} orignalSize - starting size
    * @param {number} scaleAmount - Amount to scale
    * @returns {String} Scale amount in px
@@ -252,6 +253,8 @@ function CursorCore({
     )
 
     clickableEls.forEach((el) => {
+      if (!showSystemCursor) el.style.cursor = 'none'
+
       const clickableOptions =
         typeof clickables === 'object'
           ? find(
@@ -401,7 +404,7 @@ function AnimatedCursor({
   trailingSpeed
 }: AnimatedCursorProps) {
   const deviceInfo = useDeviceInfo()
-  if (typeof navigator !== 'undefined' && deviceInfo.any) {
+  if (typeof navigator !== 'undefined' && deviceInfo.any()) {
     return <></>
   }
   return (
