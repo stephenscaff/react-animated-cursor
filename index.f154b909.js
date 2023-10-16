@@ -27329,6 +27329,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _useEventListener = require("./hooks/useEventListener");
+//import IsDevice from './helpers/isDevice'
 var _useDeviceInfo = require("./hooks/useDeviceInfo");
 var _useDeviceInfoDefault = parcelHelpers.interopDefault(_useDeviceInfo);
 var _find = require("./helpers/find");
@@ -27446,7 +27447,7 @@ var _s = $RefreshSig$(), _s1 = $RefreshSig$();
         animateOuterCursor
     ]);
     /**
-   * Calculates amount to scale cursor in px
+   * Calculates amount to scale cursor in px3
    * @param {number} orignalSize - starting size
    * @param {number} scaleAmount - Amount to scale
    * @returns {String} Scale amount in px
@@ -27518,6 +27519,7 @@ var _s = $RefreshSig$(), _s1 = $RefreshSig$();
     (0, _react.useEffect)(()=>{
         const clickableEls = document.querySelectorAll(clickables.map((clickable)=>typeof clickable === "object" && clickable?.target ? clickable.target : clickable ?? "").join(","));
         clickableEls.forEach((el)=>{
+            if (!showSystemCursor) el.style.cursor = "none";
             const clickableOptions = typeof clickables === "object" ? (0, _findDefault.default)(clickables, (clickable)=>typeof clickable === "object" && el.matches(clickable.target)) : {};
             const options = {
                 ...defaultOptions,
@@ -27617,7 +27619,7 @@ var _s = $RefreshSig$(), _s1 = $RefreshSig$();
                 style: styles.cursorOuter
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.tsx",
-                lineNumber: 370,
+                lineNumber: 373,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -27631,12 +27633,12 @@ var _s = $RefreshSig$(), _s1 = $RefreshSig$();
                     children: options.children
                 }, void 0, false, {
                     fileName: "lib/AnimatedCursor.tsx",
-                    lineNumber: 372,
+                    lineNumber: 375,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "lib/AnimatedCursor.tsx",
-                lineNumber: 371,
+                lineNumber: 374,
                 columnNumber: 7
             }, this)
         ]
@@ -27658,7 +27660,7 @@ _c = CursorCore;
  */ function AnimatedCursor({ children , clickables , color , innerScale , innerSize , innerStyle , outerAlpha , outerScale , outerSize , outerStyle , showSystemCursor , trailingSpeed  }) {
     _s1();
     const deviceInfo = (0, _useDeviceInfoDefault.default)();
-    if (typeof navigator !== "undefined" && deviceInfo.any) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {}, void 0, false);
+    if (typeof navigator !== "undefined" && deviceInfo.any()) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {}, void 0, false);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(CursorCore, {
         clickables: clickables,
         color: color,
@@ -27674,7 +27676,7 @@ _c = CursorCore;
         children: children
     }, void 0, false, {
         fileName: "lib/AnimatedCursor.tsx",
-        lineNumber: 408,
+        lineNumber: 411,
         columnNumber: 5
     }, this);
 }
@@ -27694,7 +27696,43 @@ $RefreshReg$(_c1, "AnimatedCursor");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","./hooks/useEventListener":"bKIw0","./helpers/find":"dDsLL","./hooks/useDeviceInfo":"gXS5E"}],"gkKU3":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","./hooks/useEventListener":"bKIw0","./helpers/find":"dDsLL","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./hooks/useDeviceInfo":"gXS5E"}],"bKIw0":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$8cf7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$8cf7.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "useEventListener", ()=>useEventListener);
+var _react = require("react");
+function useEventListener(type, listener, element) {
+    const listenerRef = (0, _react.useRef)(listener);
+    (0, _react.useEffect)(()=>{
+        listenerRef.current = listener;
+    });
+    (0, _react.useEffect)(()=>{
+        const el = element === undefined ? window : element;
+        const internalListener = (ev)=>{
+            return listenerRef.current(ev);
+        };
+        el?.addEventListener(type, internalListener);
+        return ()=>{
+            el?.removeEventListener(type, internalListener);
+        };
+    }, [
+        type,
+        element
+    ]);
+}
+
+  $parcel$ReactRefreshHelpers$8cf7.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -27857,43 +27895,7 @@ function registerExportsForReactRefresh(module1) {
     }
 }
 
-},{"946756aee8a87411":"786KC"}],"bKIw0":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$8cf7 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$8cf7.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "useEventListener", ()=>useEventListener);
-var _react = require("react");
-function useEventListener(type, listener, element) {
-    const listenerRef = (0, _react.useRef)(listener);
-    (0, _react.useEffect)(()=>{
-        listenerRef.current = listener;
-    });
-    (0, _react.useEffect)(()=>{
-        const el = element === undefined ? window : element;
-        const internalListener = (ev)=>{
-            return listenerRef.current(ev);
-        };
-        el?.addEventListener(type, internalListener);
-        return ()=>{
-            el?.removeEventListener(type, internalListener);
-        };
-    }, [
-        type,
-        element
-    ]);
-}
-
-  $parcel$ReactRefreshHelpers$8cf7.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"dDsLL":[function(require,module,exports) {
+},{"946756aee8a87411":"786KC"}],"dDsLL":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 function findInArray(arr, callback, ...args) {
