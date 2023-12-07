@@ -403,7 +403,7 @@ function AnimatedCursor({
   trailingSpeed
 }: AnimatedCursorProps) {
   const isTouchdevice = useIsTouchdevice()
-  if (typeof navigator !== 'undefined' && isTouchdevice) {
+  if (typeof window !== 'undefined' && isTouchdevice) {
     return <></>
   }
   return (
