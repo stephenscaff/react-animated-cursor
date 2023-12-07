@@ -7,8 +7,6 @@ import {
   useMemo
 } from 'react'
 import { useEventListener } from './hooks/useEventListener'
-//import IsDevice from './helpers/isDevice'
-import useDeviceInfo from './hooks/useDeviceInfo'
 import type {
   AnimatedCursorProps,
   AnimatedCursorCoordinates,
@@ -16,6 +14,7 @@ import type {
   Clickable
 } from './AnimatedCursor.types'
 import find from './helpers/find'
+import useIsTouchdevice from './hooks/useIsTouchdevice'
 
 /**
  * Cursor Core
@@ -403,8 +402,8 @@ function AnimatedCursor({
   showSystemCursor,
   trailingSpeed
 }: AnimatedCursorProps) {
-  const deviceInfo = useDeviceInfo()
-  if (typeof navigator !== 'undefined' && deviceInfo.any()) {
+  const isTouchdevice = useIsTouchdevice()
+  if (typeof navigator !== 'undefined' && isTouchdevice) {
     return <></>
   }
   return (
